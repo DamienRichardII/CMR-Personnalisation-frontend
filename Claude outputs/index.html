@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CMR Personnalisation | Textile &amp; objets personnalisés</title>
+  <meta name="description" content="CMR Personnalisation, atelier basé dans l'Oise : sérigraphie, broderie, DTF, flocage, sublimation et objets personnalisés pour entreprises, clubs, associations et événements. Demandez votre devis gratuit.">
+  <meta name="theme-color" content="#060b13">
+  <meta name="color-scheme" content="dark light">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="CMR Personnalisation">
+  <meta property="og:title" content="CMR Personnalisation | Textile &amp; objets personnalisés">
+  <meta property="og:description" content="Vêtements professionnels, textiles de club, goodies et équipements de travail personnalisés. Atelier dans l'Oise, devis gratuit.">
+  <meta property="og:image" content="Assets/img/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/png" sizes="48x48" href="Assets/img/favicon-48.png">
+  <link rel="apple-touch-icon" href="Assets/img/favicon.png">
+
+  <link rel="preload" href="fonts/poppins-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="Assets/img/hero-nuit.webp" as="image" type="image/webp" fetchpriority="high">
+
+  <script>
+    (function () {
+      var t = 'dark';
+      try { t = localStorage.getItem('cmr-theme') || 'dark'; } catch (e) {}
+      var r = document.documentElement;
+      r.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+      r.classList.add('js');
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Sprite d'icônes SVG -->
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="i-insta" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r=".7" fill="currentColor"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+    <symbol id="i-diamond" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M9 3 7.5 9 12 21l4.5-12L15 3"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21.5h4M12 2.5a6.5 6.5 0 0 0-3.8 11.8c.5.4.8 1 .8 1.7v.5h6V16c0-.7.3-1.3.8-1.7A6.5 6.5 0 0 0 12 2.5z"/><path d="M3.5 5.5l1.3 1.3M20.5 5.5l-1.3 1.3M1.5 11H3M21 11h1.5"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 9h4l3 3.5V16h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/><path d="M1 9h3M1 12h2"/></symbol>
+    <symbol id="i-france" viewBox="0 0 24 24"><path d="M13.5 2.5 16.5 4.5 17.5 6.5 19.5 7.5 20 10 19 12.5 20.5 15 20.5 18 16.5 19 14 19 12.5 21.5 8.5 22 5.5 20.5 6 17.5 5 13.5 5.5 10 2.5 9.5 2 7.5 4.5 5.5 6.5 6 6.5 3.5 9 5 11.5 4z"/><path d="M22 20.5v2"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+    <symbol id="i-serigraphie" viewBox="0 0 24 24"><rect x="4" y="9" width="16" height="11" rx="2"/><path d="M9 9V4.5h6V9M8 13h8M8 16.5h5"/></symbol>
+    <symbol id="i-broderie" viewBox="0 0 24 24"><path d="M20 3.5 8 16"/><path d="M18.5 5c1.8 1.6 1.8 3.4.2 5"/><path d="M8 16c-3 .6-5 2.4-4.5 4.2S7 21 8.5 18.5"/></symbol>
+    <symbol id="i-dtf" viewBox="0 0 24 24"><path d="M4 6h16v12H4zM8.5 6v12M15.5 6v12M4 10h4.5M4 14h4.5M15.5 10H20M15.5 14H20"/></symbol>
+    <symbol id="i-flocage" viewBox="0 0 24 24"><path d="M4 20 12 4l8 16M7.6 14h8.8"/></symbol>
+    <symbol id="i-sublimation" viewBox="0 0 24 24"><path d="M8 3 3 6l2 4 3-1v11h8V9l3 1 2-4-5-3c-.5 1.5-2 2.3-4 2.3S8.5 4.5 8 3z"/></symbol>
+    <symbol id="i-objets" viewBox="0 0 24 24"><path d="M5 8h11v7a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16M8 3v2M11 3v2M14 3v2"/></symbol>
+  </defs>
+</svg>
+
+<a class="skip-link" href="#main">Aller au contenu</a>
+
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a class="brand" href="#top" aria-label="CMR Personnalisation, retour à l'accueil">
+      <img class="only-dark" src="Assets/img/logo-blanc.png" alt="CMR Personnalisation" width="900" height="357">
+      <img class="only-light" src="Assets/img/logo-noir.png" alt="CMR Personnalisation" width="900" height="357">
+    </a>
+
+    <div class="nav-panel" id="nav-panel">
+      <nav class="main-nav" aria-label="Navigation principale">
+        <ul>
+          <li><a href="#top" aria-current="page">Accueil</a></li>
+          <li class="has-dropdown">
+            <button type="button" class="dropdown-toggle" aria-expanded="false" aria-controls="dropdown-produits">
+              Nos produits
+              <svg class="icon icon-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+            </button>
+            <ul class="dropdown" id="dropdown-produits">
+              <li><a href="#">Entreprise</a></li>
+              <li><a href="#">Clubs &amp; Associations</a></li>
+              <li><a href="#">Événementiel</a></li>
+              <li><a href="#">Équipements de travail</a></li>
+            </ul>
+          </li>
+          <li><a href="#realisations">Réalisations</a></li>
+          <li><a href="#devis">Devis</a></li>
+          <li><a href="#">À propos</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a class="icon-btn" href="#" aria-label="Instagram CMR Personnalisation">
+          <svg class="icon" aria-hidden="true"><use href="#i-insta"/></svg>
+        </a>
+        <button type="button" class="theme-switch" role="switch" aria-checked="true" aria-label="Activer le mode sombre">
+          <svg class="icon icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+          <svg class="icon icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+          <span class="theme-thumb" aria-hidden="true"></span>
+        </button>
+        <a class="btn btn-primary btn-sm" href="#devis">
+          <span>Demander un devis</span>
+          <svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="nav-panel" aria-label="Ouvrir le menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-media" data-parallax="0.05">
+      <img class="only-dark" src="Assets/img/hero-nuit.webp" width="988" height="658"
+           alt="Sweat à capuche noir, casquette, textile et gourde floqués CMR Personnalisation" fetchpriority="high">
+      <img class="only-light" src="Assets/img/hero-jour.webp" width="988" height="658" loading="lazy"
+           alt="Sweat à capuche noir, casquette, textile et gourde floqués CMR Personnalisation">
+    </div>
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <h1 id="hero-title" class="hero-logo hero-anim" style="--h:1">
+          <img class="only-dark" src="Assets/img/logo-blanc.png" alt="CMR Personnalisation" width="900" height="357">
+          <img class="only-light" src="Assets/img/logo-noir.png" alt="CMR Personnalisation" width="900" height="357">
+          <span class="sr-only">Textile et objets personnalisés pour entreprises, clubs, associations et événements</span>
+        </h1>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-lg hero-anim" style="--h:2" href="#devis">
+            <span>Demander un devis gratuit</span>
+            <svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+          <a class="btn btn-outline btn-lg hero-anim" style="--h:3" href="#realisations">
+            <span>Voir nos réalisations</span>
+            <span class="play" aria-hidden="true"><svg class="icon"><use href="#i-play"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVANTAGES -->
+  <section class="benefits" aria-label="Nos engagements">
+    <ul class="container benefits-list">
+      <li class="benefit hero-anim hero-anim-bar" style="--h:0">
+        <svg class="icon benefit-icon ic-diamond" aria-hidden="true"><use href="#i-diamond"/></svg>
+        <span>Qualité<br>professionnelle</span>
+      </li>
+      <li class="benefit hero-anim hero-anim-bar" style="--h:1">
+        <svg class="icon benefit-icon ic-bulb" aria-hidden="true"><use href="#i-bulb"/></svg>
+        <span>Créations<br>sur-mesure</span>
+      </li>
+      <li class="benefit hero-anim hero-anim-bar" style="--h:2">
+        <svg class="icon benefit-icon ic-truck" aria-hidden="true"><use href="#i-truck"/></svg>
+        <span>Délais<br>maîtrisés</span>
+      </li>
+      <li class="benefit hero-anim hero-anim-bar" style="--h:3">
+        <svg class="icon benefit-icon ic-france" aria-hidden="true"><use href="#i-france"/></svg>
+        <span>Fabrication<br>dans l'Oise</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- NOS UNIVERS -->
+  <section class="section univers" id="univers" aria-labelledby="univers-title">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow fade-up">Nos univers</p>
+          <h2 class="title title-reveal" id="univers-title">
+            <span class="line"><span class="t" style="--k:0">Des solutions personnalisées</span></span>
+            <span class="line"><span class="t" style="--k:1">pour</span> <span class="t accent" style="--k:2">chaque besoin</span></span>
+          </h2>
+        </div>
+        <a class="link-arrow fade-left" href="#">
+          <span>Voir tous nos produits</span>
+          <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+
+      <ul class="cards" data-stagger>
+        <li class="fade-up">
+          <a class="card" href="#">
+            <img src="Assets/img/univers-entreprise.webp" width="464" height="438" loading="lazy" alt="Polo bleu nuit brodé du logo CMR pour l'univers Entreprise">
+            <div class="card-body">
+              <h3>Entreprise</h3>
+              <p>Vêtements professionnels,<br>image de marque</p>
+            </div>
+            <span class="card-arrow" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
+          </a>
+        </li>
+        <li class="fade-up">
+          <a class="card" href="#">
+            <img src="Assets/img/univers-clubs.webp" width="464" height="438" loading="lazy" alt="Maillot de sport bleu et noir n°10 pour les clubs et associations">
+            <div class="card-body">
+              <h3>Clubs &amp; Associations</h3>
+              <p>Maillots, tenues d'équipe,<br>textiles sportifs</p>
+            </div>
+            <span class="card-arrow" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
+          </a>
+        </li>
+        <li class="fade-up">
+          <a class="card" href="#">
+            <img src="Assets/img/univers-evenementiel.webp" width="464" height="438" loading="lazy" alt="Casquette noire brodée du logo CMR pour l'événementiel">
+            <div class="card-body">
+              <h3>Événementiel</h3>
+              <p>Goodies, textiles, objets<br>personnalisés</p>
+            </div>
+            <span class="card-arrow" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
+          </a>
+        </li>
+        <li class="fade-up">
+          <a class="card" href="#">
+            <img src="Assets/img/univers-equipements.webp" width="464" height="438" loading="lazy" alt="Veste de travail haute visibilité brodée du logo CMR">
+            <div class="card-body">
+              <h3>Équipements de travail</h3>
+              <p>Sécurité, conformité,<br>haute visibilité</p>
+            </div>
+            <span class="card-arrow" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SAVOIR-FAIRE -->
+  <section class="section savoir" id="savoir-faire" aria-labelledby="savoir-title">
+    <div class="savoir-media" data-parallax="0.05">
+      <img class="only-dark" src="Assets/img/savoir-faire-nuit.webp" width="828" height="574" loading="lazy"
+           alt="Machine à broder en train de réaliser le logo CMR Personnalisation sur un textile noir">
+      <img class="only-light" src="Assets/img/savoir-faire-jour.webp" width="828" height="574" loading="lazy"
+           alt="Machine à broder en train de réaliser le logo CMR Personnalisation sur un textile noir">
+    </div>
+    <div class="container savoir-inner">
+      <p class="eyebrow fade-up">Notre savoir-faire</p>
+      <h2 class="title title-reveal" id="savoir-title">
+        <span class="line"><span class="t" style="--k:0">Plus qu'un simple marquage,</span></span>
+        <span class="line"><span class="t" style="--k:1">une vraie</span> <span class="t accent" style="--k:2">identité.</span></span>
+      </h2>
+      <ul class="techs" data-stagger>
+        <li class="tech fade-up"><svg class="icon" aria-hidden="true"><use href="#i-serigraphie"/></svg><span>Sérigraphie</span></li>
+        <li class="tech fade-up"><svg class="icon" aria-hidden="true"><use href="#i-broderie"/></svg><span>Broderie</span></li>
+        <li class="tech fade-up"><svg class="icon" aria-hidden="true"><use href="#i-dtf"/></svg><span>DTF</span></li>
+        <li class="tech fade-up"><svg class="icon" aria-hidden="true"><use href="#i-flocage"/></svg><span>Flocage</span></li>
+        <li class="tech fade-up"><svg class="icon" aria-hidden="true"><use href="#i-sublimation"/></svg><span>Sublimation</span></li>
+        <li class="tech fade-up"><svg class="icon" aria-hidden="true"><use href="#i-objets"/></svg><span>Objets personnalisés</span></li>
+      </ul>
+      <a class="btn btn-primary btn-lg fade-up" href="#">
+        <span>Découvrir nos techniques</span>
+        <svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- RÉALISATIONS -->
+  <section class="section realisations" id="realisations" aria-labelledby="real-title">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow fade-up">Nos réalisations</p>
+          <h2 class="title title-reveal" id="real-title">
+            <span class="line"><span class="t" style="--k:0">Ils nous font</span> <span class="t accent" style="--k:1">confiance</span></span>
+          </h2>
+        </div>
+        <a class="link-arrow fade-left" href="#">
+          <span>Voir toutes les réalisations</span>
+          <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="container gallery-wrap">
+      <ul class="gallery" data-stagger>
+        <li class="fade-up"><a class="shot" href="#" aria-label="Voir la réalisation : veste de cuisine brodée"><img src="Assets/img/real-chemise.webp" width="304" height="320" loading="lazy" alt="Veste de cuisine noire avec broderie personnalisée"><span class="shot-icon" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span></a></li>
+        <li class="fade-up"><a class="shot" href="#" aria-label="Voir la réalisation : sweat à capuche STAFF"><img src="Assets/img/real-hoodie.webp" width="304" height="320" loading="lazy" alt="Sweat à capuche noir floqué STAFF"><span class="shot-icon" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span></a></li>
+        <li class="fade-up"><a class="shot" href="#" aria-label="Voir la réalisation : maillot de sport"><img src="Assets/img/real-maillot.webp" width="304" height="320" loading="lazy" alt="Maillot de sport blanc et bleu numéro 10"><span class="shot-icon" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span></a></li>
+        <li class="fade-up"><a class="shot" href="#" aria-label="Voir la réalisation : tote bag"><img src="Assets/img/real-tote.webp" width="304" height="320" loading="lazy" alt="Tote bag noir avec logo CMR"><span class="shot-icon" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span></a></li>
+        <li class="fade-up"><a class="shot" href="#" aria-label="Voir la réalisation : textiles brodés"><img src="Assets/img/real-textiles.webp" width="304" height="320" loading="lazy" alt="Pile de textiles gris, bleus et noirs brodés du logo CMR"><span class="shot-icon" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span></a></li>
+        <li class="fade-up"><a class="shot" href="#" aria-label="Voir la réalisation : gourde personnalisée"><img src="Assets/img/real-gourde.webp" width="304" height="320" loading="lazy" alt="Gourde blanche personnalisée avec logo CMR"><span class="shot-icon" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="section cta" id="devis" aria-labelledby="cta-title">
+    <div class="container">
+      <div class="cta-box scale-in">
+        <div class="cta-bg" data-parallax="0.06">
+          <img class="only-dark" src="Assets/img/cta-nuit.webp" width="705" height="330" loading="lazy" alt="">
+          <img class="only-light" src="Assets/img/cta-jour.webp" width="705" height="330" loading="lazy" alt="">
+        </div>
+        <div class="cta-copy">
+          <p class="eyebrow">Votre projet</p>
+          <h2 class="cta-title title-reveal" id="cta-title"><span class="line"><span class="t" style="--k:0">Besoin d'un devis&nbsp;?</span></span></h2>
+          <p class="cta-text">Parlons de votre projet et recevons une proposition personnalisée.</p>
+        </div>
+        <a class="btn btn-primary btn-lg" href="mailto:cmrpersonnalisation@gmail.com?subject=Demande%20de%20devis">
+          <svg class="icon btn-doc" aria-hidden="true"><use href="#i-doc"/></svg>
+          <span>Demander un devis gratuit</span>
+          <svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="contact">
+  <div class="container">
+    <div class="footer-grid" data-stagger>
+      <div class="footer-brand fade-up">
+        <a href="#top" aria-label="CMR Personnalisation, retour en haut">
+          <img class="only-dark" src="Assets/img/logo-blanc.png" alt="CMR Personnalisation" width="900" height="357" loading="lazy">
+          <img class="only-light" src="Assets/img/logo-noir.png" alt="CMR Personnalisation" width="900" height="357" loading="lazy">
+        </a>
+        <span class="footer-rule" aria-hidden="true"></span>
+        <p class="footer-tagline">Personnaliser. <span>Valoriser.</span> Marquer.</p>
+      </div>
+
+      <nav class="footer-col fade-up" aria-label="Navigation du pied de page">
+        <h2 class="footer-title">Navigation</h2>
+        <ul>
+          <li><a href="#top">Accueil</a></li>
+          <li><a href="#univers">Nos produits</a></li>
+          <li><a href="#realisations">Réalisations</a></li>
+          <li><a href="#devis">Devis</a></li>
+          <li><a href="#">À propos</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-col fade-up">
+        <h2 class="footer-title">Contact</h2>
+        <ul class="contact-list">
+          <li><span class="contact-ic" aria-hidden="true"><svg class="icon"><use href="#i-phone"/></svg></span><a href="tel:+33769829961">07 69 82 99 61</a></li>
+          <li><span class="contact-ic" aria-hidden="true"><svg class="icon"><use href="#i-mail"/></svg></span><a href="mailto:cmrpersonnalisation@gmail.com">cmrpersonnalisation@gmail.com</a></li>
+          <li><span class="contact-ic" aria-hidden="true"><svg class="icon"><use href="#i-pin"/></svg></span><span>Atelier basé dans l'Oise<small>Compiègne et ses alentours</small></span></li>
+        </ul>
+      </div>
+
+      <div class="footer-col fade-up">
+        <h2 class="footer-title">Suivez-nous</h2>
+        <a class="social" href="#" aria-label="Instagram CMR Personnalisation">
+          <svg class="icon" aria-hidden="true"><use href="#i-insta"/></svg>
+          <span>Instagram</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-legal">
+        <p>&copy; 2026 CMR Personnalisation. Tous droits réservés.</p>
+        <ul>
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">Politique de confidentialité</a></li>
+        </ul>
+      </div>
+      <p class="footer-banner">
+        <span>Des textiles</span>
+        <strong>qui font la différence.</strong>
+        <em>L'équipe CMR Personnalisation</em>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>
