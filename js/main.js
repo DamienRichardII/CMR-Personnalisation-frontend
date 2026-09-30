@@ -44,6 +44,7 @@
 
   /* ---------- Dropdown "Nos produits" ---------- */
   var dropItem = document.querySelector('.has-dropdown');
+  if (dropItem) {
   var dropBtn = dropItem.querySelector('.dropdown-toggle');
   var dropMenu = dropItem.querySelector('.dropdown');
   var closeTimer;
@@ -80,6 +81,7 @@
     if (dropBtn.getAttribute('aria-expanded') === 'true') { setDropdown(false); dropBtn.focus(); }
     if (toggle.getAttribute('aria-expanded') === 'true') { setMenu(false); toggle.focus(); }
   });
+  }
 
   /* ---------- Thème clair / sombre ---------- */
   var themeBtn = document.querySelector('.theme-switch');
