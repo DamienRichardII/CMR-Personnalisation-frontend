@@ -10,7 +10,7 @@
                 pré-rempli (mailto) : les fichiers joints ne sont alors pas transmis.
      ========================================================================== */
   var CONFIG = {
-    endpoint: '',
+    endpoint: '/api/devis',
     mailTo: 'cmrpersonnalisation@gmail.com'
   };
 
@@ -149,10 +149,29 @@
   /* Retourne une promesse : 'sent' (transmis au service) ou 'mailto' (e-mail ouvert) ou rejet */
   function deliver(form, subject, pairs) {
     if (CONFIG.endpoint) {
-      var fd = new FormData(form);
-      fd.append('_subject', subject);
-      return fetch(CONFIG.endpoint, { method: 'POST', body: fd, headers: { Accept: 'application/json' } })
-        .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return { mode: 'sent' }; });
+      var MAX_ATTACH = 3 * 1048576; /* limite d'une fonction Vercel (~4,5 Mo) une fois encodé en base64 */
+      var picked = [];
+      Array.prototype.forEach.call(form.querySelectorAll('input[type="file"]'), function (inp) {
+        Array.prototype.forEach.call(inp.files || [], function (f) { picked.push(f); });
+      });
+      var total = picked.reduce(function (n, f) { return n + f.size; }, 0);
+      var attach = total > 0 && total <= MAX_ATTACH ? picked : [];
+      var tooBig = total > MAX_ATTACH;
+      var readAll = Promise.all(attach.map(function (f) {
+        return new Promise(function (resolve, reject) {
+          var r = new FileReader();
+          r.onload = function () { resolve({ name: f.name, type: f.type, content: String(r.result).split(',')[1] || '' }); };
+          r.onerror = reject; r.readAsDataURL(f);
+        });
+      }));
+      return readAll.then(function (files) {
+        var email = ''; pairs.forEach(function (p) { if (p[0] === 'E-mail') email = p[1]; });
+        var extra = tooBig ? [['Pièces jointes', 'Fichiers trop volumineux pour l\'envoi automatique : le client les transmettra par e-mail.']] : [];
+        return fetch(CONFIG.endpoint, {
+          method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ subject: subject, replyTo: email, pairs: pairs.concat(extra), files: files })
+        });
+      }).then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return { mode: 'sent' }; });
     }
     var body = toText(pairs);
     var href = mailtoHref(subject, body);
@@ -348,12 +367,12 @@
       done.hidden = false;
       var mail = $('#done-mailto', done), title = $('#done-title', done), text = $('#done-text', done);
       if (res.mode === 'mailto') {
-        title.textContent = 'Votre demande est prête à partir';
-        text.textContent = 'Votre application e-mail vient de s\'ouvrir avec le récapitulatif de votre projet : il ne reste qu\'à l\'envoyer (pensez à y joindre votre logo et vos fichiers). L\'équipe CMR reviendra ensuite vers vous avec une proposition adaptée à votre projet.';
+        title.textContent = 'Plus qu\'un clic !';
+        text.textContent = 'Votre messagerie s\'est ouverte avec votre projet déjà rédigé : envoyez le message, et ajoutez votre logo ou vos fichiers si vous en avez. Nous revenons vers vous ensuite avec une proposition sur mesure.';
         mail.hidden = false; mail.href = res.href;
       } else {
-        title.textContent = 'Merci ! Votre demande a bien été envoyée.';
-        text.textContent = 'L\'équipe CMR reviendra vers vous avec une proposition adaptée à votre projet.';
+        title.textContent = 'Merci, c\'est bien reçu !';
+        text.textContent = 'Nous étudions votre projet et revenons vers vous avec une proposition sur mesure.';
         mail.hidden = true;
       }
       var h = $('#done-title', done); h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true });
