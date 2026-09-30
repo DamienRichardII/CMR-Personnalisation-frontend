@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demande de devis | CMR Personnalisation</title>
+  <meta name="description" content="Demandez votre devis gratuit CMR Personnalisation : un questionnaire simple en quelques étapes pour vos textiles et objets personnalisés (entreprises, clubs, associations, événements).">
+  <meta name="theme-color" content="#060b13">
+  <meta name="color-scheme" content="dark light">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="CMR Personnalisation">
+  <meta property="og:title" content="Demande de devis | CMR Personnalisation">
+  <meta property="og:description" content="Demandez votre devis gratuit CMR Personnalisation : un questionnaire simple en quelques étapes pour vos textiles et objets personnalisés (entreprises, clubs, associations, événements).">
+  <meta property="og:image" content="Assets/img/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" sizes="48x48" href="Assets/img/favicon-48.png">
+  <link rel="apple-touch-icon" href="Assets/img/favicon.png">
+  <link rel="preload" href="fonts/poppins-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <script>
+    (function () {
+      var t = 'dark';
+      try { t = localStorage.getItem('cmr-theme') || 'dark'; } catch (e) {}
+      var r = document.documentElement;
+      r.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+      r.classList.add('js');
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+<!-- Sprite d'icônes SVG -->
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="i-insta" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r=".7" fill="currentColor"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+    <symbol id="i-diamond" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M9 3 7.5 9 12 21l4.5-12L15 3"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21.5h4M12 2.5a6.5 6.5 0 0 0-3.8 11.8c.5.4.8 1 .8 1.7v.5h6V16c0-.7.3-1.3.8-1.7A6.5 6.5 0 0 0 12 2.5z"/><path d="M3.5 5.5l1.3 1.3M20.5 5.5l-1.3 1.3M1.5 11H3M21 11h1.5"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 9h4l3 3.5V16h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/><path d="M1 9h3M1 12h2"/></symbol>
+    <symbol id="i-france" viewBox="0 0 24 24"><path d="M13.5 2.5 16.5 4.5 17.5 6.5 19.5 7.5 20 10 19 12.5 20.5 15 20.5 18 16.5 19 14 19 12.5 21.5 8.5 22 5.5 20.5 6 17.5 5 13.5 5.5 10 2.5 9.5 2 7.5 4.5 5.5 6.5 6 6.5 3.5 9 5 11.5 4z"/><path d="M22 20.5v2"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+    <symbol id="i-serigraphie" viewBox="0 0 24 24"><rect x="4" y="9" width="16" height="11" rx="2"/><path d="M9 9V4.5h6V9M8 13h8M8 16.5h5"/></symbol>
+    <symbol id="i-broderie" viewBox="0 0 24 24"><path d="M20 3.5 8 16"/><path d="M18.5 5c1.8 1.6 1.8 3.4.2 5"/><path d="M8 16c-3 .6-5 2.4-4.5 4.2S7 21 8.5 18.5"/></symbol>
+    <symbol id="i-dtf" viewBox="0 0 24 24"><path d="M4 6h16v12H4zM8.5 6v12M15.5 6v12M4 10h4.5M4 14h4.5M15.5 10H20M15.5 14H20"/></symbol>
+    <symbol id="i-flocage" viewBox="0 0 24 24"><path d="M4 20 12 4l8 16M7.6 14h8.8"/></symbol>
+    <symbol id="i-sublimation" viewBox="0 0 24 24"><path d="M8 3 3 6l2 4 3-1v11h8V9l3 1 2-4-5-3c-.5 1.5-2 2.3-4 2.3S8.5 4.5 8 3z"/></symbol>
+    <symbol id="i-objets" viewBox="0 0 24 24"><path d="M5 8h11v7a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16M8 3v2M11 3v2M14 3v2"/></symbol>
+  
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.5V14M12 17.2v.1"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H5v1a3 3 0 0 0 3 3M16 6h3v1a3 3 0 0 1-3 3M12 13v4M8 20h8M10 17h4"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 7.8-8 9-4.8-1.2-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+    <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><circle cx="18" cy="12" r="1.2" fill="currentColor"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-msg" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l4 4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  </defs>
+</svg>
+
+<a class="skip-link" href="#main">Aller au contenu</a>
+
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a class="brand" href="index.html" aria-label="CMR Personnalisation, retour à l'accueil">
+      <img class="only-dark" src="Assets/img/logo-blanc.png" alt="CMR Personnalisation" width="900" height="357">
+      <img class="only-light" src="Assets/img/logo-noir.png" alt="CMR Personnalisation" width="900" height="357">
+    </a>
+
+    <div class="nav-panel" id="nav-panel">
+      <nav class="main-nav" aria-label="Navigation principale">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li class="has-dropdown">
+            <button type="button" class="dropdown-toggle" aria-expanded="false" aria-controls="dropdown-produits">
+              Nos produits
+              <svg class="icon icon-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+            </button>
+            <ul class="dropdown" id="dropdown-produits">
+              <li><a href="#">Entreprise</a></li>
+              <li><a href="#">Clubs &amp; Associations</a></li>
+              <li><a href="#">Événementiel</a></li>
+              <li><a href="#">Équipements de travail</a></li>
+            </ul>
+          </li>
+          <li><a href="realisations.html">Réalisations</a></li>
+          <li><a href="devis.html" aria-current="page">Devis</a></li>
+          <li><a href="a-propos.html">À propos</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a class="icon-btn" href="#" aria-label="Instagram CMR Personnalisation">
+          <svg class="icon" aria-hidden="true"><use href="#i-insta"/></svg>
+        </a>
+        <button type="button" class="theme-switch" role="switch" aria-checked="true" aria-label="Activer le mode sombre">
+          <svg class="icon icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+          <svg class="icon icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+          <span class="theme-thumb" aria-hidden="true"></span>
+        </button>
+        <a class="btn btn-primary btn-sm" href="devis.html">
+          <span>Demander un devis</span>
+          <svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="nav-panel" aria-label="Ouvrir le menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container devis-layout">
+
+    <aside class="devis-aside" aria-label="Informations complémentaires">
+      <div class="aside-intro">
+        <p class="eyebrow hero-anim" style="--h:0">Devis gratuit</p>
+        <h1 class="title page-title is-sm title-reveal" id="dv-title">
+          <span class="line"><span class="t" style="--k:0">Votre projet,</span></span>
+          <span class="line"><span class="t accent" style="--k:1">en quelques étapes.</span></span>
+        </h1>
+        <p class="lead hero-anim" style="--h:2">Répondez à quelques questions : nous préparons une proposition personnalisée, adaptée à votre besoin.</p>
+      </div>
+
+      <div class="qr-card fade-up">
+        <p class="eyebrow">Demande rapide</p>
+        <h2>Vous préférez continuer sur votre téléphone&nbsp;?</h2>
+        <div class="qr-body">
+          <div class="qr-img"><img src="Assets/img/qr-devis.svg" width="330" height="330" alt="QR Code menant au questionnaire de devis CMR Personnalisation" loading="lazy"></div>
+          <p class="qr-text">Scannez ce QR Code pour accéder au questionnaire.<span class="qr-url">cmrpersonnalisation.com/devis</span></p>
+        </div>
+        <button class="btn btn-outline btn-sm" type="button" data-copy="https://cmrpersonnalisation.com/devis"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg><span>Copier le lien du questionnaire</span></button>
+      </div>
+
+      <div class="help-card fade-up" id="aide">
+        <h2><svg class="icon" aria-hidden="true"><use href="#i-help"/></svg>Besoin d'aide&nbsp;?</h2>
+        <p>CMR vous accompagne dans le choix de la technique adaptée.</p>
+        <details>
+          <summary>Comment choisir&nbsp;?</summary>
+          <dl>
+            <div><dt>Broderie</dt><dd>Fil brodé en relief : rendu premium et durable, idéal pour polos, vestes et casquettes.</dd></div>
+            <div><dt>Sérigraphie</dt><dd>Encre déposée à travers un écran : adaptée aux séries, avec des aplats de couleurs.</dd></div>
+            <div><dt>DTF</dt><dd>Impression par transfert : bon rendu des détails et des dégradés.</dd></div>
+            <div><dt>Flocage</dt><dd>Marquage thermocollé au toucher velouté, souvent choisi pour les noms et numéros.</dd></div>
+            <div><dt>Sublimation</dt><dd>Encre intégrée aux fibres du polyester : impression intégrale pour les textiles sportifs.</dd></div>
+          </dl>
+        </details>
+      </div>
+    </aside>
+
+    <section class="quiz scale-in" id="quiz" aria-labelledby="quiz-label">
+      <div class="quiz-head">
+        <p class="eyebrow" id="quiz-label">Votre projet</p>
+        <p class="quiz-count" id="quiz-count" aria-live="polite"></p>
+      </div>
+      <ol class="steps-bar" aria-label="Progression du questionnaire">
+        <li><span class="num">01</span><span class="bar"></span></li>
+        <li><span class="num">02</span><span class="bar"></span></li>
+        <li><span class="num">03</span><span class="bar"></span></li>
+        <li><span class="num">04</span><span class="bar"></span></li>
+        <li><span class="num">05</span><span class="bar"></span></li>
+        <li><span class="num">06</span><span class="bar"></span></li>
+      </ol>
+
+      <form id="quiz-form" novalidate>
+
+        <fieldset class="q-step" data-step="1">
+          <legend class="sr-only">Étape 1 : votre besoin</legend>
+          <h2 class="q-title" tabindex="-1" data-focus>Quel est votre besoin&nbsp;?</h2>
+          <p class="q-sub">Choisissez l'option qui vous ressemble le plus.</p>
+          <div class="q-group"><div class="opts"><label class="opt"><input type="radio" name="besoin" value="Textile professionnel"><span class="opt-body"><svg class="icon" aria-hidden="true"><use href="#i-sublimation"/></svg><span>Textile professionnel</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="radio" name="besoin" value="Clubs & associations"><span class="opt-body"><svg class="icon" aria-hidden="true"><use href="#i-trophy"/></svg><span>Clubs &amp; associations</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="radio" name="besoin" value="Événementiel"><span class="opt-body"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><span>Événementiel</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="radio" name="besoin" value="Équipement de travail"><span class="opt-body"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>Équipement de travail</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="radio" name="besoin" value="Objets personnalisés"><span class="opt-body"><svg class="icon" aria-hidden="true"><use href="#i-objets"/></svg><span>Objets personnalisés</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="radio" name="besoin" value="Autre"><span class="opt-body"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg><span>Autre</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label></div></div>
+          <p class="q-error" role="alert"></p>
+          <div class="q-nav"><span class="spacer"></span><button class="btn btn-primary btn-lg" type="submit"><span>Continuer</span><svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+        </fieldset>
+
+        <fieldset class="q-step" data-step="2" hidden>
+          <legend class="sr-only">Étape 2 : produits</legend>
+          <h2 class="q-title" tabindex="-1" data-focus>Que souhaitez-vous personnaliser&nbsp;?</h2>
+          <p class="q-sub">Plusieurs choix possibles.</p>
+          <div class="q-group"><div class="opts"><label class="opt"><input type="checkbox" name="produits" value="T-shirts"><span class="opt-body"><span>T-shirts</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="checkbox" name="produits" value="Polos"><span class="opt-body"><span>Polos</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="checkbox" name="produits" value="Sweats"><span class="opt-body"><span>Sweats</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="checkbox" name="produits" value="Vestes"><span class="opt-body"><span>Vestes</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="checkbox" name="produits" value="Maillots"><span class="opt-body"><span>Maillots</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="checkbox" name="produits" value="Casquettes"><span class="opt-body"><span>Casquettes</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="checkbox" name="produits" value="Sacs"><span class="opt-body"><span>Sacs</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="checkbox" name="produits" value="Goodies"><span class="opt-body"><span>Goodies</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="checkbox" name="produits" value="Autre"><span class="opt-body"><span>Autre</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label></div></div>
+          <p class="q-error" role="alert"></p>
+          <div class="q-nav"><button class="btn btn-ghost btn-lg" type="button" data-prev><span>Précédent</span></button><span class="spacer"></span><button class="btn btn-primary btn-lg" type="submit"><span>Continuer</span><svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+        </fieldset>
+
+        <fieldset class="q-step" data-step="3" hidden>
+          <legend class="sr-only">Étape 3 : personnalisation</legend>
+          <h2 class="q-title" tabindex="-1" data-focus>Quelle personnalisation&nbsp;?</h2>
+          <p class="q-sub">Une technique en tête&nbsp;? Sinon, pas de souci : nous vous conseillons. <a class="help-link" href="#aide">Comment choisir&nbsp;?</a></p>
+          <div class="q-group"><span class="label">Technique souhaitée</span><div class="opts"><label class="opt"><input type="radio" name="technique" value="Je ne sais pas"><span class="opt-body"><span>Je ne sais pas</span><small>On vous conseille</small></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="radio" name="technique" value="Broderie"><span class="opt-body"><span>Broderie</span><small>Fil brodé, rendu premium</small></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="radio" name="technique" value="Sérigraphie"><span class="opt-body"><span>Sérigraphie</span><small>Idéale pour les séries</small></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="radio" name="technique" value="DTF"><span class="opt-body"><span>DTF</span><small>Détails et couleurs</small></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="radio" name="technique" value="Flocage"><span class="opt-body"><span>Flocage</span><small>Relief velouté</small></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="radio" name="technique" value="Sublimation"><span class="opt-body"><span>Sublimation</span><small>Impression intégrale</small></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="radio" name="technique" value="Autre"><span class="opt-body"><span>Autre</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label></div></div>
+          <div class="q-group"><span class="label">Avez-vous déjà votre logo / visuel&nbsp;?</span><div class="opts is-chips" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr))"><label class="opt"><input type="radio" name="logo" value="Oui"><span class="opt-body"><span>Oui, j'ai un logo / visuel</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="radio" name="logo" value="Non"><span class="opt-body"><span>Non, pas encore</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label></div>
+            <div class="q-conditional" id="logo-upload" hidden style="margin-top:12px"><div class="dropzone-wrap" id="logo-drop" data-max-files="5" data-max-mb="10">
+              <label class="dropzone"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg><strong>Déposez votre logo ou visuel</strong><span>PNG, JPG, SVG, PDF, AI, EPS — 10 Mo max par fichier</span>
+                <input type="file" name="fichiers_logo" multiple accept=".png,.jpg,.jpeg,.webp,.svg,.pdf,.ai,.eps,.psd"></label>
+              <ul class="file-list" aria-live="polite"></ul>
+              <p class="file-hint" role="alert" hidden></p>
+            </div></div>
+            <p class="file-hint" id="logo-no" hidden>Pas de souci : notre équipe pourra vous conseiller et préparer votre visuel avec vous.</p>
+          </div>
+          <p class="q-error" role="alert"></p>
+          <div class="q-nav"><button class="btn btn-ghost btn-lg" type="button" data-prev><span>Précédent</span></button><span class="spacer"></span><button class="btn btn-primary btn-lg" type="submit"><span>Continuer</span><svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+        </fieldset>
+
+        <fieldset class="q-step" data-step="4" hidden>
+          <legend class="sr-only">Étape 4 : quantité et délai</legend>
+          <h2 class="q-title" tabindex="-1" data-focus>Quelle quantité, pour quand&nbsp;?</h2>
+          <p class="q-sub">Une estimation suffit, nous affinerons ensemble.</p>
+          <div class="q-group"><span class="label">Quantité</span><div class="opts is-chips"><label class="opt"><input type="radio" name="quantite" value="1–10"><span class="opt-body"><span>1–10</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="radio" name="quantite" value="11–25"><span class="opt-body"><span>11–25</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="radio" name="quantite" value="26–50"><span class="opt-body"><span>26–50</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="radio" name="quantite" value="51–100"><span class="opt-body"><span>51–100</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="radio" name="quantite" value="101–250"><span class="opt-body"><span>101–250</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label><label class="opt"><input type="radio" name="quantite" value="+250"><span class="opt-body"><span>+250</span></span><span class="opt-check" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span></label></div></div>
+          <div class="q-group form-grid" style="margin-top:20px">
+            <div class="field"><label for="q-date">Date souhaitée <span class="opt-tag">(facultatif)</span></label><input class="input" type="date" id="q-date" name="date_souhaitee"></div>
+            <div class="field"><span class="label">Délai</span>
+              <label class="check" style="margin-top:0.6rem"><input type="checkbox" id="q-urgent" name="urgent" value="Oui"><span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span>Ma demande est urgente</span></label></div>
+          </div>
+          <p class="q-error" role="alert"></p>
+          <div class="q-nav"><button class="btn btn-ghost btn-lg" type="button" data-prev><span>Précédent</span></button><span class="spacer"></span><button class="btn btn-primary btn-lg" type="submit"><span>Continuer</span><svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+        </fieldset>
+
+        <fieldset class="q-step" data-step="5" hidden>
+          <legend class="sr-only">Étape 5 : votre projet</legend>
+          <h2 class="q-title" tabindex="-1" data-focus>Parlez-nous de votre projet</h2>
+          <p class="q-sub">Produits souhaités, couleurs, contraintes, inspirations…</p>
+          <div class="q-group field"><label for="q-description" class="sr-only">Description du projet</label>
+            <textarea class="textarea" id="q-description" name="description" placeholder="Parlez-nous de votre projet, des produits souhaités, couleurs, contraintes ou inspirations…"></textarea></div>
+          <div class="q-group"><span class="label">Photos ou fichiers de référence <span class="opt-tag" style="color:var(--color-muted);font-weight:400">(facultatif)</span></span><div class="dropzone-wrap" id="ref-drop" data-max-files="8" data-max-mb="10">
+              <label class="dropzone"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg><strong>Ajoutez des photos ou fichiers de référence</strong><span>Images, PDF — 10 Mo max par fichier</span>
+                <input type="file" name="fichiers_reference" multiple accept=".png,.jpg,.jpeg,.webp,.svg,.pdf,.ai,.eps,.psd"></label>
+              <ul class="file-list" aria-live="polite"></ul>
+              <p class="file-hint" role="alert" hidden></p>
+            </div></div>
+          <p class="q-error" role="alert"></p>
+          <div class="q-nav"><button class="btn btn-ghost btn-lg" type="button" data-prev><span>Précédent</span></button><span class="spacer"></span><button class="btn btn-primary btn-lg" type="submit"><span>Continuer</span><svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+        </fieldset>
+
+        <fieldset class="q-step" data-step="6" hidden>
+          <legend class="sr-only">Étape 6 : vos coordonnées</legend>
+          <h2 class="q-title" tabindex="-1" data-focus>Vos coordonnées</h2>
+          <p class="q-sub">Pour que nous puissions vous répondre.</p>
+          <div class="form-grid">
+            <div class="field"><label for="q-prenom">Prénom</label><input class="input" id="q-prenom" name="prenom" type="text" required autocomplete="given-name"></div>
+            <div class="field"><label for="q-nom">Nom</label><input class="input" id="q-nom" name="nom" type="text" required autocomplete="family-name"></div>
+            <div class="field full"><label for="q-entreprise">Entreprise / association <span class="opt-tag">(facultatif)</span></label><input class="input" id="q-entreprise" name="entreprise" type="text" autocomplete="organization"></div>
+            <div class="field"><label for="q-email">E-mail</label><input class="input" id="q-email" name="email" type="email" required autocomplete="email"></div>
+            <div class="field"><label for="q-tel">Téléphone <span class="opt-tag">(facultatif)</span></label><input class="input" id="q-tel" name="telephone" type="tel" autocomplete="tel"></div>
+            <div class="field full"><label for="q-ville">Ville / code postal <span class="opt-tag">(facultatif)</span></label><input class="input" id="q-ville" name="ville" type="text" autocomplete="postal-code"></div>
+          </div>
+          <div class="hp" aria-hidden="true"><label>Ne pas remplir<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+          <p class="q-error" role="alert"></p>
+          <div class="q-nav"><button class="btn btn-ghost btn-lg" type="button" data-prev><span>Précédent</span></button><span class="spacer"></span><button class="btn btn-primary btn-lg" type="submit"><span>Continuer</span><svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+        </fieldset>
+
+        <fieldset class="q-step" data-step="7" hidden>
+          <legend class="sr-only">Récapitulatif avant envoi</legend>
+          <h2 class="q-title" tabindex="-1" data-focus>Vérifiez votre demande</h2>
+          <p class="q-sub">Un dernier coup d'œil avant l'envoi.</p>
+          <dl class="recap" id="recap-list"></dl>
+          <div class="q-consent"><label class="check"><input type="checkbox" id="q-consent" name="consentement" value="Oui"><span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span>J'accepte que mes informations soient utilisées pour répondre à ma demande de devis. <a href="#">Politique de confidentialité</a></span></label></div>
+          <p class="q-error" role="alert"></p>
+          <div class="q-nav"><button class="btn btn-ghost btn-lg" type="button" data-prev><span>Précédent</span></button><span class="spacer"></span><button class="btn btn-primary btn-lg" type="submit" id="quiz-send"><span>Envoyer ma demande de devis</span><svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+        </fieldset>
+      </form>
+
+      <div class="q-done" id="quiz-done" hidden>
+        <div class="done-ic"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></div>
+        <h2 id="done-title">Merci ! Votre demande a bien été envoyée.</h2>
+        <p id="done-text">L'équipe CMR reviendra vers vous avec une proposition adaptée à votre projet.</p>
+        <div class="form-actions">
+          <a class="btn btn-primary btn-lg" href="index.html"><span>Retour à l'accueil</span><svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-ghost btn-lg" id="done-mailto" href="mailto:cmrpersonnalisation@gmail.com" hidden><span>Ouvrir l'e-mail à nouveau</span></a>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer" id="contact">
+  <div class="container">
+    <div class="footer-grid" data-stagger>
+      <div class="footer-brand fade-up">
+        <a href="index.html" aria-label="CMR Personnalisation, retour en haut">
+          <img class="only-dark" src="Assets/img/logo-blanc.png" alt="CMR Personnalisation" width="900" height="357" loading="lazy">
+          <img class="only-light" src="Assets/img/logo-noir.png" alt="CMR Personnalisation" width="900" height="357" loading="lazy">
+        </a>
+        <span class="footer-rule" aria-hidden="true"></span>
+        <p class="footer-tagline">Personnaliser. <span>Valoriser.</span> Marquer.</p>
+      </div>
+
+      <nav class="footer-col fade-up" aria-label="Navigation du pied de page">
+        <h2 class="footer-title">Navigation</h2>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="index.html#univers">Nos produits</a></li>
+          <li><a href="realisations.html">Réalisations</a></li>
+          <li><a href="devis.html">Devis</a></li>
+          <li><a href="a-propos.html">À propos</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-col fade-up">
+        <h2 class="footer-title">Contact</h2>
+        <ul class="contact-list">
+          <li><span class="contact-ic" aria-hidden="true"><svg class="icon"><use href="#i-phone"/></svg></span><a href="tel:+33769829961">07 69 82 99 61</a></li>
+          <li><span class="contact-ic" aria-hidden="true"><svg class="icon"><use href="#i-mail"/></svg></span><a href="mailto:cmrpersonnalisation@gmail.com">cmrpersonnalisation@gmail.com</a></li>
+          <li><span class="contact-ic" aria-hidden="true"><svg class="icon"><use href="#i-pin"/></svg></span><span>Atelier basé dans l'Oise<small>Compiègne et ses alentours</small></span></li>
+        </ul>
+      </div>
+
+      <div class="footer-col fade-up">
+        <h2 class="footer-title">Suivez-nous</h2>
+        <a class="social" href="#" aria-label="Instagram CMR Personnalisation">
+          <svg class="icon" aria-hidden="true"><use href="#i-insta"/></svg>
+          <span>Instagram</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-legal">
+        <p>&copy; 2026 CMR Personnalisation. Tous droits réservés.</p>
+        <ul>
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">Politique de confidentialité</a></li>
+        </ul>
+      </div>
+      <p class="footer-banner">
+        <span>Des textiles</span>
+        <strong>qui font la différence.</strong>
+        <em>L'équipe CMR Personnalisation</em>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+<script src="js/pages.js" defer></script>
+</body>
+</html>
