@@ -218,6 +218,7 @@ ol { list-style: none; margin: 0; padding: 0; }
 .done-ic .icon { width: 2.4rem; height: 2.4rem; stroke-width: 2.2; }
 .done-ic .icon path { stroke-dasharray: 30; stroke-dashoffset: 30; animation: draw-check 700ms var(--ease-premium) 300ms forwards; }
 @keyframes draw-check { to { stroke-dashoffset: 0; } }
+.q-done h2:focus { outline: none; }
 .q-done h2 { font-size: clamp(1.6rem, 2.8vw, 2.4rem); font-weight: 500; }
 .q-done p { max-width: 46ch; margin: 0.8rem auto 0; color: var(--color-muted); }
 .q-done .form-actions { justify-content: center; margin-top: 1.6rem; }
@@ -382,3 +383,10 @@ ol { list-style: none; margin: 0; padding: 0; }
   .pcard.is-more .btn-arrow { display: none; }
   .pcard.is-more .btn { white-space: normal; text-align: center; line-height: 1.2; height: auto; min-height: 2.4rem; }
 }
+
+/* Mentions clés (ex. : aucun minimum de commande) */
+.notes { display: flex; flex-wrap: wrap; gap: 8px 10px; margin-top: clamp(16px, 1.8vw, 24px); }
+.notes .price-note { margin-top: 0; }
+.price-note.is-key { border-color: rgba(47, 107, 255, 0.7); background: rgba(10, 71, 255, 0.16); color: var(--color-text); }
+.price-note.is-key strong { font-weight: 600; }
+@media (max-width: 767px) { .notes .price-note { border-radius: var(--radius); } }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Administration | CMR Personnalisation</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#060b13">
+  <meta name="color-scheme" content="dark light">
+  <link rel="icon" type="image/png" sizes="48x48" href="../Assets/img/favicon-48.png">
+  <script>
+    (function () {
+      var t = 'dark';
+      try { t = localStorage.getItem('cmr-theme') || 'dark'; } catch (e) {}
+      document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+    })();
+  </script>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="adm">
+  <div id="app" aria-live="polite"></div>
+  <div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+  <noscript><p style="padding:2rem">JavaScript est nécessaire pour utiliser l'administration.</p></noscript>
+  <script src="../js/vendor/supabase.js"></script>
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>

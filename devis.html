@@ -120,7 +120,8 @@
           <span class="line"><span class="t" style="--k:0">Votre projet,</span></span>
           <span class="line"><span class="t accent" style="--k:1">en quelques étapes.</span></span>
         </h1>
-        <p class="lead hero-anim" style="--h:2">Répondez à quelques questions : nous préparons une proposition personnalisée, adaptée à votre besoin.</p>
+        <p class="lead hero-anim" data-cms="devis.intro" style="--h:2">Répondez à quelques questions : nous préparons une proposition personnalisée, adaptée à votre besoin.</p>
+        <div class="notes hero-anim" style="--h:3"><p class="price-note is-key"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-cms="devis.minimum"><strong>Aucun minimum de commande</strong>, pour les particuliers comme pour les professionnels.</span></p></div>
       </div>
 
       <div class="qr-card fade-up">
@@ -261,8 +262,8 @@
 
       <div class="q-done" id="quiz-done" hidden>
         <div class="done-ic"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></div>
-        <h2 id="done-title">Merci ! Votre demande a bien été envoyée.</h2>
-        <p id="done-text">L'équipe CMR reviendra vers vous avec une proposition adaptée à votre projet.</p>
+        <h2 id="done-title">Merci, c'est bien reçu !</h2>
+        <p id="done-text">Nous étudions votre projet et revenons vers vous avec une proposition sur mesure.</p>
         <div class="form-actions">
           <a class="btn btn-primary btn-lg" href="index.html"><span>Retour à l'accueil</span><svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           <a class="btn btn-ghost btn-lg" id="done-mailto" href="mailto:cmrpersonnalisation@gmail.com" hidden><span>Ouvrir l'e-mail à nouveau</span></a>
@@ -330,7 +331,9 @@
   </div>
 </footer>
 
+<script src="js/supabase-config.js"></script>
 <script src="js/main.js" defer></script>
 <script src="js/pages.js" defer></script>
+<script src="js/cms.js" defer></script>
 </body>
 </html>

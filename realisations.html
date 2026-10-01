@@ -119,14 +119,14 @@
         <span class="line"><span class="t" style="--k:0">Des créations qui portent</span></span>
         <span class="line"><span class="t accent" style="--k:1">votre image.</span></span>
       </h1>
-      <p class="lead hero-anim" style="--h:2">Polos, sweats, softshells, t-shirts, vêtements haute visibilité, tabliers… découvrez quelques-unes de nos personnalisations réalisées dans l'atelier pour des entreprises, artisans et commerçants.</p>
-      <p class="price-note hero-anim" style="--h:3"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg>Aucun tarif affiché : le prix dépend de la quantité et de la personnalisation. Chaque projet fait l'objet d'un devis.</p>
+      <p class="lead hero-anim" data-cms="realisations.intro" style="--h:2">Polos, sweats, softshells, t-shirts, vêtements haute visibilité, tabliers… découvrez quelques-unes de nos personnalisations réalisées dans l'atelier pour des entreprises, artisans et commerçants.</p>
+      <div class="notes hero-anim" style="--h:3"><p class="price-note is-key"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-cms="realisations.minimum"><strong>Aucun minimum de commande</strong>, pour les particuliers comme pour les professionnels.</span></p><p class="price-note"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg><span data-cms="realisations.tarif">Aucun tarif affiché : le prix dépend de la quantité et de la personnalisation. Chaque projet fait l'objet d'un devis.</span></p></div>
     </div>
   </section>
 
   <section class="section" style="border-top:0;padding-top:0" aria-label="Nos réalisations par produit">
     <div class="container">
-      <ul class="pcards" data-stagger>
+      <ul class="pcards" data-stagger data-cms-cards>
         <li class="pcard fade-up"><div class="pcard-media"><img src="Assets/img/realisations/real-11.webp" width="840" height="1050" loading="lazy" alt=""></div><div class="pcard-body"><h3>Sweats & pulls<span class="sub">Sweats, pulls, capuches</span></h3><span class="pcard-go" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></div><a class="pcard-link" href="devis.html" aria-label="Demander un devis : Sweats & pulls"></a></li>
         <li class="pcard fade-up"><div class="pcard-media"><img src="Assets/img/realisations/real-10.webp" width="840" height="1050" loading="lazy" alt=""></div><div class="pcard-body"><h3>Polos<span class="sub">Polos brodés ou floqués</span></h3><span class="pcard-go" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></div><a class="pcard-link" href="devis.html" aria-label="Demander un devis : Polos"></a></li>
         <li class="pcard fade-up"><div class="pcard-media"><img src="Assets/img/realisations/real-13.webp" width="840" height="1050" loading="lazy" alt=""></div><div class="pcard-body"><h3>Softshells & bodywarmers<span class="sub">Vestes et bodywarmers</span></h3><span class="pcard-go" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></div><a class="pcard-link" href="devis.html" aria-label="Demander un devis : Softshells & bodywarmers"></a></li>
@@ -202,7 +202,9 @@
   </div>
 </footer>
 
+<script src="js/supabase-config.js"></script>
 <script src="js/main.js" defer></script>
 <script src="js/pages.js" defer></script>
+<script src="js/cms.js" defer></script>
 </body>
 </html>
