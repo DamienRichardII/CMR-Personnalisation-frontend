@@ -11,7 +11,7 @@
      ========================================================================== */
   var CONFIG = {
     endpoint: '/api/devis',
-    mailTo: 'cmrpersonnalisation@gmail.com'
+    mailTo: 'cmr.personnalisation@gmail.com'
   };
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

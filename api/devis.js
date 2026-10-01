@@ -2,17 +2,61 @@
    Fonction serverless Vercel : POST /api/devis (JSON).
    Variables d'environnement (Vercel → Settings → Environment Variables) :
      RESEND_API_KEY  (obligatoire) clé API Resend
-     MAIL_TO         (optionnel)  destinataire — défaut : cmrpersonnalisation@gmail.com
+     MAIL_TO         (optionnel)  destinataire — défaut : cmr.personnalisation@gmail.com
+     SUPABASE_URL                (optionnel) https://ruxyfdmhkxfsbhxwscom.supabase.co
+     SUPABASE_SERVICE_ROLE_KEY   (optionnel) clé "service_role" (secrète, jamais côté navigateur) :
+                                  si présente, chaque demande est aussi enregistrée dans Supabase
      MAIL_FROM       (optionnel)  expéditeur — défaut : onboarding@resend.dev (test) ;
                                   utiliser une adresse d'un domaine vérifié dans Resend en production */
 const ALLOWED_EXT = /\.(png|jpe?g|gif|webp|svg|pdf|ai|eps|psd|zip)$/i;
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const clip = (s, n) => String(s == null ? '' : s).slice(0, n);
 
+const SB_URL = () => (process.env.SUPABASE_URL || '').replace(/\/$/, '');
+const sbHeaders = (extra) => Object.assign({ apikey: process.env.SUPABASE_SERVICE_ROLE_KEY, Authorization: 'Bearer ' + process.env.SUPABASE_SERVICE_ROLE_KEY }, extra || {});
+const get = (pairs, label) => { const p = pairs.find((x) => x[0] === label); return p ? p[1] : null; };
+
+async function saveToSupabase(subject, pairs, attachments) {
+  if (!SB_URL() || !process.env.SUPABASE_SERVICE_ROLE_KEY) return false;
+  const isContact = /^Contact site/i.test(subject);
+  let table, row;
+  if (isContact) {
+    table = 'messages_contact';
+    row = { nom: get(pairs, 'Nom'), entreprise: get(pairs, 'Entreprise'), email: get(pairs, 'E-mail'), telephone: get(pairs, 'Téléphone'), sujet: get(pairs, 'Sujet'), message: get(pairs, 'Message') };
+    if (!row.email || !row.message) return false;
+  } else {
+    table = 'demandes_devis';
+    const d = get(pairs, 'Date souhaitée');
+    row = {
+      besoin: get(pairs, 'Besoin'), produits: (get(pairs, 'Produits') || '').split(',').map((x) => x.trim()).filter(Boolean),
+      technique: get(pairs, 'Technique'), logo_existant: get(pairs, 'Logo / visuel existant'), quantite: get(pairs, 'Quantité'),
+      date_souhaitee: /^\d{4}-\d{2}-\d{2}$/.test(d || '') ? d : null, urgent: get(pairs, 'Urgent') === 'Oui',
+      description: get(pairs, 'Description'), prenom: get(pairs, 'Prénom'), nom: get(pairs, 'Nom'),
+      entreprise: get(pairs, 'Entreprise / association'), email: get(pairs, 'E-mail'), telephone: get(pairs, 'Téléphone'),
+      ville: get(pairs, 'Ville / code postal'), donnees: Object.fromEntries(pairs)
+    };
+    if (!row.email) return false;
+    const id = require('crypto').randomUUID();
+    row.id = id;
+    const saved = [];
+    for (const f of attachments) {
+      const path = id + '/' + Date.now() + '-' + f.filename.replace(/[^\w.\-]+/g, '_');
+      const up = await fetch(SB_URL() + '/storage/v1/object/devis-fichiers/' + path, {
+        method: 'POST', headers: sbHeaders({ 'Content-Type': 'application/octet-stream' }), body: Buffer.from(f.content, 'base64')
+      });
+      if (up.ok) saved.push({ nom: f.filename, chemin: path });
+    }
+    row.fichiers = saved;
+  }
+  const r = await fetch(SB_URL() + '/rest/v1/' + table, {
+    method: 'POST', headers: sbHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }), body: JSON.stringify(row)
+  });
+  return r.ok;
+}
+
 module.exports = async (req, res) => {
   if (req.method !== 'POST') { res.setHeader('Allow', 'POST'); return res.status(405).json({ error: 'method' }); }
   const key = process.env.RESEND_API_KEY;
-  if (!key) return res.status(500).json({ error: 'config' });
 
   let b = req.body;
   if (typeof b === 'string') { try { b = JSON.parse(b); } catch (e) { b = null; } }
@@ -38,21 +82,21 @@ module.exports = async (req, res) => {
     pairs.map((p) => '<tr><td style="vertical-align:top;color:#555;white-space:nowrap"><b>' + esc(p[0]) + '</b></td><td style="white-space:pre-wrap">' + esc(p[1]) + '</td></tr>').join('') +
     '</table></div>';
 
-  try {
-    const r = await fetch('https://api.resend.com/emails', {
+  const [stored, mailed] = await Promise.all([
+    saveToSupabase(subject, pairs, attachments).catch(() => false),
+    key ? fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: { Authorization: 'Bearer ' + key, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         from: process.env.MAIL_FROM || 'CMR Personnalisation <onboarding@resend.dev>',
-        to: [process.env.MAIL_TO || 'cmrpersonnalisation@gmail.com'],
+        to: [process.env.MAIL_TO || 'cmr.personnalisation@gmail.com'],
         subject, html, text,
         reply_to: replyTo,
         attachments: attachments.length ? attachments : undefined
       })
-    });
-    if (!r.ok) return res.status(502).json({ error: 'provider' });
-    return res.status(200).json({ ok: true });
-  } catch (e) {
-    return res.status(502).json({ error: 'network' });
-  }
+    }).then((r) => r.ok).catch(() => false) : Promise.resolve(false)
+  ]);
+  /* Succès dès qu'au moins un canal (base de données ou e-mail) a enregistré la demande */
+  if (stored || mailed) return res.status(200).json({ ok: true });
+  return res.status(key || SB_URL() ? 502 : 500).json({ error: 'delivery' });
 };
