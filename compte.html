@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Espace client | CMR Personnalisation</title>
+  <meta name="description" content="Espace client CMR Personnalisation : suivez vos demandes de devis et vos commandes, gérez votre profil et vos fichiers.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#060b13">
+  <meta name="color-scheme" content="dark light">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="CMR Personnalisation">
+  <meta property="og:title" content="Espace client | CMR Personnalisation">
+  <meta property="og:description" content="Espace client CMR Personnalisation : suivez vos demandes de devis et vos commandes, gérez votre profil et vos fichiers.">
+  <meta property="og:image" content="Assets/img/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" sizes="48x48" href="Assets/img/favicon-48.png">
+  <link rel="apple-touch-icon" href="Assets/img/favicon.png">
+  <link rel="preload" href="fonts/poppins-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <script>
+    (function () {
+      var t = 'dark';
+      try { t = localStorage.getItem('cmr-theme') || 'dark'; } catch (e) {}
+      var r = document.documentElement;
+      r.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+      r.classList.add('js');
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/compte.css">
+</head>
+<body>
+
+<!-- Sprite d'icônes SVG -->
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="i-insta" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r=".7" fill="currentColor"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+    <symbol id="i-diamond" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M9 3 7.5 9 12 21l4.5-12L15 3"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21.5h4M12 2.5a6.5 6.5 0 0 0-3.8 11.8c.5.4.8 1 .8 1.7v.5h6V16c0-.7.3-1.3.8-1.7A6.5 6.5 0 0 0 12 2.5z"/><path d="M3.5 5.5l1.3 1.3M20.5 5.5l-1.3 1.3M1.5 11H3M21 11h1.5"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 9h4l3 3.5V16h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/><path d="M1 9h3M1 12h2"/></symbol>
+    <symbol id="i-france" viewBox="0 0 24 24"><path d="M13.5 2.5 16.5 4.5 17.5 6.5 19.5 7.5 20 10 19 12.5 20.5 15 20.5 18 16.5 19 14 19 12.5 21.5 8.5 22 5.5 20.5 6 17.5 5 13.5 5.5 10 2.5 9.5 2 7.5 4.5 5.5 6.5 6 6.5 3.5 9 5 11.5 4z"/><path d="M22 20.5v2"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+    <symbol id="i-serigraphie" viewBox="0 0 24 24"><rect x="4" y="9" width="16" height="11" rx="2"/><path d="M9 9V4.5h6V9M8 13h8M8 16.5h5"/></symbol>
+    <symbol id="i-broderie" viewBox="0 0 24 24"><path d="M20 3.5 8 16"/><path d="M18.5 5c1.8 1.6 1.8 3.4.2 5"/><path d="M8 16c-3 .6-5 2.4-4.5 4.2S7 21 8.5 18.5"/></symbol>
+    <symbol id="i-dtf" viewBox="0 0 24 24"><path d="M4 6h16v12H4zM8.5 6v12M15.5 6v12M4 10h4.5M4 14h4.5M15.5 10H20M15.5 14H20"/></symbol>
+    <symbol id="i-flocage" viewBox="0 0 24 24"><path d="M4 20 12 4l8 16M7.6 14h8.8"/></symbol>
+    <symbol id="i-sublimation" viewBox="0 0 24 24"><path d="M8 3 3 6l2 4 3-1v11h8V9l3 1 2-4-5-3c-.5 1.5-2 2.3-4 2.3S8.5 4.5 8 3z"/></symbol>
+    <symbol id="i-objets" viewBox="0 0 24 24"><path d="M5 8h11v7a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16M8 3v2M11 3v2M14 3v2"/></symbol>
+      <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
+      <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></symbol>
+  
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.5V14M12 17.2v.1"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H5v1a3 3 0 0 0 3 3M16 6h3v1a3 3 0 0 1-3 3M12 13v4M8 20h8M10 17h4"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 7.8-8 9-4.8-1.2-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+    <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><circle cx="18" cy="12" r="1.2" fill="currentColor"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-msg" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l4 4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  </defs>
+</svg>
+
+<a class="skip-link" href="#main">Aller au contenu</a>
+
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a class="brand" href="index.html" aria-label="CMR Personnalisation, retour à l'accueil">
+      <img class="only-dark" src="Assets/img/logo-blanc.png" alt="CMR Personnalisation" width="900" height="357">
+      <img class="only-light" src="Assets/img/logo-noir.png" alt="CMR Personnalisation" width="900" height="357">
+    </a>
+
+    <div class="nav-panel" id="nav-panel">
+      <nav class="main-nav" aria-label="Navigation principale">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="realisations.html">Réalisations</a></li>
+          <li><a href="devis.html">Devis</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a class="icon-btn" href="compte.html" aria-label="Espace client" aria-current="page">
+          <svg class="icon" aria-hidden="true"><use href="#i-user"/></svg>
+        </a>
+        <a class="icon-btn" href="#" aria-label="Instagram CMR Personnalisation">
+          <svg class="icon" aria-hidden="true"><use href="#i-insta"/></svg>
+        </a>
+        <button type="button" class="theme-switch" role="switch" aria-checked="true" aria-label="Activer le mode sombre">
+          <svg class="icon icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+          <svg class="icon icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+          <span class="theme-thumb" aria-hidden="true"></span>
+        </button>
+        <a class="btn btn-primary btn-sm" href="devis.html">
+          <span>Demander un devis</span>
+          <svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="nav-panel" aria-label="Ouvrir le menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero" aria-labelledby="ac-title">
+    <div class="container page-hero-inner is-single">
+      <p class="eyebrow hero-anim" style="--h:0">Espace client</p>
+      <h1 class="title page-title title-reveal" id="ac-title">
+        <span class="line"><span class="t" style="--k:0">Votre espace</span> <span class="t accent" style="--k:1">CMR.</span></span>
+      </h1>
+      <p class="lead hero-anim" style="--h:2">Suivez vos demandes et vos commandes, gérez votre profil et conservez vos logos au même endroit.</p>
+    </div>
+  </section>
+
+  <section class="section" style="border-top:0;padding-top:0" aria-label="Espace client">
+    <div class="container">
+
+      <div class="acct-loading" id="acct-loading" role="status">Chargement…</div>
+
+      <!-- Connexion / inscription -->
+      <div class="acct-auth" id="acct-auth" hidden>
+        <div class="form-card acct-card">
+          <div class="acct-tabs" role="tablist" aria-label="Connexion ou création de compte">
+            <button class="acct-tab is-active" type="button" role="tab" id="tab-login" aria-selected="true" aria-controls="panel-login" data-auth-tab="login">Connexion</button>
+            <button class="acct-tab" type="button" role="tab" id="tab-signup" aria-selected="false" aria-controls="panel-signup" data-auth-tab="signup" tabindex="-1">Créer un compte</button>
+          </div>
+
+          <form id="form-login" class="acct-panel" role="tabpanel" aria-labelledby="tab-login" novalidate>
+            <div class="form-grid">
+              <div class="field full"><label for="l-email">E-mail</label><input class="input" id="l-email" name="l-email" type="email" required data-req autocomplete="email" ><p class="field-error" data-err-for="l-email" role="alert"></p></div>
+              <div class="field full"><label for="l-pass">Mot de passe</label><input class="input" id="l-pass" name="l-pass" type="password" required data-req autocomplete="current-password" ><p class="field-error" data-err-for="l-pass" role="alert"></p></div>
+            </div>
+            <div class="form-actions acct-actions">
+              <button class="btn btn-primary btn-lg" type="submit"><span>Me connecter</span><svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+              <button class="acct-link" type="button" data-auth-tab="forgot">Mot de passe oublié ?</button>
+            </div>
+            <div class="form-status" role="status" aria-live="polite" hidden></div>
+          </form>
+
+          <form id="form-signup" class="acct-panel" role="tabpanel" aria-labelledby="tab-signup" hidden novalidate>
+            <div class="form-grid">
+              <div class="field"><label for="s-prenom">Prénom</label><input class="input" id="s-prenom" name="s-prenom" type="text" required data-req autocomplete="given-name" ><p class="field-error" data-err-for="s-prenom" role="alert"></p></div>
+              <div class="field"><label for="s-nom">Nom</label><input class="input" id="s-nom" name="s-nom" type="text" required data-req autocomplete="family-name" ><p class="field-error" data-err-for="s-nom" role="alert"></p></div>
+              <div class="field"><label for="s-entreprise">Entreprise <span class="opt-tag">(facultatif)</span></label><input class="input" id="s-entreprise" name="s-entreprise" type="text" autocomplete="organization" ><p class="field-error" data-err-for="s-entreprise" role="alert"></p></div>
+              <div class="field"><label for="s-tel">Téléphone <span class="opt-tag">(facultatif)</span></label><input class="input" id="s-tel" name="s-tel" type="tel" autocomplete="tel" ><p class="field-error" data-err-for="s-tel" role="alert"></p></div>
+              <div class="field"><label for="s-email">E-mail</label><input class="input" id="s-email" name="s-email" type="email" required data-req autocomplete="email" ><p class="field-error" data-err-for="s-email" role="alert"></p></div>
+              <div class="field"><label for="s-pass">Mot de passe (8 caractères minimum)</label><input class="input" id="s-pass" name="s-pass" type="password" required data-req autocomplete="new-password" ><p class="field-error" data-err-for="s-pass" role="alert"></p></div>
+              <div class="field full">
+                <label class="check"><input type="checkbox" id="s-consent" name="consentement" required data-req><span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span>J'accepte que mes informations soient utilisées pour gérer mon compte et le suivi de mes demandes. <a href="#">Politique de confidentialité</a></span></label>
+                <p class="field-error" data-err-for="s-consent" role="alert"></p>
+              </div>
+            </div>
+            <div class="form-actions acct-actions">
+              <button class="btn btn-primary btn-lg" type="submit"><span>Créer mon compte</span><svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            </div>
+            <div class="form-status" role="status" aria-live="polite" hidden></div>
+          </form>
+
+          <form id="form-forgot" class="acct-panel" aria-label="Réinitialiser le mot de passe" hidden novalidate>
+            <p class="acct-note">Indiquez votre e-mail : nous vous envoyons un lien pour choisir un nouveau mot de passe.</p>
+            <div class="form-grid">
+              <div class="field full"><label for="f-email">E-mail</label><input class="input" id="f-email" name="f-email" type="email" required data-req autocomplete="email" ><p class="field-error" data-err-for="f-email" role="alert"></p></div>
+            </div>
+            <div class="form-actions acct-actions">
+              <button class="btn btn-primary btn-lg" type="submit"><span>Envoyer le lien</span><svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+              <button class="acct-link" type="button" data-auth-tab="login">Retour à la connexion</button>
+            </div>
+            <div class="form-status" role="status" aria-live="polite" hidden></div>
+          </form>
+
+          <form id="form-reset" class="acct-panel" aria-label="Nouveau mot de passe" hidden novalidate>
+            <p class="acct-note">Choisissez votre nouveau mot de passe.</p>
+            <div class="form-grid">
+              <div class="field full"><label for="r-pass">Nouveau mot de passe (8 caractères minimum)</label><input class="input" id="r-pass" name="r-pass" type="password" required data-req autocomplete="new-password" ><p class="field-error" data-err-for="r-pass" role="alert"></p></div>
+            </div>
+            <div class="form-actions acct-actions">
+              <button class="btn btn-primary btn-lg" type="submit"><span>Enregistrer</span><svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            </div>
+            <div class="form-status" role="status" aria-live="polite" hidden></div>
+          </form>
+        </div>
+        <aside class="acct-aside fade-up">
+          <h2>Pourquoi créer un compte ?</h2>
+          <ul class="acct-bullets">
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Suivre l'avancement de vos demandes de devis et de vos commandes</span></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Retrouver vos coordonnées sans les ressaisir</span></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Conserver vos logos et fichiers pour vos prochains projets</span></li>
+          </ul>
+          <p class="acct-note">Pas besoin de compte pour demander un devis : <a href="devis.html">le questionnaire reste accessible à tous</a>.</p>
+        </aside>
+      </div>
+
+      <!-- Espace connecté -->
+      <div class="acct-app" id="acct-app" hidden>
+        <div class="acct-head">
+          <div>
+            <p class="acct-hello" id="acct-hello">Bonjour</p>
+            <p class="acct-mail" id="acct-mail"></p>
+          </div>
+          <button class="btn btn-outline btn-sm" type="button" id="acct-logout"><span>Se déconnecter</span></button>
+        </div>
+        <div class="acct-banner" id="acct-unverified" hidden>Votre adresse e-mail n'est pas encore confirmée : confirmez-la depuis le message reçu pour voir vos demandes et commandes.</div>
+
+        <div class="acct-tabs acct-tabs-app" role="tablist" aria-label="Sections de l'espace client">
+          <button class="acct-tab is-active" type="button" role="tab" aria-selected="true" id="at-demandes" aria-controls="ap-demandes" data-app-tab="demandes">Mes demandes</button>
+          <button class="acct-tab" type="button" role="tab" aria-selected="false" id="at-commandes" aria-controls="ap-commandes" data-app-tab="commandes" tabindex="-1">Mes commandes</button>
+          <button class="acct-tab" type="button" role="tab" aria-selected="false" id="at-profil" aria-controls="ap-profil" data-app-tab="profil" tabindex="-1">Mon profil</button>
+          <button class="acct-tab" type="button" role="tab" aria-selected="false" id="at-fichiers" aria-controls="ap-fichiers" data-app-tab="fichiers" tabindex="-1">Mes fichiers</button>
+        </div>
+
+        <div class="acct-pane" id="ap-demandes" role="tabpanel" aria-labelledby="at-demandes"></div>
+        <div class="acct-pane" id="ap-commandes" role="tabpanel" aria-labelledby="at-commandes" hidden></div>
+
+        <div class="acct-pane" id="ap-profil" role="tabpanel" aria-labelledby="at-profil" hidden>
+          <form class="form-card" id="form-profile" novalidate>
+            <div class="form-grid">
+              <div class="field"><label for="p-prenom">Prénom</label><input class="input" id="p-prenom" name="p-prenom" type="text" required data-req autocomplete="given-name" ><p class="field-error" data-err-for="p-prenom" role="alert"></p></div>
+              <div class="field"><label for="p-nom">Nom</label><input class="input" id="p-nom" name="p-nom" type="text" required data-req autocomplete="family-name" ><p class="field-error" data-err-for="p-nom" role="alert"></p></div>
+              <div class="field"><label for="p-entreprise">Entreprise <span class="opt-tag">(facultatif)</span></label><input class="input" id="p-entreprise" name="p-entreprise" type="text" autocomplete="organization" ><p class="field-error" data-err-for="p-entreprise" role="alert"></p></div>
+              <div class="field"><label for="p-tel">Téléphone <span class="opt-tag">(facultatif)</span></label><input class="input" id="p-tel" name="p-tel" type="tel" autocomplete="tel" ><p class="field-error" data-err-for="p-tel" role="alert"></p></div>
+              <div class="field full"><label for="p-adresse">Adresse <span class="opt-tag">(facultatif)</span></label><input class="input" id="p-adresse" name="p-adresse" type="text" autocomplete="street-address" ><p class="field-error" data-err-for="p-adresse" role="alert"></p></div>
+              <div class="field"><label for="p-cp">Code postal <span class="opt-tag">(facultatif)</span></label><input class="input" id="p-cp" name="p-cp" type="text" autocomplete="postal-code" ><p class="field-error" data-err-for="p-cp" role="alert"></p></div>
+              <div class="field"><label for="p-ville">Ville <span class="opt-tag">(facultatif)</span></label><input class="input" id="p-ville" name="p-ville" type="text" autocomplete="address-level2" ><p class="field-error" data-err-for="p-ville" role="alert"></p></div>
+            </div>
+            <div class="form-actions acct-actions">
+              <button class="btn btn-primary btn-lg" type="submit"><span>Enregistrer</span><svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            </div>
+            <div class="form-status" role="status" aria-live="polite" hidden></div>
+          </form>
+        </div>
+
+        <div class="acct-pane" id="ap-fichiers" role="tabpanel" aria-labelledby="at-fichiers" hidden>
+          <div class="form-card">
+            <p class="acct-note">Déposez vos logos et visuels (PNG, JPG, SVG, PDF, AI, EPS — 10 Mo maximum par fichier). Seuls vous et l'équipe CMR y avez accès.</p>
+            <label class="acct-drop" for="file-input">
+              <svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>
+              <span>Ajouter un fichier</span>
+              <input type="file" id="file-input" accept=".png,.jpg,.jpeg,.svg,.pdf,.ai,.eps" multiple>
+            </label>
+            <div class="form-status" id="files-status" role="status" aria-live="polite" hidden></div>
+            <ul class="acct-files" id="files-list"></ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="contact">
+  <div class="container">
+    <div class="footer-grid" data-stagger>
+      <div class="footer-brand fade-up">
+        <a href="index.html" aria-label="CMR Personnalisation, retour en haut">
+          <img class="only-dark" src="Assets/img/logo-blanc.png" alt="CMR Personnalisation" width="900" height="357" loading="lazy">
+          <img class="only-light" src="Assets/img/logo-noir.png" alt="CMR Personnalisation" width="900" height="357" loading="lazy">
+        </a>
+        <span class="footer-rule" aria-hidden="true"></span>
+        <p class="footer-tagline">Personnaliser. <span>Valoriser.</span> Marquer.</p>
+      </div>
+
+      <nav class="footer-col fade-up" aria-label="Navigation du pied de page">
+        <h2 class="footer-title">Navigation</h2>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="realisations.html">Réalisations</a></li>
+          <li><a href="devis.html">Devis</a></li>
+          <li><a href="a-propos.html">À propos</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-col fade-up">
+        <h2 class="footer-title">Contact</h2>
+        <ul class="contact-list">
+          <li><span class="contact-ic" aria-hidden="true"><svg class="icon"><use href="#i-phone"/></svg></span><a href="tel:+33769829961">07 69 82 99 61</a></li>
+          <li><span class="contact-ic" aria-hidden="true"><svg class="icon"><use href="#i-mail"/></svg></span><a href="mailto:cmrpersonnalisation@gmail.com">cmrpersonnalisation@gmail.com</a></li>
+          <li><span class="contact-ic" aria-hidden="true"><svg class="icon"><use href="#i-pin"/></svg></span><span>Atelier basé dans l'Oise<small>Compiègne et ses alentours</small></span></li>
+        </ul>
+      </div>
+
+      <div class="footer-col fade-up">
+        <h2 class="footer-title">Suivez-nous</h2>
+        <a class="social" href="#" aria-label="Instagram CMR Personnalisation">
+          <svg class="icon" aria-hidden="true"><use href="#i-insta"/></svg>
+          <span>Instagram</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-legal">
+        <p>&copy; 2026 CMR Personnalisation. Tous droits réservés.</p>
+        <ul>
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">Politique de confidentialité</a></li>
+        </ul>
+      </div>
+      <p class="footer-banner">
+        <span>Des textiles</span>
+        <strong>qui font la différence.</strong>
+        <em>L'équipe CMR Personnalisation</em>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/vendor/supabase.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/main.js" defer></script>
+<script src="js/pages.js" defer></script>
+<script src="js/cms.js" defer></script>
+<script src="js/compte.js" defer></script>
+</body>
+</html>

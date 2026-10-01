@@ -557,3 +557,39 @@ section[id], footer[id] { scroll-margin-top: calc(var(--header-h) + 8px); }
   .hero-media::after, .savoir-media::after, .cta-box::after { display: none; }
   [data-parallax] img { transform: none !important; }
 }
+
+/* ==========================================================================
+   Avis Google — bande défilante
+   ========================================================================== */
+.reviews .section-head { align-items: flex-end; }
+.rating { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; }
+.rating-score { font-size: 2rem; font-weight: 600; line-height: 1; }
+.rating-score small { font-size: 0.9rem; font-weight: 400; color: var(--color-muted); }
+.rating-count { font-size: 0.85rem; color: var(--color-muted); }
+.stars { display: inline-flex; gap: 2px; color: #f5b301; }
+.stars .icon { width: 1rem; height: 1rem; fill: currentColor; stroke: none; }
+.rating .stars .icon { width: 1.15rem; height: 1.15rem; }
+
+.marquee { position: relative; overflow: hidden; margin-top: clamp(18px, 2vw, 28px); -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.marquee-track { display: flex; width: max-content; gap: var(--gap); padding: 6px 0; margin: 0; list-style: none; animation: reviews-scroll 70s linear infinite; will-change: transform; }
+.marquee:hover .marquee-track, .marquee:focus-within .marquee-track { animation-play-state: paused; }
+@keyframes reviews-scroll { to { transform: translateX(calc(-50% - var(--gap) / 2)); } }
+.review { flex: none; width: clamp(260px, 26vw, 340px); display: flex; flex-direction: column; gap: 0.7rem; padding: clamp(16px, 1.6vw, 22px); border: 1px solid var(--color-border); border-radius: var(--radius); background: var(--color-surface); }
+.review-head { display: flex; align-items: center; gap: 0.7rem; }
+.review-head b { display: block; font-size: 0.92rem; font-weight: 600; line-height: 1.25; }
+.review-src { display: block; margin-top: 1px; font-size: 0.72rem; color: var(--color-muted); }
+.review-av { flex: none; display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 50%; background: var(--av, var(--color-primary)); color: #fff; font-weight: 600; font-size: 1rem; }
+.review p { margin: 0; font-size: 0.88rem; line-height: 1.5; color: var(--color-muted); }
+.review p + p { margin-top: -0.3rem; }
+.reviews-cta { display: flex; justify-content: center; margin-top: clamp(20px, 2.4vw, 32px); }
+@media (max-width: 767px) {
+  .reviews .section-head { align-items: flex-start; }
+  .review { width: 78vw; }
+  .marquee-track { animation-duration: 90s; }
+}
+/* Mouvement réduit : plus d'animation, défilement manuel et une seule série d'avis */
+@media (prefers-reduced-motion: reduce) {
+  .marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; scrollbar-width: thin; }
+  .marquee-track { animation: none; width: auto; padding-inline: var(--gutter); }
+  .review[aria-hidden="true"] { display: none; }
+}

@@ -289,7 +289,7 @@
 
   /* ============================== Coquille + routeur ============================== */
   var ROUTES = [
-    ['dashboard', 'Tableau de bord'], ['demandes', 'Demandes'], ['commandes', 'Commandes'], ['stock', 'Stock'],
+    ['dashboard', 'Tableau de bord'], ['demandes', 'Demandes'], ['commandes', 'Commandes'], ['clients', 'Clients'], ['stock', 'Stock'],
     ['realisations', 'Réalisations'], ['contenus', 'Contenus du site'], ['medias', 'Médias']
   ];
   var VIEWS = {};
@@ -560,6 +560,52 @@
       },
       onDelete: isNew ? null : function () { return sb.from('commandes').delete().eq('id', c.id).then(function (r) { if (!r.error) { toast('Commande supprimée.', 'ok'); reload(); } return r.error; }); },
       deleteMsg: 'Supprimer définitivement cette commande ?'
+    });
+  }
+
+  /* ============================== Clients (comptes espace client) ============================== */
+  VIEWS.clients = function (box) {
+    clear(box);
+    return sb.from('clients').select('*').order('created_at', { ascending: false }).limit(500).then(function (r) {
+      var rows = ensure(r);
+      var q = h('input', { class: 'in', type: 'search', placeholder: 'Rechercher (nom, e-mail, entreprise, téléphone…)', 'aria-label': 'Rechercher' });
+      var out = h('div');
+      box.appendChild(h('div', { class: 'tools' }, q)); box.appendChild(out);
+      function draw() {
+        var t = norm(q.value);
+        var list = rows.filter(function (c) { return !t || norm([c.prenom, c.nom, c.email, c.entreprise, c.telephone, c.ville].join(' ')).indexOf(t) > -1; });
+        clear(out);
+        if (!list.length) { out.appendChild(h('div', { class: 'card-a empty-a', text: rows.length ? 'Aucun résultat.' : 'Aucun compte client pour le moment.' })); return; }
+        out.appendChild(tableOf([
+          { label: 'Inscrit le', cell: function (c) { return fmtDate(c.created_at); }, muted: true },
+          { label: 'Client', cell: function (c) { return h('span', null, h('b', { text: [c.prenom, c.nom].filter(Boolean).join(' ') || '—' }), c.entreprise ? h('span', { class: 'muted', text: ' · ' + c.entreprise }) : null); } },
+          { label: 'E-mail', cell: function (c) { return c.email || '—'; }, muted: true },
+          { label: 'Téléphone', cell: function (c) { return c.telephone || '—'; }, muted: true }
+        ], list, openClient));
+      }
+      q.addEventListener('input', draw); draw();
+    });
+  };
+  function openClient(c) {
+    var m = openModal({ title: 'Client — ' + ([c.prenom, c.nom].filter(Boolean).join(' ') || c.email), wide: true });
+    m.body.appendChild(kv([['Nom', [c.prenom, c.nom].filter(Boolean).join(' ')], ['Entreprise', c.entreprise], ['E-mail', c.email], ['Téléphone', c.telephone],
+      ['Adresse', [c.adresse, [c.code_postal, c.ville].filter(Boolean).join(' ')].filter(Boolean).join(', ')], ['Inscrit le', fmtDate(c.created_at, true)]]));
+    m.body.appendChild(h('h3', { class: 'sec', text: 'Demandes de devis (même e-mail)' }));
+    var dl = h('div'); m.body.appendChild(dl);
+    sb.from('demandes_devis').select('id,created_at,besoin,statut').ilike('email', String(c.email || '').replace(/[%_]/g, '\\$&')).order('created_at', { ascending: false }).limit(20).then(function (r) {
+      var rows = r.data || [];
+      dl.appendChild(rows.length ? h('ul', { class: 'files-l' }, rows.map(function (d) { return h('li', null, h('span', { text: fmtDate(d.created_at) + ' — ' + (d.besoin || 'Demande') }), pill(DEMANDE_STATUTS, d.statut)); })) : h('p', { class: 'muted', style: 'font-size:.84rem', text: 'Aucune demande.' }));
+    });
+    m.body.appendChild(h('h3', { class: 'sec', text: 'Fichiers du client' }));
+    var fl = h('ul', { class: 'files-l' }); m.body.appendChild(fl);
+    sb.storage.from('client-fichiers').list(c.id, { limit: 100 }).then(function (r) {
+      var rows = (r.data || []).filter(function (f) { return f.name && f.name !== '.emptyFolderPlaceholder'; });
+      if (!rows.length) { fl.appendChild(h('li', null, h('span', { class: 'muted', text: 'Aucun fichier.' }))); return; }
+      rows.forEach(function (f) {
+        fl.appendChild(h('li', null, h('span', { text: f.name.replace(/^\d+-/, '') }), h('button', { class: 'btn-a ghost sm', type: 'button', text: 'Ouvrir', onclick: function () {
+          sb.storage.from('client-fichiers').createSignedUrl(c.id + '/' + f.name, 600).then(function (x) { if (x.error) toast(errText(x.error), 'err'); else window.open(x.data.signedUrl, '_blank', 'noopener'); });
+        } })));
+      });
     });
   }
 
