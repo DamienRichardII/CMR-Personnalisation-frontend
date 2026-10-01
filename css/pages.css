@@ -390,3 +390,11 @@ ol { list-style: none; margin: 0; padding: 0; }
 .price-note.is-key { border-color: rgba(47, 107, 255, 0.7); background: rgba(10, 71, 255, 0.16); color: var(--color-text); }
 .price-note.is-key strong { font-weight: 600; }
 @media (max-width: 767px) { .notes .price-note { border-radius: var(--radius); } }
+
+/* Pages légales */
+.legal { max-width: 860px; }
+.legal h2 { font-size: clamp(1.1rem, 1.6vw, 1.35rem); margin: 2rem 0 0.7rem; }
+.legal p, .legal li { color: var(--color-muted); font-size: 0.95rem; line-height: 1.7; }
+.legal ul { padding-left: 1.2rem; margin: 0 0 1rem; display: grid; gap: 0.35rem; }
+.legal b { color: var(--color-text); font-weight: 500; }
+.legal a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }

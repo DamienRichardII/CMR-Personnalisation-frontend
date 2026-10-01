@@ -13,7 +13,9 @@
   <meta property="og:site_name" content="CMR Personnalisation">
   <meta property="og:title" content="Demande de devis | CMR Personnalisation">
   <meta property="og:description" content="Demandez votre devis gratuit CMR Personnalisation : un questionnaire simple en quelques étapes pour vos textiles et objets personnalisés (entreprises, clubs, associations, événements).">
-  <meta property="og:image" content="Assets/img/og-image.jpg">
+  <meta property="og:image" content="https://cmr-personnalisation.vercel.app/Assets/img/og-image.jpg">
+  <link rel="canonical" href="https://cmr-personnalisation.vercel.app/devis">
+  <meta property="og:url" content="https://cmr-personnalisation.vercel.app/devis">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" sizes="48x48" href="Assets/img/favicon-48.png">
   <link rel="apple-touch-icon" href="Assets/img/favicon.png">
@@ -259,7 +261,7 @@
           <h2 class="q-title" tabindex="-1" data-focus>Vérifiez votre demande</h2>
           <p class="q-sub">Un dernier coup d'œil avant l'envoi.</p>
           <dl class="recap" id="recap-list"></dl>
-          <div class="q-consent"><label class="check"><input type="checkbox" id="q-consent" name="consentement" value="Oui"><span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span>J'accepte que mes informations soient utilisées pour répondre à ma demande de devis. <a href="#">Politique de confidentialité</a></span></label></div>
+          <div class="q-consent"><label class="check"><input type="checkbox" id="q-consent" name="consentement" value="Oui"><span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span>J'accepte que mes informations soient utilisées pour répondre à ma demande de devis. <a href="confidentialite.html">Politique de confidentialité</a></span></label></div>
           <p class="q-error" role="alert"></p>
           <div class="q-nav"><button class="btn btn-ghost btn-lg" type="button" data-prev><span>Précédent</span></button><span class="spacer"></span><button class="btn btn-primary btn-lg" type="submit" id="quiz-send"><span>Envoyer ma demande de devis</span><svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
         </fieldset>
@@ -323,8 +325,8 @@
       <div class="footer-legal">
         <p>&copy; 2026 CMR Personnalisation. Tous droits réservés.</p>
         <ul>
-          <li><a href="#">Mentions légales</a></li>
-          <li><a href="#">Politique de confidentialité</a></li>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+          <li><a href="confidentialite.html">Politique de confidentialité</a></li>
         </ul>
       </div>
       <p class="footer-banner">
@@ -340,5 +342,6 @@
 <script src="js/main.js" defer></script>
 <script src="js/pages.js" defer></script>
 <script src="js/cms.js" defer></script>
+<script src="js/devis-prefill.js" defer></script>
 </body>
 </html>
