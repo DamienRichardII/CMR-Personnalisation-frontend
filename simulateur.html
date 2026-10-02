@@ -119,21 +119,25 @@
   </div>
 </header>
 
-<main id="main">
-  <section class="page-hero" aria-labelledby="sim-title">
-    <div class="container page-hero-inner is-single">
-      <p class="eyebrow hero-anim" style="--h:0">Simulateur</p>
-      <h1 class="title page-title title-reveal" id="sim-title">
-        <span class="line"><span class="t" style="--k:0">Votre logo,</span> <span class="t accent" style="--k:1">sur vos vêtements.</span></span>
-      </h1>
-      <p class="lead hero-anim" style="--h:2">Choisissez un vêtement, déposez votre logo et visualisez le résultat avant de demander votre devis.</p>
+<main id="main" class="cfg">
+  <section class="cfg-head" aria-labelledby="sim-title">
+    <div class="container">
+      <p class="cfg-eyebrow">Personnalisez</p>
+      <h1 class="cfg-title" id="sim-title">Visualisez votre logo directement sur votre vêtement.</h1>
+      <ol class="cfg-steps" id="cfg-steps" aria-label="Étapes de configuration">
+        <li><a href="#cfg-s1"><span class="cfg-dot">1</span><span class="cfg-lab">Vêtement</span></a></li>
+        <li><a href="#cfg-s2"><span class="cfg-dot">2</span><span class="cfg-lab">Couleur</span></a></li>
+        <li><a href="#cfg-s3"><span class="cfg-dot">3</span><span class="cfg-lab">Face</span></a></li>
+        <li><a href="#cfg-s4"><span class="cfg-dot">4</span><span class="cfg-lab">Logo</span></a></li>
+        <li><a href="#cfg-s5"><span class="cfg-dot">5</span><span class="cfg-lab">Position</span></a></li>
+      </ol>
     </div>
   </section>
 
-  <section class="section" style="border-top:0;padding-top:0" aria-label="Simulateur de personnalisation">
-    <div class="container sim">
-      <div class="sim-stage-wrap">
-        <div class="sim-stage" id="sim-stage">
+  <section class="cfg-main" aria-label="Simulateur de personnalisation">
+    <div class="container cfg-grid">
+      <div class="cfg-preview">
+        <div class="sim-stage cfg-stage" id="sim-stage">
           <svg id="sim-svg" viewBox="0 0 600 640" role="img" aria-label="Aperçu du vêtement avec votre logo">
             <defs>
               <linearGradient id="sim-shade" x1="0" x2="1" y1="0" y2="0">
@@ -143,52 +147,73 @@
               <linearGradient id="sim-light" x1="0" x2="0" y1="0" y2="1">
                 <stop offset="0" stop-color="#fff" stop-opacity=".1"/><stop offset="1" stop-color="#000" stop-opacity=".12"/>
               </linearGradient>
+              <radialGradient id="sim-ground-g" cx=".5" cy=".5" r=".5">
+                <stop offset="0" stop-color="#000" stop-opacity=".16"/><stop offset="1" stop-color="#000" stop-opacity="0"/>
+              </radialGradient>
             </defs>
             <rect id="sim-bg" x="0" y="0" width="600" height="640" fill="none"/>
+            <ellipse id="sim-ground" cx="300" cy="610" rx="215" ry="16" fill="url(#sim-ground-g)"/>
             <g id="sim-garment"></g>
             <g id="sim-logo" tabindex="0" role="img" aria-label="Votre logo. Flèches pour le déplacer, plus et moins pour changer sa taille." hidden></g>
           </svg>
-          <p class="sim-empty" id="sim-empty">Déposez votre logo pour le voir apparaître ici.</p>
+          <p class="sim-empty" id="sim-empty">Ajoutez votre logo pour le voir ici</p>
+          <div class="cfg-stagebar">
+            <div class="cfg-seg" id="sim-faces2" role="radiogroup" aria-label="Face du vêtement"></div>
+            <button class="cfg-ghost" type="button" id="sim-download" disabled><span>Télécharger l'aperçu</span></button>
+          </div>
         </div>
-        <p class="sim-disclaimer">Aperçu indicatif et non contractuel : le rendu final dépend de la technique choisie (broderie, sérigraphie, flocage…), des couleurs et du tissu. Nous validons toujours le visuel avec vous avant production.</p>
+        <p class="sim-disclaimer">Aperçu indicatif et non contractuel : le rendu final dépend de la technique (broderie, sérigraphie, flocage…), des couleurs et du tissu. Nous validons toujours le visuel avec vous avant production.</p>
       </div>
 
-      <div class="form-card sim-panel">
-        <fieldset class="sim-group">
-          <legend>1. Vêtement</legend>
-          <div class="sim-chips" id="sim-garments" role="radiogroup" aria-label="Vêtement"></div>
+      <div class="cfg-panel">
+        <fieldset class="cfg-step" id="cfg-s1">
+          <legend><span class="cfg-n">01</span>Vêtement</legend>
+          <div class="cfg-cards" id="sim-garments" role="radiogroup" aria-label="Vêtement"></div>
         </fieldset>
-        <fieldset class="sim-group">
-          <legend>2. Couleur</legend>
-          <div class="sim-swatches" id="sim-colors" role="radiogroup" aria-label="Couleur du vêtement"></div>
-          <p class="sim-colorname" id="sim-colorname" aria-live="polite"></p>
+        <fieldset class="cfg-step" id="cfg-s2">
+          <legend><span class="cfg-n">02</span>Couleur <span class="cfg-colorname" id="sim-colorname" aria-live="polite"></span></legend>
+          <div class="cfg-swatches" id="sim-colors" role="radiogroup" aria-label="Couleur du vêtement"></div>
         </fieldset>
-        <fieldset class="sim-group" id="sim-face-group">
-          <legend>3. Face</legend>
-          <div class="sim-chips" id="sim-faces" role="radiogroup" aria-label="Face du vêtement"></div>
+        <fieldset class="cfg-step" id="cfg-s3">
+          <legend><span class="cfg-n">03</span>Face</legend>
+          <div id="sim-face-group"><div class="cfg-seg" id="sim-faces" role="radiogroup" aria-label="Face du vêtement"></div></div>
         </fieldset>
-        <fieldset class="sim-group">
-          <legend>4. Votre logo</legend>
-          <label class="sim-drop" for="sim-file">
-            <svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>
-            <span id="sim-file-label">Ajouter mon logo</span>
-            <input type="file" id="sim-file" accept=".png,.jpg,.jpeg,.svg,.webp">
-          </label>
-          <p class="sim-hint">PNG ou SVG sur fond transparent pour le meilleur rendu. JPG, PNG, SVG ou WebP — 5 Mo maximum.</p>
-          <label class="check sim-bgopt" id="sim-bgopt" hidden><input type="checkbox" id="sim-nobg"><span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span>Retirer le fond blanc ou clair de mon logo</span></label>
+        <fieldset class="cfg-step" id="cfg-s4">
+          <legend><span class="cfg-n">04</span>Votre logo</legend>
+          <input type="file" id="sim-file" class="cfg-file" accept=".png,.jpg,.jpeg,.svg,.webp" tabindex="-1" aria-hidden="true">
+          <button type="button" class="cfg-drop" id="sim-drop"><svg class="cfg-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0L7 9m5-5 5 5M4 20h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><strong>Glissez votre logo ici</strong><span>ou <u>choisir un fichier</u></span><small>PNG · JPG · WEBP · SVG — 5 Mo maximum</small></button>
+          <div class="cfg-logo-ok" id="sim-logo-ok" hidden>
+            <span class="cfg-thumb"><img id="sim-thumb" alt="Aperçu de votre logo"></span>
+            <div class="cfg-logo-meta"><p class="cfg-ok"><svg class="cfg-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Logo ajouté</p><p class="cfg-fname" id="sim-file-label"></p></div>
+            <div class="cfg-logo-btns"><button type="button" class="cfg-link" id="sim-replace">Remplacer</button><button type="button" class="cfg-link" id="sim-remove">Supprimer</button></div>
+          </div>
+          <label class="cfg-check sim-bgopt" id="sim-bgopt" hidden><input type="checkbox" id="sim-nobg"><span class="cfg-box"><svg class="cfg-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Retirer le fond blanc ou clair</span></label>
           <p class="field-error" id="sim-error" role="alert"></p>
         </fieldset>
-        <fieldset class="sim-group" id="sim-place-group" disabled>
-          <legend>5. Emplacement et taille</legend>
-          <div class="sim-chips" id="sim-places" role="radiogroup" aria-label="Emplacement du logo"></div>
-          <div class="field sim-range"><label for="sim-size">Taille du logo</label><input type="range" id="sim-size" min="40" max="160" value="100" step="2"></div>
-          <p class="sim-hint">Vous pouvez aussi faire glisser le logo directement sur le vêtement.</p>
+        <fieldset class="cfg-step" id="cfg-s5" disabled>
+          <legend><span class="cfg-n">05</span>Position</legend>
+          <div class="cfg-opts" id="sim-places" role="radiogroup" aria-label="Emplacement du logo"></div>
+          <div class="cfg-range"><label for="sim-size">Taille du logo</label><output id="sim-sizeval" for="sim-size">100 %</output><input type="range" id="sim-size" min="40" max="160" value="100" step="2"></div>
+          <p class="cfg-hint">Faites aussi glisser le logo directement sur le vêtement.</p>
         </fieldset>
-        <div class="sim-actions">
-          <button class="btn btn-primary btn-lg" type="button" id="sim-quote" disabled><span>Demander un devis avec ce visuel</span><svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-          <button class="btn btn-outline btn-lg" type="button" id="sim-download" disabled><span>Télécharger l'aperçu</span></button>
+        <div class="cfg-sum" aria-label="Votre configuration">
+          <h2>Votre configuration</h2>
+          <dl>
+            <div><dt>Vêtement</dt><dd id="sum-g"></dd></div>
+            <div><dt>Couleur</dt><dd id="sum-c"></dd></div>
+            <div><dt>Face</dt><dd id="sum-f"></dd></div>
+            <div><dt>Logo</dt><dd id="sum-l"></dd></div>
+            <div><dt>Position</dt><dd id="sum-p"></dd></div>
+          </dl>
         </div>
         <p class="sim-privacy">Votre logo reste sur votre appareil tant que vous n'envoyez pas votre demande.</p>
+      </div>
+    </div>
+
+    <div class="cfg-bar">
+      <div class="container cfg-bar-in">
+        <p class="cfg-note" id="sim-note" aria-live="polite">Ajoutez votre logo pour continuer.</p>
+        <button class="cfg-cta" type="button" id="sim-quote" disabled><span>Demander mon devis</span><svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
       </div>
     </div>
   </section>

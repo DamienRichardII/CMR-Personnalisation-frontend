@@ -9,7 +9,8 @@
   var COLORS = [
     { id: 'noir', label: 'Noir', hex: '#171b22' }, { id: 'blanc', label: 'Blanc', hex: '#f3f3f1' },
     { id: 'marine', label: 'Bleu marine', hex: '#16294f' }, { id: 'royal', label: 'Bleu roi', hex: '#1f4fd8' },
-    { id: 'gris', label: 'Gris chiné', hex: '#8b9099' }, { id: 'rouge', label: 'Rouge', hex: '#b3202a' }
+    { id: 'gris', label: 'Gris chiné', hex: '#8b9099' }, { id: 'rouge', label: 'Rouge', hex: '#b3202a' },
+    { id: 'beige', label: 'Beige', hex: '#d2bf9f' }, { id: 'marron', label: 'Marron', hex: '#5a3d2b' }
   ];
 
   /* Silhouettes (viewBox 600 × 640). */
@@ -40,7 +41,7 @@
   };
   var FACE_LABEL = { face: 'Devant', dos: 'Dos' };
 
-  var st = { g: 'tshirt', c: 'noir', f: 'face', place: null, x: 300, y: 260, scale: 100, logo: null, logoOrig: null, logoName: '', ratio: 1 };
+  var st = { t: { g: 0, c: 0, f: 0, p: 0 }, sel: false, g: 'tshirt', c: 'noir', f: 'face', place: null, x: 300, y: 260, scale: 100, logo: null, logoOrig: null, logoName: '', ratio: 1 };
 
   function mix(hex, to, t) {
     var a = parseInt(hex.slice(1), 16), b = parseInt(to.slice(1), 16);
@@ -72,9 +73,15 @@
   /* ----- logo ----- */
   function drawLogo() {
     var lg = $('#sim-logo'); while (lg.firstChild) lg.removeChild(lg.firstChild);
-    var has = !!st.logo; if (has) lg.removeAttribute('hidden'); else lg.setAttribute('hidden', ''); $('#sim-empty').hidden = has;
+    var has = !!st.logo;
+    if (has) { if (lg.hasAttribute('hidden')) { lg.removeAttribute('hidden'); lg.classList.remove('is-new'); void lg.getBoundingClientRect(); lg.classList.add('is-new'); } } else lg.setAttribute('hidden', '');
+    lg.classList.toggle('is-sel', has && st.sel);
+    $('#sim-empty').hidden = has;
     ['#sim-download', '#sim-quote'].forEach(function (s) { $(s).disabled = !has; });
-    $('#sim-place-group').disabled = !has;
+    $('#cfg-s5').disabled = !has;
+    $('#sim-size').value = st.scale; $('#sim-sizeval').textContent = Math.round(st.scale) + ' %';
+    $('#sim-note').textContent = has ? 'Votre simulation sera jointe à votre demande.' : 'Ajoutez votre logo pour continuer.';
+    syncLogoUI(); drawSummary();
     if (!has) return;
     var p = place(), w = p.w * st.scale / 100, h = w / st.ratio, maxH = 330;
     if (h > maxH) { h = maxH; w = h * st.ratio; }
@@ -82,29 +89,69 @@
     im.setAttribute('crossorigin', 'anonymous');
     el('rect', { class: 'sim-frame', x: st.x - w / 2 - 4, y: st.y - h / 2 - 4, width: w + 8, height: h + 8, rx: 6, fill: 'none' }, lg);
   }
-  function resetPlace() { var p = place(); st.place = p.id; st.x = p.x; st.y = p.y; st.scale = 100; $('#sim-size').value = 100; }
+  function syncLogoUI() {
+    var has = !!st.logo;
+    $('#sim-drop').hidden = has; $('#sim-logo-ok').hidden = !has;
+    if (has) { $('#sim-thumb').src = st.logo; $('#sim-file-label').textContent = st.logoName; }
+  }
+  function drawSummary() {
+    $('#sum-g').textContent = garment().label; $('#sum-c').textContent = color().label;
+    $('#sum-f').textContent = garment().faces.length < 2 ? 'Face avant' : (st.f === 'dos' ? 'Dos' : 'Face avant');
+    $('#sum-l').textContent = st.logo ? 'Logo personnalisé' : 'Aucun logo';
+    $('#sum-p').textContent = st.logo ? place().label : '—';
+    var t = st.t, has = !!st.logo, one = garment().faces.length < 2;
+    var done = [t.g, t.c, t.f || one, has, t.p && has];
+    for (var i = 3; i >= 0; i--) if (done[i + 1]) done[i] = true;
+    var cur = done.indexOf(false), items = document.querySelectorAll('#cfg-steps li');
+    for (var k = 0; k < items.length; k++) {
+      items[k].classList.toggle('is-done', !!done[k]); items[k].classList.toggle('is-on', k === cur);
+      var a = items[k].querySelector('a'); if (k === cur) a.setAttribute('aria-current', 'step'); else a.removeAttribute('aria-current');
+    }
+  }
+  function swap() { svg.classList.remove('is-swap'); void svg.getBoundingClientRect(); svg.classList.add('is-swap'); }
+  function resetPlace() { var p = place(); st.place = p.id; st.x = p.x; st.y = p.y; st.scale = 100; }
 
   /* ----- commandes ----- */
-  function chips(box, items, current, onPick, fmt) {
+  function buttons(box, items, current, cls, onPick, pre) {
     box.textContent = '';
     items.forEach(function (it) {
-      var b = document.createElement('button'); b.type = 'button'; b.className = 'sim-chip' + (it.id === current ? ' is-on' : ''); b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', it.id === current ? 'true' : 'false');
-      b.textContent = fmt ? fmt(it) : it.label; b.addEventListener('click', function () { onPick(it.id); }); box.appendChild(b);
+      var b = document.createElement('button'); b.type = 'button'; b.className = cls + (it.id === current ? ' is-on' : ''); b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', it.id === current ? 'true' : 'false'); b.dataset.k = pre + it.id;
+      b.textContent = it.label; b.addEventListener('click', function () { onPick(it.id); }); box.appendChild(b);
     });
+  }
+  function thumb(k) {
+    var s2 = document.createElementNS(NS, 'svg'); s2.setAttribute('viewBox', k === 'casquette' ? '60 100 480 390' : '20 50 560 560'); s2.setAttribute('aria-hidden', 'true');
+    GARMENTS[k].parts.face.forEach(function (p) {
+      if (p.k === 'body' || p.k === 'visor') el('path', { d: p.d, class: p.k === 'body' ? 'th-b' : 'th-l' }, s2);
+      else if (p.k === 'line') el('path', { d: p.d, class: 'th-l' }, s2);
+    });
+    return s2;
   }
   function drawControls() {
-    chips($('#sim-garments'), Object.keys(GARMENTS).map(function (k) { return { id: k, label: GARMENTS[k].label }; }), st.g, function (id) { st.g = id; if (GARMENTS[id].faces.indexOf(st.f) < 0) st.f = 'face'; resetPlace(); refresh(); });
+    var gs = $('#sim-garments'); gs.textContent = '';
+    Object.keys(GARMENTS).forEach(function (k) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'cfg-card' + (k === st.g ? ' is-on' : ''); b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', k === st.g ? 'true' : 'false'); b.dataset.k = 'g:' + k;
+      b.appendChild(thumb(k)); var t = document.createElement('span'); t.textContent = GARMENTS[k].label; b.appendChild(t);
+      b.addEventListener('click', function () { if (k === st.g) return; st.g = k; st.t.g = 1; if (GARMENTS[k].faces.indexOf(st.f) < 0) st.f = 'face'; resetPlace(); swap(); refresh(); });
+      gs.appendChild(b);
+    });
     var cs = $('#sim-colors'); cs.textContent = '';
     COLORS.forEach(function (c) {
-      var b = document.createElement('button'); b.type = 'button'; b.className = 'sim-swatch' + (c.id === st.c ? ' is-on' : ''); b.style.background = c.hex; b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', c.id === st.c ? 'true' : 'false'); b.setAttribute('aria-label', c.label); b.title = c.label;
-      b.addEventListener('click', function () { st.c = c.id; refresh(); }); cs.appendChild(b);
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'sim-swatch' + (c.id === st.c ? ' is-on' : ''); b.style.setProperty('--sw', c.hex); b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', c.id === st.c ? 'true' : 'false'); b.setAttribute('aria-label', c.label); b.title = c.label; b.dataset.k = 'c:' + c.id;
+      b.addEventListener('click', function () { st.c = c.id; st.t.c = 1; refresh(); }); cs.appendChild(b);
     });
     $('#sim-colorname').textContent = color().label;
-    var fg = $('#sim-face-group'); fg.hidden = garment().faces.length < 2;
-    chips($('#sim-faces'), garment().faces.map(function (f) { return { id: f, label: FACE_LABEL[f] }; }), st.f, function (id) { st.f = id; resetPlace(); refresh(); });
-    chips($('#sim-places'), places(), st.place, function (id) { st.place = id; var p = place(); st.x = p.x; st.y = p.y; st.scale = 100; $('#sim-size').value = 100; refresh(); });
+    var one = garment().faces.length < 2; $('#sim-face-group').hidden = one; $('#sim-faces2').hidden = one; $('#cfg-s3').hidden = one;
+    var fs = garment().faces.map(function (f) { return { id: f, label: f === 'dos' ? 'Dos' : 'Avant' }; });
+    var pickFace = function (id) { if (id === st.f) return; st.f = id; st.t.f = 1; resetPlace(); swap(); refresh(); };
+    buttons($('#sim-faces'), fs, st.f, 'cfg-segbtn', pickFace, 'f:'); buttons($('#sim-faces2'), fs, st.f, 'cfg-segbtn', pickFace, 'g2:');
+    buttons($('#sim-places'), places(), st.place, 'cfg-opt', function (id) { st.place = id; st.t.p = 1; var p = place(); st.x = p.x; st.y = p.y; st.scale = 100; refresh(); }, 'p:');
   }
-  function refresh() { drawGarment(); drawLogo(); drawControls(); }
+  function refresh() {
+    var ae = document.activeElement, ak = ae && ae.dataset ? ae.dataset.k : null;
+    drawGarment(); drawLogo(); drawControls();
+    if (ak) { var nb = document.querySelector('[data-k="' + ak + '"]'); if (nb) nb.focus({ preventScroll: true }); }
+  }
 
   /* ----- fichier logo ----- */
   function err(m) { $('#sim-error').textContent = m || ''; }
@@ -121,8 +168,8 @@
     }
     st.logo = c.toDataURL('image/png'); st.ratio = c.width / c.height; drawLogo();
   }
-  $('#sim-file').addEventListener('change', function (e) {
-    var f = e.target.files && e.target.files[0]; err(''); if (!f) return;
+  function handleFile(f) {
+    err(''); if (!f) return;
     if (!/\.(png|jpe?g|svg|webp)$/i.test(f.name)) return err('Format non accepté : utilisez PNG, JPG, SVG ou WebP.');
     if (f.size > 5 * 1048576) return err('Fichier trop lourd (5 Mo maximum).');
     readFile(f).then(function (url) {
@@ -131,29 +178,42 @@
         srcImg = im; st.logoName = f.name; st.logoOrig = f.size <= 2 * 1048576 ? url : null;
         origIsOpaque = /\.jpe?g$/i.test(f.name);
         $('#sim-bgopt').hidden = false; $('#sim-nobg').checked = origIsOpaque;
-        $('#sim-file-label').textContent = f.name;
         if (!st.place) resetPlace();
-        render(origIsOpaque); refresh();
+        st.sel = true; render(origIsOpaque); refresh();
       };
       im.onerror = function () { err('Impossible de lire cette image.'); };
       im.src = url;
     });
+  }
+  $('#sim-file').addEventListener('change', function (e) { handleFile(e.target.files && e.target.files[0]); });
+  var drop = $('#sim-drop');
+  drop.addEventListener('click', function () { $('#sim-file').click(); });
+  $('#sim-replace').addEventListener('click', function () { $('#sim-file').click(); });
+  $('#sim-remove').addEventListener('click', function () {
+    srcImg = null; st.logo = null; st.logoOrig = null; st.logoName = ''; st.sel = false; st.t.p = 0; st.scale = 100;
+    $('#sim-file').value = ''; $('#sim-bgopt').hidden = true; $('#sim-nobg').checked = false; err(''); refresh();
+    var d = $('#sim-drop'); if (d) d.focus();
   });
+  ['dragenter', 'dragover'].forEach(function (n) { drop.addEventListener(n, function (e) { e.preventDefault(); drop.classList.add('is-over'); }); });
+  ['dragleave', 'dragend'].forEach(function (n) { drop.addEventListener(n, function () { drop.classList.remove('is-over'); }); });
+  drop.addEventListener('drop', function (e) { e.preventDefault(); drop.classList.remove('is-over'); handleFile(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]); });
   $('#sim-nobg').addEventListener('change', function () { if (srcImg) render(this.checked); });
-  $('#sim-size').addEventListener('input', function () { st.scale = +this.value; drawLogo(); });
+  $('#sim-size').addEventListener('input', function () { st.scale = +this.value; st.t.p = 1; drawLogo(); });
 
   /* ----- glisser / clavier ----- */
   var drag = null;
   function pt(ev) { var r = svg.getBoundingClientRect(), k = 600 / r.width; return { x: (ev.clientX - r.left) * k, y: (ev.clientY - r.top) * k }; }
   var lgEl = $('#sim-logo');
-  lgEl.addEventListener('pointerdown', function (ev) { if (!st.logo) return; var p = pt(ev); drag = { dx: st.x - p.x, dy: st.y - p.y }; lgEl.setPointerCapture(ev.pointerId); lgEl.classList.add('is-drag'); ev.preventDefault(); });
+  lgEl.addEventListener('pointerdown', function (ev) { if (!st.logo) return; st.sel = true; st.t.p = 1; var p = pt(ev); drag = { dx: st.x - p.x, dy: st.y - p.y }; lgEl.setPointerCapture(ev.pointerId); lgEl.classList.add('is-drag'); ev.preventDefault(); });
   lgEl.addEventListener('pointermove', function (ev) { if (!drag) return; var p = pt(ev); st.x = Math.max(40, Math.min(560, p.x + drag.dx)); st.y = Math.max(40, Math.min(600, p.y + drag.dy)); drawLogo(); });
   ['pointerup', 'pointercancel'].forEach(function (n) { lgEl.addEventListener(n, function () { drag = null; lgEl.classList.remove('is-drag'); }); });
+  $('#sim-stage').addEventListener('pointerdown', function (ev) { if (st.logo && st.sel && !ev.target.closest('#sim-logo') && !ev.target.closest('button')) { st.sel = false; drawLogo(); } });
+  lgEl.addEventListener('focus', function () { if (st.logo && !st.sel) { st.sel = true; drawLogo(); } });
   lgEl.addEventListener('keydown', function (ev) {
     var s = ev.shiftKey ? 12 : 4, k = ev.key, ch = true;
     if (k === 'ArrowLeft') st.x -= s; else if (k === 'ArrowRight') st.x += s; else if (k === 'ArrowUp') st.y -= s; else if (k === 'ArrowDown') st.y += s;
     else if (k === '+' || k === '=') st.scale = Math.min(160, st.scale + 4); else if (k === '-') st.scale = Math.max(40, st.scale - 4); else ch = false;
-    if (ch) { ev.preventDefault(); $('#sim-size').value = st.scale; drawLogo(); }
+    if (ch) { ev.preventDefault(); st.t.p = 1; drawLogo(); }
   });
   /* le focus clavier doit rester sur le logo : drawLogo() ne recrée que son contenu */
 
@@ -162,7 +222,7 @@
     return new Promise(function (res, rej) {
       var clone = svg.cloneNode(true); clone.setAttribute('xmlns', NS); clone.setAttribute('width', size); clone.setAttribute('height', Math.round(size * 640 / 600));
       var fr = clone.querySelector('.sim-frame'); if (fr) fr.parentNode.removeChild(fr);
-      var bg = clone.querySelector('#sim-bg'); bg.setAttribute('fill', '#eef1f6');
+      var bg = clone.querySelector('#sim-bg'); bg.setAttribute('fill', '#f1f1ee');
       var lg = clone.querySelector('#sim-logo'); lg.removeAttribute('hidden');
       var url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(new XMLSerializer().serializeToString(clone));
       var im = new Image();
