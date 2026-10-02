@@ -1,0 +1,41 @@
+/* Simulateur de personnalisation */
+.sim { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(20px, 3vw, 48px); align-items: start; }
+.sim-stage-wrap { position: sticky; top: calc(var(--header-h) + 20px); }
+.sim-stage { position: relative; border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: radial-gradient(60% 55% at 50% 42%, rgba(10, 71, 255, 0.10), transparent 70%), var(--color-surface); box-shadow: var(--shadow-card), 0 0 60px -40px var(--glow); overflow: hidden; }
+[data-theme="light"] .sim-stage { background: #eef1f6; }
+.sim-stage svg { display: block; width: 100%; height: auto; max-height: 78vh; margin-inline: auto; touch-action: none; }
+.sim-empty { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); margin: 0; padding: 0.45rem 0.9rem; border-radius: var(--radius-pill); background: rgba(var(--color-overlay), 0.72); color: #fff; font-size: 0.8rem; white-space: nowrap; pointer-events: none; }
+.sim-empty[hidden] { display: none; }
+#sim-logo { cursor: grab; outline: none; }
+#sim-logo[hidden] { display: none; }
+#sim-logo.is-drag { cursor: grabbing; }
+.sim-frame { stroke: transparent; stroke-width: 2; stroke-dasharray: 6 5; }
+#sim-logo:hover .sim-frame, #sim-logo:focus-visible .sim-frame { stroke: var(--color-accent); }
+.sim-disclaimer { margin: 12px 4px 0; font-size: 0.78rem; line-height: 1.55; color: var(--color-muted); }
+.sim-panel { display: grid; gap: 22px; }
+.sim-group { margin: 0; padding: 0; border: 0; min-width: 0; }
+.sim-group[hidden] { display: none; }
+.sim-group[disabled] { opacity: 0.45; pointer-events: none; }
+.sim-group legend { padding: 0; margin-bottom: 10px; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-accent); }
+.sim-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.sim-chip { appearance: none; padding: 0.55rem 1rem; border: 1px solid var(--color-border); border-radius: var(--radius-pill); background: var(--color-bg); color: var(--color-text); font: inherit; font-size: 0.86rem; cursor: pointer; transition: background-color var(--transition-fast) ease, border-color var(--transition-fast) ease; }
+.sim-chip.is-on { background: var(--color-primary); border-color: var(--color-primary); color: #fff; box-shadow: 0 0 16px -4px var(--glow); }
+.sim-chip:focus-visible, .sim-swatch:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+.sim-swatches { display: flex; flex-wrap: wrap; gap: 10px; }
+.sim-swatch { appearance: none; width: 36px; height: 36px; border-radius: 50%; border: 2px solid color-mix(in srgb, var(--color-text) 25%, transparent); cursor: pointer; padding: 0; }
+.sim-swatch.is-on { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(10, 71, 255, 0.35); }
+.sim-colorname { margin: 8px 0 0; font-size: 0.82rem; color: var(--color-muted); }
+.sim-drop { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 20px; border: 1px dashed color-mix(in srgb, var(--color-text) 30%, transparent); border-radius: var(--radius); cursor: pointer; font-size: 0.92rem; overflow: hidden; }
+.sim-drop span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sim-drop input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.sim-drop:focus-within { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+.sim-drop .icon { flex: none; width: 1.2rem; height: 1.2rem; color: var(--color-accent); }
+.sim-hint { margin: 8px 0 0; font-size: 0.8rem; color: var(--color-muted); }
+.sim-bgopt { margin-top: 12px; }
+.sim-bgopt[hidden] { display: none; }
+.sim-range { margin-top: 14px; }
+.sim-range input[type="range"] { width: 100%; accent-color: var(--color-primary); }
+.sim-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.sim-privacy { margin: 0; font-size: 0.78rem; color: var(--color-muted); }
+@media (hover: hover) { .sim-chip:not(.is-on):hover { border-color: var(--color-accent); } .sim-drop:hover { border-color: var(--color-accent); } }
+@media (max-width: 900px) { .sim { grid-template-columns: minmax(0, 1fr); } .sim-stage-wrap { position: static; } .sim-stage svg { max-height: 62vh; } .sim-actions .btn { flex: 1 1 100%; } }
