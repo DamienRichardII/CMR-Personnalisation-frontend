@@ -4,4 +4,4 @@ Disallow: /admin
 Disallow: /compte
 Disallow: /api/
 
-Sitemap: https://cmr-personnalisation.vercel.app/sitemap.xml
+Sitemap: https://www.cmrpersonnalisation.com/sitemap.xml

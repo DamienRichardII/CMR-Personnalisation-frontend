@@ -8,6 +8,7 @@
                                   si présente, chaque demande est aussi enregistrée dans Supabase
      MAIL_FROM       (optionnel)  expéditeur — défaut : onboarding@resend.dev (test) ;
                                   utiliser une adresse d'un domaine vérifié dans Resend en production */
+const { renderMail } = require('./_mail');
 const ALLOWED_EXT = /\.(png|jpe?g|gif|webp|svg|pdf|ai|eps|psd|zip)$/i;
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const clip = (s, n) => String(s == null ? '' : s).slice(0, n);
@@ -76,11 +77,7 @@ module.exports = async (req, res) => {
   }).map((f) => ({ filename: clip(f.name, 120).replace(/[\\/]/g, '_'), content: f.content }));
 
   const text = pairs.map((p) => p[0] + ' : ' + p[1]).join('\n');
-  const html = '<div style="font-family:Arial,sans-serif;font-size:14px;color:#111">' +
-    '<h2 style="margin:0 0 12px">' + esc(subject) + '</h2>' +
-    '<table cellpadding="6" style="border-collapse:collapse">' +
-    pairs.map((p) => '<tr><td style="vertical-align:top;color:#555;white-space:nowrap"><b>' + esc(p[0]) + '</b></td><td style="white-space:pre-wrap">' + esc(p[1]) + '</td></tr>').join('') +
-    '</table></div>';
+  const html = renderMail({ subject, pairs, replyTo, siteUrl: process.env.SITE_URL || 'https://www.cmrpersonnalisation.com' });
 
   const [stored, mailed] = await Promise.all([
     saveToSupabase(subject, pairs, attachments).catch(() => false),
