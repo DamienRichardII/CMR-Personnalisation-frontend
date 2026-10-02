@@ -69,7 +69,7 @@
       busy(f, false);
       if (r.error) return status(f, frErr(r.error), 'error');
       if (r.data && r.data.session) return;
-      f.reset(); status(f, 'Compte créé. Un e-mail de confirmation vient de vous être envoyé : cliquez sur le lien pour activer votre compte, puis connectez-vous.', 'ok');
+      f.reset(); status(f, 'Demande enregistrée. Si cette adresse n\u2019a pas encore de compte, un e-mail de confirmation vient de vous être envoyé : cliquez sur le lien pour activer votre compte (pensez à vérifier vos courriers indésirables). Si vous avez déjà un compte, connectez-vous ou utilisez « Mot de passe oublié ».', 'ok');
     });
   });
   $('#form-forgot').addEventListener('submit', function (ev) {

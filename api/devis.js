@@ -95,5 +95,7 @@ module.exports = async (req, res) => {
   ]);
   /* Succès dès qu'au moins un canal (base de données ou e-mail) a enregistré la demande */
   if (stored || mailed) return res.status(200).json({ ok: true });
+  const missing = ['RESEND_API_KEY', 'SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY'].filter((k) => !process.env[k]);
+  console.error('[devis] envoi impossible — stocké:', stored, '— e-mail:', mailed, '— variables absentes:', missing.join(', ') || 'aucune');
   return res.status(key || SB_URL() ? 502 : 500).json({ error: 'delivery' });
 };
