@@ -89,6 +89,7 @@
         <ul>
           <li><a href="index.html">Accueil</a></li>
           <li><a href="realisations.html">Réalisations</a></li>
+          <li><a href="galerie.html">Galerie</a></li>
           <li><a href="simulateur.html" aria-current="page">Simulateur</a></li>
           <li><a href="devis.html">Devis</a></li>
         </ul>
@@ -138,24 +139,15 @@
     <div class="container cfg-grid">
       <div class="cfg-preview">
         <div class="sim-stage cfg-stage" id="sim-stage">
-          <svg id="sim-svg" viewBox="0 0 600 640" role="img" aria-label="Aperçu du vêtement avec votre logo">
-            <defs>
-              <linearGradient id="sim-shade" x1="0" x2="1" y1="0" y2="0">
-                <stop offset="0" stop-color="#000" stop-opacity=".18"/><stop offset=".22" stop-color="#000" stop-opacity="0"/>
-                <stop offset=".78" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".2"/>
-              </linearGradient>
-              <linearGradient id="sim-light" x1="0" x2="0" y1="0" y2="1">
-                <stop offset="0" stop-color="#fff" stop-opacity=".1"/><stop offset="1" stop-color="#000" stop-opacity=".12"/>
-              </linearGradient>
-              <radialGradient id="sim-ground-g" cx=".5" cy=".5" r=".5">
-                <stop offset="0" stop-color="#000" stop-opacity=".16"/><stop offset="1" stop-color="#000" stop-opacity="0"/>
-              </radialGradient>
-            </defs>
-            <rect id="sim-bg" x="0" y="0" width="600" height="640" fill="none"/>
-            <ellipse id="sim-ground" cx="300" cy="610" rx="215" ry="16" fill="url(#sim-ground-g)"/>
-            <g id="sim-garment"></g>
-            <g id="sim-logo" tabindex="0" role="img" aria-label="Votre logo. Flèches pour le déplacer, plus et moins pour changer sa taille." hidden></g>
-          </svg>
+          <div class="sim-view">
+            <canvas id="sim-view" width="900" height="960" aria-hidden="true"></canvas>
+            <svg id="sim-svg" viewBox="0 0 900 960" role="img" aria-label="Aperçu du vêtement avec votre logo">
+              <g id="sim-logo" tabindex="0" role="img" aria-label="Votre logo. Flèches pour le déplacer, plus et moins pour changer sa taille." visibility="hidden"></g>
+            </svg>
+            <button type="button" class="sim-rot sim-rot-l" id="sim-rot-l" aria-label="Tourner vers la gauche"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button type="button" class="sim-rot sim-rot-r" id="sim-rot-r" aria-label="Tourner vers la droite"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <span class="sim-360" aria-hidden="true">360°</span>
+          </div>
           <p class="sim-empty" id="sim-empty">Ajoutez votre logo pour le voir ici</p>
           <div class="cfg-stagebar">
             <div class="cfg-seg" id="sim-faces2" role="radiogroup" aria-label="Face du vêtement"></div>
@@ -176,7 +168,7 @@
         </fieldset>
         <fieldset class="cfg-step" id="cfg-s3">
           <legend><span class="cfg-n">03</span>Face</legend>
-          <div id="sim-face-group"><div class="cfg-seg" id="sim-faces" role="radiogroup" aria-label="Face du vêtement"></div></div>
+          <div id="sim-face-group"><div class="cfg-seg" id="sim-faces" role="radiogroup" aria-label="Face du vêtement"></div><p class="cfg-hint">Faites glisser le vêtement pour le faire tourner à 360°.</p></div>
         </fieldset>
         <fieldset class="cfg-step" id="cfg-s4">
           <legend><span class="cfg-n">04</span>Votre logo</legend>
@@ -192,6 +184,7 @@
         </fieldset>
         <fieldset class="cfg-step" id="cfg-s5" disabled>
           <legend><span class="cfg-n">05</span>Position</legend>
+          <label class="cfg-check" id="sim-dos-row" hidden><input type="checkbox" id="sim-dos-on"><span class="cfg-box"><svg class="cfg-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Ajouter aussi le logo dans le dos</span></label>
           <div class="cfg-opts" id="sim-places" role="radiogroup" aria-label="Emplacement du logo"></div>
           <div class="cfg-range"><label for="sim-size">Taille du logo</label><output id="sim-sizeval" for="sim-size">100 %</output><input type="range" id="sim-size" min="40" max="160" value="100" step="2"></div>
           <p class="cfg-hint">Faites aussi glisser le logo directement sur le vêtement.</p>
@@ -236,6 +229,7 @@
         <ul>
           <li><a href="index.html">Accueil</a></li>
           <li><a href="realisations.html">Réalisations</a></li>
+          <li><a href="galerie.html">Galerie</a></li>
           <li><a href="simulateur.html">Simulateur</a></li>
           <li><a href="devis.html">Devis</a></li>
           <li><a href="a-propos.html">À propos</a></li>

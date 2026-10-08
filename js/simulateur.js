@@ -1,115 +1,211 @@
-/* Simulateur de personnalisation — 100 % côté navigateur : le logo n'est envoyé nulle part. */
+/* Simulateur de personnalisation — photos produit en rotation 360° + logo du client.
+   100 % côté navigateur : le logo n'est envoyé nulle part tant que la demande de devis n'est pas envoyée. */
 (function () {
   'use strict';
-  var NS = 'http://www.w3.org/2000/svg';
+  var NS = 'http://www.w3.org/2000/svg', W = 900, H = 960;
   var $ = function (s) { return document.querySelector(s); };
-  var svg = $('#sim-svg'); if (!svg) return;
+  var cv = $('#sim-view'); if (!cv) return;
+  var ctx = cv.getContext('2d'), svg = $('#sim-svg'), stage = $('#sim-stage');
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var DATA = null, imgCache = {}, colCache = {}, colOrder = [];
 
-  /* Couleurs proposées — PLACEHOLDER : à confirmer avec CMR (couleurs réellement disponibles). */
-  var COLORS = [
-    { id: 'noir', label: 'Noir', hex: '#171b22' }, { id: 'blanc', label: 'Blanc', hex: '#f3f3f1' },
-    { id: 'marine', label: 'Bleu marine', hex: '#16294f' }, { id: 'royal', label: 'Bleu roi', hex: '#1f4fd8' },
-    { id: 'gris', label: 'Gris chiné', hex: '#8b9099' }, { id: 'rouge', label: 'Rouge', hex: '#b3202a' },
-    { id: 'beige', label: 'Beige', hex: '#d2bf9f' }, { id: 'marron', label: 'Marron', hex: '#5a3d2b' }
-  ];
+  var st = { t: { g: 0, c: 0, f: 0, p: 0 }, sel: false, pid: 'tshirt', ci: 0, angle: 0, anim: null, spun: false,
+    pl: null, logo: null, logoEl: null, logoOrig: null, logoName: '', ratio: 366 / 900, demo: true };
+  st.ratio = 900 / 366;
 
-  /* Silhouettes (viewBox 600 × 640). */
-  var TEE = 'M 200 60 L 120 90 L 40 170 L 100 215 L 140 185 L 140 585 Q 140 598 155 598 L 445 598 Q 460 598 460 585 L 460 185 L 500 215 L 560 170 L 480 90 L 400 60 Q 380 98 300 98 Q 220 98 200 60 Z';
-  var TEE_BACK = 'M 200 60 L 120 90 L 40 170 L 100 215 L 140 185 L 140 585 Q 140 598 155 598 L 445 598 Q 460 598 460 585 L 460 185 L 500 215 L 560 170 L 480 90 L 400 60 Q 380 78 300 78 Q 220 78 200 60 Z';
-  var SWEAT = 'M 205 60 L 120 85 L 52 150 L 28 430 L 104 440 L 140 250 L 140 575 Q 140 592 160 592 L 440 592 Q 460 592 460 575 L 460 250 L 496 440 L 572 430 L 548 150 L 480 85 L 395 60 Q 378 98 300 98 Q 222 98 205 60 Z';
-  var SWEAT_BACK = 'M 205 60 L 120 85 L 52 150 L 28 430 L 104 440 L 140 250 L 140 575 Q 140 592 160 592 L 440 592 Q 460 592 460 575 L 460 250 L 496 440 L 572 430 L 548 150 L 480 85 L 395 60 Q 378 82 300 82 Q 222 82 205 60 Z';
-
-  var GARMENTS = {
-    tshirt: { label: 'T-shirt', faces: ['face', 'dos'],
-      parts: { face: [{ d: TEE, k: 'body' }, { d: 'M 200 60 Q 222 98 300 106 Q 378 98 400 60', k: 'rib' }, { d: 'M 100 215 L 140 185 M 500 215 L 460 185', k: 'line' }],
-               dos:  [{ d: TEE_BACK, k: 'body' }, { d: 'M 200 60 Q 300 84 400 60', k: 'rib' }, { d: 'M 100 215 L 140 185 M 500 215 L 460 185', k: 'line' }] },
-      places: { face: [{ id: 'pg', label: 'Poitrine gauche', x: 372, y: 215, w: 92 }, { id: 'cp', label: 'Centre poitrine', x: 300, y: 262, w: 210 }, { id: 'gf', label: 'Grand format', x: 300, y: 330, w: 290 }],
-                dos:  [{ id: 'hd', label: 'Haut du dos', x: 300, y: 190, w: 170 }, { id: 'cd', label: 'Centre du dos', x: 300, y: 310, w: 290 }] } },
-    sweat: { label: 'Sweat', faces: ['face', 'dos'],
-      parts: { face: [{ d: SWEAT, k: 'body' }, { d: 'M 205 60 Q 222 100 300 108 Q 378 100 395 60', k: 'rib' }, { d: 'M 140 560 L 460 560 M 28 430 L 104 440 M 572 430 L 496 440', k: 'line' }, { d: 'M 140 560 L 460 560 L 460 575 Q 460 592 440 592 L 160 592 Q 140 592 140 575 Z', k: 'rib' }],
-               dos:  [{ d: SWEAT_BACK, k: 'body' }, { d: 'M 205 60 Q 300 88 395 60', k: 'rib' }, { d: 'M 140 560 L 460 560 L 460 575 Q 460 592 440 592 L 160 592 Q 140 592 140 575 Z', k: 'rib' }] },
-      places: { face: [{ id: 'pg', label: 'Poitrine gauche', x: 372, y: 215, w: 92 }, { id: 'cp', label: 'Centre poitrine', x: 300, y: 262, w: 210 }, { id: 'gf', label: 'Grand format', x: 300, y: 330, w: 290 }],
-                dos:  [{ id: 'hd', label: 'Haut du dos', x: 300, y: 190, w: 170 }, { id: 'cd', label: 'Centre du dos', x: 300, y: 310, w: 290 }] } },
-    polo: { label: 'Polo', faces: ['face', 'dos'],
-      parts: { face: [{ d: TEE, k: 'body' }, { d: 'M 200 60 L 255 70 L 285 150 L 262 118 Z', k: 'rib' }, { d: 'M 400 60 L 345 70 L 315 150 L 338 118 Z', k: 'rib' }, { d: 'M 285 150 L 315 150 L 315 300 L 285 300 Z', k: 'rib' }, { d: 'M 100 215 L 140 185 M 500 215 L 460 185', k: 'line' }, { d: 'M 300 150 L 300 300', k: 'line' }, { d: 'CIRC 300 185 3|CIRC 300 225 3|CIRC 300 265 3', k: 'dots' }],
-               dos:  [{ d: TEE_BACK, k: 'body' }, { d: 'M 200 60 Q 300 84 400 60 L 400 72 Q 300 98 200 72 Z', k: 'rib' }, { d: 'M 100 215 L 140 185 M 500 215 L 460 185', k: 'line' }] },
-      places: { face: [{ id: 'pg', label: 'Poitrine gauche', x: 375, y: 225, w: 80 }, { id: 'pd', label: 'Poitrine droite', x: 225, y: 225, w: 80 }, { id: 'cb', label: 'Centre bas', x: 300, y: 380, w: 190 }],
-                dos:  [{ id: 'hd', label: 'Haut du dos', x: 300, y: 190, w: 170 }, { id: 'cd', label: 'Centre du dos', x: 300, y: 310, w: 280 }] } },
-    casquette: { label: 'Casquette', faces: ['face'],
-      parts: { face: [{ d: 'M 110 370 Q 110 120 300 120 Q 490 120 490 370 Z', k: 'body' }, { d: 'M 300 120 L 300 370 M 205 135 Q 175 250 182 370 M 395 135 Q 425 250 418 370', k: 'line' }, { d: 'M 80 372 Q 300 338 520 372 Q 540 450 300 470 Q 60 450 80 372 Z', k: 'visor' }, { d: 'CIRC 300 118 9', k: 'dots' }] },
-      places: { face: [{ id: 'fa', label: 'Face avant', x: 300, y: 250, w: 150 }, { id: 'fg', label: 'Face avant (grand)', x: 300, y: 255, w: 210 }] } }
-  };
-  var FACE_LABEL = { face: 'Devant', dos: 'Dos' };
-
-  var st = { t: { g: 0, c: 0, f: 0, p: 0 }, sel: false, g: 'tshirt', c: 'noir', f: 'face', place: null, x: 300, y: 260, scale: 100, logo: null, logoOrig: null, logoName: '', ratio: 1 };
-
-  function mix(hex, to, t) {
-    var a = parseInt(hex.slice(1), 16), b = parseInt(to.slice(1), 16);
-    var r = Math.round(((a >> 16) & 255) * (1 - t) + ((b >> 16) & 255) * t), g = Math.round(((a >> 8) & 255) * (1 - t) + ((b >> 8) & 255) * t), bl = Math.round((a & 255) * (1 - t) + (b & 255) * t);
-    return '#' + ((1 << 24) + (r << 16) + (g << 8) + bl).toString(16).slice(1);
-  }
   function el(tag, attrs, parent) { var n = document.createElementNS(NS, tag); Object.keys(attrs || {}).forEach(function (k) { n.setAttribute(k, attrs[k]); }); if (parent) parent.appendChild(n); return n; }
-  function color() { return COLORS.filter(function (c) { return c.id === st.c; })[0]; }
-  function garment() { return GARMENTS[st.g]; }
-  function places() { return garment().places[st.f]; }
-  function place() { return places().filter(function (p) { return p.id === st.place; })[0] || places()[0]; }
+  function prod() { return DATA.products.filter(function (p) { return p.id === st.pid; })[0]; }
+  function color() { return prod().colors[st.ci]; }
+  function norm(a) { return ((a % 360) + 360) % 360; }
+  function dAng(a, b) { var d = norm(a - b); return d > 180 ? d - 360 : d; }
+  function bw(p, k) { var b = p.bbox[k]; return b[2] - b[0]; }
+  function hasBack(p) { return !!p.views.dos; }
+  function viewList(p) {
+    var v = [{ key: 'face', angle: 0, flip: false, w: bw(p, 'face') }];
+    if (p.views.gauche) v.push({ key: 'gauche', angle: 90, flip: false, w: bw(p, 'gauche') });
+    if (p.views.dos) v.push({ key: 'dos', angle: 180, flip: false, w: bw(p, 'dos') });
+    if (p.views.droite) v.push({ key: 'droite', angle: 270, flip: false, w: bw(p, 'droite') });
+    else if (p.views.gauche) v.push({ key: 'gauche', angle: 270, flip: true, w: bw(p, 'gauche') });
+    return v;
+  }
 
-  /* ----- vêtement ----- */
-  function drawGarment() {
-    var g = $('#sim-garment'); while (g.firstChild) g.removeChild(g.firstChild);
-    var hex = color().hex, dark = mix(hex, '#000000', 0.2), edge = mix(hex, '#000000', 0.38);
-    var light = (st.c === 'blanc');
-    garment().parts[st.f].forEach(function (p) {
-      if (p.k === 'body') {
-        el('path', { d: p.d, fill: hex, stroke: edge, 'stroke-width': 2, 'stroke-linejoin': 'round' }, g);
-        el('path', { d: p.d, fill: 'url(#sim-shade)' }, g); el('path', { d: p.d, fill: 'url(#sim-light)' }, g);
-      } else if (p.k === 'rib') { el('path', { d: p.d, fill: dark, stroke: edge, 'stroke-width': 1.5, 'stroke-linejoin': 'round' }, g); }
-      else if (p.k === 'visor') { el('path', { d: p.d, fill: dark, stroke: edge, 'stroke-width': 2, 'stroke-linejoin': 'round' }, g); el('path', { d: p.d, fill: 'url(#sim-light)' }, g); }
-      else if (p.k === 'line') { el('path', { d: p.d, fill: 'none', stroke: light ? 'rgba(0,0,0,.22)' : 'rgba(0,0,0,.35)', 'stroke-width': 1.5, 'stroke-linecap': 'round' }, g); }
-      else if (p.k === 'dots') { p.d.split('|').forEach(function (c) { var q = c.split(' '); el('circle', { cx: q[1], cy: q[2], r: q[3], fill: dark, stroke: edge, 'stroke-width': 1 }, g); }); }
+  /* ----- images + recoloration ----- */
+  function loadImg(src) {
+    if (!imgCache[src]) imgCache[src] = new Promise(function (res, rej) { var i = new Image(); i.onload = function () { res(i); }; i.onerror = rej; i.src = src; });
+    return imgCache[src];
+  }
+  function hexRgb(h) { return [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)]; }
+  function lum(hex) { var c = hexRgb(hex); return 0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2]; }
+  function colorize(img, hex) {
+    var c = document.createElement('canvas'); c.width = W; c.height = H; var x = c.getContext('2d', { willReadFrequently: true });
+    x.drawImage(img, 0, 0, W, H);
+    var d = x.getImageData(0, 0, W, H), px = d.data, t = hexRgb(hex), i, ls = [];
+    for (i = 0; i < px.length; i += 52) { if (Math.min(px[i], px[i + 1], px[i + 2]) < 235) ls.push((px[i] + px[i + 1] + px[i + 2]) / 3); }
+    ls.sort(function (a, b) { return a - b; });
+    var Lm = Math.max(12, ls.length ? ls[ls.length >> 1] : 60);
+    for (i = 0; i < px.length; i += 4) {
+      var mn = Math.min(px[i], px[i + 1], px[i + 2]), a = (250 - mn) / 40; if (a <= 0) continue; if (a > 1) a = 1;
+      var L = (px[i] + px[i + 1] + px[i + 2]) / 3, s = L / Lm; if (s > 2.2) s = 2.2;
+      var f = 1 + (s - 1) * 0.85;
+      for (var k = 0; k < 3; k++) { var v = t[k] * f; v = v > 255 ? 255 : v < 0 ? 0 : v; px[i + k] = v * a + 255 * (1 - a); }
+    }
+    x.putImageData(d, 0, 0); return c;
+  }
+  function viewSource(p, key, ci) {
+    var base = loadImg(p.views[key]);
+    if (ci === p.base) return base;
+    var ck = p.id + '|' + key + '|' + p.colors[ci].hex;
+    if (colCache[ck]) return Promise.resolve(colCache[ck]);
+    return base.then(function (img) {
+      var c = colorize(img, p.colors[ci].hex); colCache[ck] = c; colOrder.push(ck);
+      if (colOrder.length > 16) delete colCache[colOrder.shift()];
+      return c;
+    });
+  }
+  var cur = {}, loadToken = 0;
+  function prepare() {
+    var p = prod(), tok = ++loadToken, keys = Object.keys(p.views);
+    stage.classList.add('is-loading');
+    return Promise.all(keys.map(function (k) { return viewSource(p, k, st.ci); })).then(function (arr) {
+      if (tok !== loadToken) return;
+      cur = {}; keys.forEach(function (k, i) { cur[k] = arr[i]; });
+      stage.classList.remove('is-loading'); demoLogo(); render();
     });
   }
 
-  /* ----- logo ----- */
+  /* ----- logo d'exemple CMR (remplacé dès que le client ajoute le sien) ----- */
+  function demoLogo() {
+    if (!st.demo) return;
+    var src = lum(color().hex) < 140 ? 'Assets/img/logo-blanc.png' : 'Assets/img/logo-noir.png';
+    if (st.logo === src) return;
+    st.logo = src; st.ratio = 900 / 366;
+    loadImg(src).then(function (i) { if (st.demo && st.logo === src) { st.logoEl = i; } });
+  }
+
+  /* ----- rendu (rotation) ----- */
+  var shown = { fk: null, sx: 1, op: 1, dd: 0, best: null };
+  function render() {
+    var p = prod(); if (!p || !cur.face) return;
+    var vs = viewList(p), a = norm(st.angle), best = null, bd = 999;
+    vs.forEach(function (v) { var d = Math.abs(dAng(a, v.angle)); if (d < bd) { bd = d; best = v; } });
+    var dd = dAng(a, best.angle), dir = dd >= 0 ? 1 : -1, nb = null, nd = 999;
+    vs.forEach(function (v) { if (v === best) return; var d = dAng(v.angle, best.angle) * dir; if (d > 0 && d < nd) { nd = d; nb = v; } });
+    var sx = 1;
+    if (nb && nd < 200) { var tt = Math.min(1, Math.abs(dd) / nd); sx = (best.w + (nb.w - best.w) * tt) / best.w; }
+    sx = Math.max(0.25, Math.min(1.6, sx));
+    ctx.clearRect(0, 0, W, H); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
+    ctx.save(); ctx.translate(W / 2, 0); ctx.scale(best.flip ? -sx : sx, 1); ctx.translate(-W / 2, 0);
+    ctx.drawImage(cur[best.key], 0, 0, W, H); ctx.restore();
+    shown.fk = best.key === 'face' ? 'face' : best.key === 'dos' ? 'dos' : null;
+    shown.sx = sx; shown.op = Math.max(0, 1 - Math.abs(dd) / 35); shown.dd = dd; shown.best = best;
+    drawLogo(); updateRot();
+  }
+
+  /* ----- logo sur la photo ----- */
+  function curPlace(fk) { var pl = st.pl[fk], p = prod(); return p.places[fk].filter(function (q) { return q.id === pl.id; })[0] || p.places[fk][0]; }
   function drawLogo() {
     var lg = $('#sim-logo'); while (lg.firstChild) lg.removeChild(lg.firstChild);
-    var has = !!st.logo;
-    if (has) { if (lg.hasAttribute('hidden')) { lg.removeAttribute('hidden'); lg.classList.remove('is-new'); void lg.getBoundingClientRect(); lg.classList.add('is-new'); } } else lg.setAttribute('hidden', '');
-    lg.classList.toggle('is-sel', has && st.sel);
-    $('#sim-empty').hidden = has;
-    ['#sim-download', '#sim-quote'].forEach(function (s) { $(s).disabled = !has; });
+    var has = !!st.logo, user = has && !st.demo, fk = shown.fk, p = prod();
+    var visible = has && fk && st.pl[fk].on && p.places[fk].length;
+    lg.setAttribute('visibility', visible ? 'visible' : 'hidden');
+    lg.classList.toggle('is-sel', !!visible && st.sel);
+    var em = $('#sim-empty'); em.hidden = user; em.textContent = 'Logo d’exemple : ajoutez le vôtre';
+    $('#sim-download').disabled = !user; $('#sim-quote').disabled = !user;
     $('#cfg-s5').disabled = !has;
-    $('#sim-size').value = st.scale; $('#sim-sizeval').textContent = Math.round(st.scale) + ' %';
-    $('#sim-note').textContent = has ? 'Votre simulation sera jointe à votre demande.' : 'Ajoutez votre logo pour continuer.';
+    $('#sim-note').textContent = user ? 'Votre simulation sera jointe à votre demande.' : 'Ajoutez votre logo pour continuer.';
     syncLogoUI(); drawSummary();
-    if (!has) return;
-    var p = place(), w = p.w * st.scale / 100, h = w / st.ratio, maxH = 330;
-    if (h > maxH) { h = maxH; w = h * st.ratio; }
-    var im = el('image', { href: st.logo, x: st.x - w / 2, y: st.y - h / 2, width: w, height: h, preserveAspectRatio: 'xMidYMid meet' }, lg);
-    im.setAttribute('crossorigin', 'anonymous');
-    el('rect', { class: 'sim-frame', x: st.x - w / 2 - 4, y: st.y - h / 2 - 4, width: w + 8, height: h + 8, rx: 6, fill: 'none' }, lg);
+    if (!visible) return;
+    var pl = st.pl[fk], q = curPlace(fk), w = q.w * pl.s / 100, h = w / st.ratio;
+    if (h > 430) { h = 430; w = h * st.ratio; }
+    var g = el('g', { transform: 'translate(' + W / 2 + ' 0) scale(' + shown.sx.toFixed(4) + ' 1) translate(' + (-W / 2) + ' 0)', opacity: shown.op.toFixed(3) }, lg);
+    el('image', { href: st.logo, x: pl.x - w / 2, y: pl.y - h / 2, width: w, height: h, preserveAspectRatio: 'xMidYMid meet' }, g);
+    el('rect', { 'class': 'sim-frame', x: pl.x - w / 2 - 6, y: pl.y - h / 2 - 6, width: w + 12, height: h + 12, rx: 8, fill: 'none' }, g);
   }
-  function syncLogoUI() {
-    var has = !!st.logo;
-    $('#sim-drop').hidden = has; $('#sim-logo-ok').hidden = !has;
-    if (has) { $('#sim-thumb').src = st.logo; $('#sim-file-label').textContent = st.logoName; }
+  function initPlaces() {
+    var p = prod(); st.pl = {};
+    ['face', 'dos'].forEach(function (k) { var q = p.places[k] && p.places[k][0]; st.pl[k] = q ? { id: q.id, x: q.x, y: q.y, s: 100, on: k === 'face' } : { id: null, x: W / 2, y: H / 2, s: 100, on: false }; });
   }
-  function drawSummary() {
-    $('#sum-g').textContent = garment().label; $('#sum-c').textContent = color().label;
-    $('#sum-f').textContent = garment().faces.length < 2 ? 'Face avant' : (st.f === 'dos' ? 'Dos' : 'Face avant');
-    $('#sum-l').textContent = st.logo ? 'Logo personnalisé' : 'Aucun logo';
-    $('#sum-p').textContent = st.logo ? place().label : '—';
-    var t = st.t, has = !!st.logo, one = garment().faces.length < 2;
-    var done = [t.g, t.c, t.f || one, has, t.p && has];
-    for (var i = 3; i >= 0; i--) if (done[i + 1]) done[i] = true;
-    var cur = done.indexOf(false), items = document.querySelectorAll('#cfg-steps li');
-    for (var k = 0; k < items.length; k++) {
-      items[k].classList.toggle('is-done', !!done[k]); items[k].classList.toggle('is-on', k === cur);
-      var a = items[k].querySelector('a'); if (k === cur) a.setAttribute('aria-current', 'step'); else a.removeAttribute('aria-current');
+  function atRest() { return !st.anim && !rot && Math.abs(shown.dd || 0) < 2 && shown.fk; }
+
+  /* ----- animation d'angle ----- */
+  function animateTo(target, ms) {
+    if (st.anim) { cancelAnimationFrame(st.anim.id); st.anim = null; }
+    var from = st.angle, t0 = null;
+    if (reduce || !ms) { st.angle = target; render(); return; }
+    var an = st.anim = {};
+    function step(ts) {
+      if (t0 === null) t0 = ts;
+      var k = Math.min(1, (ts - t0) / ms), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      st.angle = from + (target - from) * e;
+      if (k < 1) { an.id = requestAnimationFrame(step); render(); }
+      else { st.anim = null; st.angle = hasBack(prod()) ? norm(target) : target; render(); }
     }
+    an.id = requestAnimationFrame(step);
   }
-  function swap() { svg.classList.remove('is-swap'); void svg.getBoundingClientRect(); svg.classList.add('is-swap'); }
-  function resetPlace() { var p = place(); st.place = p.id; st.x = p.x; st.y = p.y; st.scale = 100; }
+  function goFace(fk) {
+    var p = prod(); if (fk === 'dos' && !hasBack(p)) return; st.t.f = 1;
+    var target = fk === 'dos' ? 180 : 0, a = norm(st.angle);
+    if (!hasBack(p)) { animateTo(0, 420); return; }
+    animateTo(a + dAng(target, a), 560);
+  }
+  function stepRot(sgn) {
+    var p = prod(); st.t.f = 1;
+    if (!hasBack(p)) { var a0 = st.angle; animateTo(Math.max(-90, Math.min(90, Math.round(a0 / 90) * 90 + sgn * 90)), 420); return; }
+    animateTo(Math.round(st.angle / 90) * 90 + sgn * 90, 480);
+  }
+  function spinDemo() {
+    if (reduce || st.spun) return; st.spun = true;
+    if (hasBack(prod())) animateTo(360, 3000);
+    else { animateTo(70, 1000); setTimeout(function () { if (!rot && !st.anim) animateTo(0, 1000); }, 1250); }
+  }
+
+  /* ----- glisser : rotation du vêtement ou déplacement du logo ----- */
+  var rot = null, drag = null;
+  function pt(ev) { var r = svg.getBoundingClientRect(), k = W / r.width; return { x: (ev.clientX - r.left) * k, y: (ev.clientY - r.top) * k }; }
+  svg.addEventListener('pointerdown', function (ev) {
+    if (ev.target.closest && ev.target.closest('#sim-logo') && st.logo && atRest() && st.pl[shown.fk].on) {
+      st.sel = true; st.t.p = 1; var p = pt(ev), pl = st.pl[shown.fk];
+      drag = { dx: pl.x - p.x, dy: pl.y - p.y, fk: shown.fk };
+      svg.setPointerCapture(ev.pointerId); $('#sim-logo').classList.add('is-drag'); ev.preventDefault(); return;
+    }
+    if (st.sel) { st.sel = false; drawLogo(); }
+    if (st.anim) { cancelAnimationFrame(st.anim.id); st.anim = null; }
+    rot = { x: ev.clientX, a: st.angle, moved: false }; svg.setPointerCapture(ev.pointerId); stage.classList.add('is-rot');
+  });
+  svg.addEventListener('pointermove', function (ev) {
+    if (drag) {
+      var p = pt(ev), pl = st.pl[drag.fk];
+      pl.x = Math.max(60, Math.min(W - 60, p.x + drag.dx)); pl.y = Math.max(60, Math.min(H - 60, p.y + drag.dy)); drawLogo(); return;
+    }
+    if (!rot) return;
+    var dx = ev.clientX - rot.x; if (Math.abs(dx) > 3) rot.moved = true;
+    if (!rot.moved) return;
+    var a = rot.a - dx * 0.55;
+    if (!hasBack(prod())) a = Math.max(-90, Math.min(90, a));
+    st.angle = a; st.t.f = 1; render();
+  });
+  function endPtr() {
+    if (drag) { drag = null; $('#sim-logo').classList.remove('is-drag'); return; }
+    if (!rot) return; var moved = rot.moved; rot = null; stage.classList.remove('is-rot'); if (!moved) return;
+    var snap = Math.round(st.angle / 90) * 90;
+    if (!hasBack(prod())) snap = Math.max(-90, Math.min(90, snap));
+    animateTo(snap, 320);
+  }
+  ['pointerup', 'pointercancel'].forEach(function (n) { svg.addEventListener(n, endPtr); });
+  $('#sim-logo').addEventListener('keydown', function (ev) {
+    if (!st.logo || !shown.fk) return; var pl = st.pl[shown.fk];
+    var s = ev.shiftKey ? 16 : 5, k = ev.key, ch = true;
+    if (k === 'ArrowLeft') pl.x -= s; else if (k === 'ArrowRight') pl.x += s; else if (k === 'ArrowUp') pl.y -= s; else if (k === 'ArrowDown') pl.y += s;
+    else if (k === '+' || k === '=') pl.s = Math.min(160, pl.s + 4); else if (k === '-') pl.s = Math.max(40, pl.s - 4); else ch = false;
+    if (ch) { ev.preventDefault(); st.t.p = 1; controlsSize(); drawLogo(); }
+  });
+  $('#sim-logo').addEventListener('focus', function () { if (st.logo && !st.sel) { st.sel = true; drawLogo(); } });
+  $('#sim-rot-l').addEventListener('click', function () { stepRot(-1); });
+  $('#sim-rot-r').addEventListener('click', function () { stepRot(1); });
+  stage.addEventListener('keydown', function (ev) {
+    if (ev.target.closest && ev.target.closest('#sim-logo')) return;
+    if (ev.target.closest && ev.target.closest('.sim-view') === null) return;
+  });
 
   /* ----- commandes ----- */
   function buttons(box, items, current, cls, onPick, pre) {
@@ -119,45 +215,80 @@
       b.textContent = it.label; b.addEventListener('click', function () { onPick(it.id); }); box.appendChild(b);
     });
   }
-  function thumb(k) {
-    var s2 = document.createElementNS(NS, 'svg'); s2.setAttribute('viewBox', k === 'casquette' ? '60 100 480 390' : '20 50 560 560'); s2.setAttribute('aria-hidden', 'true');
-    GARMENTS[k].parts.face.forEach(function (p) {
-      if (p.k === 'body' || p.k === 'visor') el('path', { d: p.d, class: p.k === 'body' ? 'th-b' : 'th-l' }, s2);
-      else if (p.k === 'line') el('path', { d: p.d, class: 'th-l' }, s2);
-    });
-    return s2;
-  }
-  function drawControls() {
+  function currentFace() { return shown.fk || (shown.best && shown.best.angle > 90 && shown.best.angle < 270 ? 'dos' : 'face'); }
+  function drawProducts() {
     var gs = $('#sim-garments'); gs.textContent = '';
-    Object.keys(GARMENTS).forEach(function (k) {
-      var b = document.createElement('button'); b.type = 'button'; b.className = 'cfg-card' + (k === st.g ? ' is-on' : ''); b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', k === st.g ? 'true' : 'false'); b.dataset.k = 'g:' + k;
-      b.appendChild(thumb(k)); var t = document.createElement('span'); t.textContent = GARMENTS[k].label; b.appendChild(t);
-      b.addEventListener('click', function () { if (k === st.g) return; st.g = k; st.t.g = 1; if (GARMENTS[k].faces.indexOf(st.f) < 0) st.f = 'face'; resetPlace(); swap(); refresh(); });
-      gs.appendChild(b);
+    DATA.products.forEach(function (p) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'cfg-card' + (p.id === st.pid ? ' is-on' : ''); b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', p.id === st.pid ? 'true' : 'false'); b.dataset.k = 'g:' + p.id;
+      var im = document.createElement('img'); im.src = p.views.face; im.alt = ''; im.width = 90; im.height = 96; im.loading = 'lazy'; im.decoding = 'async'; b.appendChild(im);
+      var t = document.createElement('span'); t.textContent = p.name; b.appendChild(t);
+      b.addEventListener('click', function () { chooseProduct(p.id); }); gs.appendChild(b);
     });
-    var cs = $('#sim-colors'); cs.textContent = '';
-    COLORS.forEach(function (c) {
-      var b = document.createElement('button'); b.type = 'button'; b.className = 'sim-swatch' + (c.id === st.c ? ' is-on' : ''); b.style.setProperty('--sw', c.hex); b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', c.id === st.c ? 'true' : 'false'); b.setAttribute('aria-label', c.label); b.title = c.label; b.dataset.k = 'c:' + c.id;
-      b.addEventListener('click', function () { st.c = c.id; st.t.c = 1; refresh(); }); cs.appendChild(b);
-    });
-    $('#sim-colorname').textContent = color().label;
-    var one = garment().faces.length < 2; $('#sim-face-group').hidden = one; $('#sim-faces2').hidden = one; $('#cfg-s3').hidden = one;
-    var fs = garment().faces.map(function (f) { return { id: f, label: f === 'dos' ? 'Dos' : 'Avant' }; });
-    var pickFace = function (id) { if (id === st.f) return; st.f = id; st.t.f = 1; resetPlace(); swap(); refresh(); };
-    buttons($('#sim-faces'), fs, st.f, 'cfg-segbtn', pickFace, 'f:'); buttons($('#sim-faces2'), fs, st.f, 'cfg-segbtn', pickFace, 'g2:');
-    buttons($('#sim-places'), places(), st.place, 'cfg-opt', function (id) { st.place = id; st.t.p = 1; var p = place(); st.x = p.x; st.y = p.y; st.scale = 100; refresh(); }, 'p:');
   }
-  function refresh() {
-    var ae = document.activeElement, ak = ae && ae.dataset ? ae.dataset.k : null;
-    drawGarment(); drawLogo(); drawControls();
-    if (ak) { var nb = document.querySelector('[data-k="' + ak + '"]'); if (nb) nb.focus({ preventScroll: true }); }
+  function drawColors() {
+    var p = prod(), cs = $('#sim-colors'); cs.textContent = '';
+    p.colors.forEach(function (c, i) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'sim-swatch' + (i === st.ci ? ' is-on' : ''); b.style.setProperty('--sw', c.hex); b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', i === st.ci ? 'true' : 'false'); b.setAttribute('aria-label', c.name); b.title = c.name; b.dataset.k = 'c:' + i;
+      b.addEventListener('click', function () { if (i === st.ci) return; st.ci = i; st.t.c = 1; drawColors(); prepare(); }); cs.appendChild(b);
+    });
+    $('#sim-colorname').textContent = color().name + ' · ' + p.colors.length + ' coloris';
+  }
+  function controlsFor() {
+    var p = prod(), fk = currentFace(), back = hasBack(p);
+    var fs = [{ id: 'face', label: 'Avant' }]; if (back) fs.push({ id: 'dos', label: 'Dos' });
+    buttons($('#sim-faces'), fs, fk, 'cfg-segbtn', goFace, 'f:'); buttons($('#sim-faces2'), fs, fk, 'cfg-segbtn', goFace, 'g2:');
+    var list = p.places[fk] || [];
+    buttons($('#sim-places'), list, st.pl[fk].id, 'cfg-opt', function (id) {
+      var q = p.places[fk].filter(function (z) { return z.id === id; })[0], pl = st.pl[fk];
+      pl.id = id; pl.x = q.x; pl.y = q.y; pl.s = 100; pl.on = true; st.t.p = 1; controlsFor(); drawLogo();
+    }, 'p:');
+    $('#sim-dos-row').hidden = !(fk === 'dos' && back);
+    $('#sim-dos-on').checked = st.pl.dos.on;
+    $('#sim-places').hidden = !list.length || (fk === 'dos' && !st.pl.dos.on);
+    controlsSize();
+  }
+  function controlsSize() { var fk = currentFace(), pl = st.pl && st.pl[fk]; if (!pl) return; $('#sim-size').value = pl.s; $('#sim-sizeval').textContent = Math.round(pl.s) + ' %'; }
+  var lastFk = null;
+  function updateRot() { var fk = currentFace(); if (shown.fk && fk !== lastFk) { lastFk = fk; controlsFor(); } }
+  function chooseProduct(id) {
+    if (id === st.pid) return;
+    st.pid = id; st.t.g = 1; st.ci = prod().base; st.angle = 0; if (st.anim) { cancelAnimationFrame(st.anim.id); st.anim = null; }
+    initPlaces(); lastFk = null; drawProducts(); drawColors(); controlsFor(); prepare();
+    var u = new URL(location.href); u.searchParams.set('produit', id); try { history.replaceState(null, '', u); } catch (e) {}
+  }
+  $('#sim-dos-on').addEventListener('change', function () { st.pl.dos.on = this.checked; if (this.checked) st.t.p = 1; controlsFor(); drawLogo(); });
+  $('#sim-size').addEventListener('input', function () { var fk = currentFace(); if (!st.pl[fk]) return; st.pl[fk].s = +this.value; st.t.p = 1; $('#sim-sizeval').textContent = Math.round(+this.value) + ' %'; drawLogo(); });
+
+  /* ----- résumé + progression ----- */
+  function drawSummary() {
+    var p = DATA && prod(); if (!p || !st.pl) return;
+    var user = !!st.logo && !st.demo;
+    $('#sum-g').textContent = p.name; $('#sum-c').textContent = color().name;
+    var both = user && st.pl.dos.on && hasBack(p);
+    $('#sum-f').textContent = hasBack(p) ? (both ? 'Avant et dos' : (currentFace() === 'dos' ? 'Dos' : 'Avant')) : 'Avant';
+    $('#sum-l').textContent = user ? 'Logo personnalisé' : 'Aucun logo';
+    var pos = [];
+    if (user) { if (st.pl.face.on && p.places.face.length) pos.push(curPlace('face').label + (both ? ' (avant)' : '')); if (both) pos.push(curPlace('dos').label + ' (dos)'); }
+    $('#sum-p').textContent = pos.length ? pos.join(' · ') : '—';
+    var t = st.t, done = [!!t.g, !!t.c, !!t.f, user, !!(t.p && user)];
+    for (var i = 3; i >= 0; i--) if (done[i + 1]) done[i] = true;
+    var cur2 = done.indexOf(false), items = document.querySelectorAll('#cfg-steps li');
+    for (var k = 0; k < items.length; k++) {
+      items[k].classList.toggle('is-done', !!done[k]); items[k].classList.toggle('is-on', k === cur2);
+      var a = items[k].querySelector('a'); if (k === cur2) a.setAttribute('aria-current', 'step'); else a.removeAttribute('aria-current');
+    }
+    svg.setAttribute('aria-label', 'Aperçu : ' + p.name + ' ' + color().name.toLowerCase() + ', vue ' + (shown.fk === 'dos' ? 'de dos' : shown.fk === 'face' ? 'de face' : 'de côté'));
+  }
+  function syncLogoUI() {
+    var user = !!st.logo && !st.demo; $('#sim-drop').hidden = user; $('#sim-logo-ok').hidden = !user;
+    if (user) { $('#sim-thumb').src = st.logo; $('#sim-file-label').textContent = st.logoName; }
   }
 
   /* ----- fichier logo ----- */
   function err(m) { $('#sim-error').textContent = m || ''; }
   function readFile(f) { return new Promise(function (res, rej) { var r = new FileReader(); r.onload = function () { res(r.result); }; r.onerror = rej; r.readAsDataURL(f); }); }
-  var srcImg = null, origIsOpaque = false;
-  function render(removeBg) {
+  var srcImg = null;
+  function renderLogo(removeBg) {
     var c = document.createElement('canvas'), M = 900, s = Math.min(1, M / Math.max(srcImg.naturalWidth, srcImg.naturalHeight));
     c.width = Math.max(1, Math.round(srcImg.naturalWidth * s)); c.height = Math.max(1, Math.round(srcImg.naturalHeight * s));
     var x = c.getContext('2d'); x.drawImage(srcImg, 0, 0, c.width, c.height);
@@ -166,7 +297,8 @@
       for (var i = 0; i < px.length; i += 4) { var m = Math.min(px[i], px[i + 1], px[i + 2]); if (m > 235) px[i + 3] = 0; else if (m > 200) px[i + 3] = Math.round(px[i + 3] * (235 - m) / 35); }
       x.putImageData(d, 0, 0);
     }
-    st.logo = c.toDataURL('image/png'); st.ratio = c.width / c.height; drawLogo();
+    var url = c.toDataURL('image/png'); st.logo = url; st.ratio = c.width / c.height;
+    var e = new Image(); e.onload = function () { if (st.logo === url) { st.logoEl = e; render(); } }; e.src = url; drawLogo();
   }
   function handleFile(f) {
     err(''); if (!f) return;
@@ -175,11 +307,10 @@
     readFile(f).then(function (url) {
       var im = new Image();
       im.onload = function () {
-        srcImg = im; st.logoName = f.name; st.logoOrig = f.size <= 2 * 1048576 ? url : null;
-        origIsOpaque = /\.jpe?g$/i.test(f.name);
-        $('#sim-bgopt').hidden = false; $('#sim-nobg').checked = origIsOpaque;
-        if (!st.place) resetPlace();
-        st.sel = true; render(origIsOpaque); refresh();
+        srcImg = im; st.demo = false; st.logoName = f.name; st.logoOrig = f.size <= 2 * 1048576 ? url : null;
+        var jpg = /\.jpe?g$/i.test(f.name);
+        $('#sim-bgopt').hidden = false; $('#sim-nobg').checked = jpg;
+        st.sel = true; renderLogo(jpg); controlsFor();
       };
       im.onerror = function () { err('Impossible de lire cette image.'); };
       im.src = url;
@@ -190,44 +321,32 @@
   drop.addEventListener('click', function () { $('#sim-file').click(); });
   $('#sim-replace').addEventListener('click', function () { $('#sim-file').click(); });
   $('#sim-remove').addEventListener('click', function () {
-    srcImg = null; st.logo = null; st.logoOrig = null; st.logoName = ''; st.sel = false; st.t.p = 0; st.scale = 100;
-    $('#sim-file').value = ''; $('#sim-bgopt').hidden = true; $('#sim-nobg').checked = false; err(''); refresh();
-    var d = $('#sim-drop'); if (d) d.focus();
+    srcImg = null; st.demo = true; st.logo = null; st.logoEl = null; st.logoOrig = null; st.logoName = ''; st.sel = false; st.t.p = 0; initPlaces();
+    $('#sim-file').value = ''; $('#sim-bgopt').hidden = true; $('#sim-nobg').checked = false; err(''); demoLogo(); render(); controlsFor();
+    var d = $('#sim-drop'); if (d && !d.hidden) d.focus();
   });
   ['dragenter', 'dragover'].forEach(function (n) { drop.addEventListener(n, function (e) { e.preventDefault(); drop.classList.add('is-over'); }); });
   ['dragleave', 'dragend'].forEach(function (n) { drop.addEventListener(n, function () { drop.classList.remove('is-over'); }); });
   drop.addEventListener('drop', function (e) { e.preventDefault(); drop.classList.remove('is-over'); handleFile(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]); });
-  $('#sim-nobg').addEventListener('change', function () { if (srcImg) render(this.checked); });
-  $('#sim-size').addEventListener('input', function () { st.scale = +this.value; st.t.p = 1; drawLogo(); });
+  $('#sim-nobg').addEventListener('change', function () { if (srcImg) renderLogo(this.checked); });
 
-  /* ----- glisser / clavier ----- */
-  var drag = null;
-  function pt(ev) { var r = svg.getBoundingClientRect(), k = 600 / r.width; return { x: (ev.clientX - r.left) * k, y: (ev.clientY - r.top) * k }; }
-  var lgEl = $('#sim-logo');
-  lgEl.addEventListener('pointerdown', function (ev) { if (!st.logo) return; st.sel = true; st.t.p = 1; var p = pt(ev); drag = { dx: st.x - p.x, dy: st.y - p.y }; lgEl.setPointerCapture(ev.pointerId); lgEl.classList.add('is-drag'); ev.preventDefault(); });
-  lgEl.addEventListener('pointermove', function (ev) { if (!drag) return; var p = pt(ev); st.x = Math.max(40, Math.min(560, p.x + drag.dx)); st.y = Math.max(40, Math.min(600, p.y + drag.dy)); drawLogo(); });
-  ['pointerup', 'pointercancel'].forEach(function (n) { lgEl.addEventListener(n, function () { drag = null; lgEl.classList.remove('is-drag'); }); });
-  $('#sim-stage').addEventListener('pointerdown', function (ev) { if (st.logo && st.sel && !ev.target.closest('#sim-logo') && !ev.target.closest('button')) { st.sel = false; drawLogo(); } });
-  lgEl.addEventListener('focus', function () { if (st.logo && !st.sel) { st.sel = true; drawLogo(); } });
-  lgEl.addEventListener('keydown', function (ev) {
-    var s = ev.shiftKey ? 12 : 4, k = ev.key, ch = true;
-    if (k === 'ArrowLeft') st.x -= s; else if (k === 'ArrowRight') st.x += s; else if (k === 'ArrowUp') st.y -= s; else if (k === 'ArrowDown') st.y += s;
-    else if (k === '+' || k === '=') st.scale = Math.min(160, st.scale + 4); else if (k === '-') st.scale = Math.max(40, st.scale - 4); else ch = false;
-    if (ch) { ev.preventDefault(); st.t.p = 1; drawLogo(); }
-  });
-  /* le focus clavier doit rester sur le logo : drawLogo() ne recrée que son contenu */
-
-  /* ----- export ----- */
+  /* ----- export (canvas) ----- */
+  function drawExportView(x, key, fk, size, offX) {
+    var p = prod(), k = size / W;
+    x.drawImage(cur[key], offX, 0, size, Math.round(size * H / W));
+    if (st.logo && st.logoEl && st.pl[fk].on && p.places[fk].length) {
+      var pl = st.pl[fk], q = curPlace(fk), w = q.w * pl.s / 100, h = w / st.ratio; if (h > 430) { h = 430; w = h * st.ratio; }
+      x.drawImage(st.logoEl, offX + (pl.x - w / 2) * k, (pl.y - h / 2) * k, w * k, h * k);
+    }
+  }
   function exportPng(size) {
     return new Promise(function (res, rej) {
-      var clone = svg.cloneNode(true); clone.setAttribute('xmlns', NS); clone.setAttribute('width', size); clone.setAttribute('height', Math.round(size * 640 / 600));
-      var fr = clone.querySelector('.sim-frame'); if (fr) fr.parentNode.removeChild(fr);
-      var bg = clone.querySelector('#sim-bg'); bg.setAttribute('fill', '#f1f1ee');
-      var lg = clone.querySelector('#sim-logo'); lg.removeAttribute('hidden');
-      var url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(new XMLSerializer().serializeToString(clone));
-      var im = new Image();
-      im.onload = function () { var c = document.createElement('canvas'); c.width = size; c.height = Math.round(size * 640 / 600); c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); res(c.toDataURL('image/png')); };
-      im.onerror = rej; im.src = url;
+      try {
+        var p = prod(), both = st.pl.dos.on && hasBack(p), c = document.createElement('canvas');
+        c.width = size * (both ? 2 : 1); c.height = Math.round(size * H / W); var x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height);
+        drawExportView(x, 'face', 'face', size, 0); if (both) drawExportView(x, 'dos', 'dos', size, size);
+        res(c.toDataURL('image/png'));
+      } catch (e) { rej(e); }
     });
   }
   $('#sim-download').addEventListener('click', function () {
@@ -235,11 +354,21 @@
   });
   $('#sim-quote').addEventListener('click', function () {
     exportPng(900).then(function (u) {
-      var data = { mock: u, logo: st.logoOrig, logoName: st.logoName, garment: garment().label, color: color().label, face: FACE_LABEL[st.f], place: place().label };
+      var p = prod(), both = st.pl.dos.on && hasBack(p), pos = [];
+      if (st.pl.face.on && p.places.face.length) pos.push(curPlace('face').label + ' (avant)');
+      if (both) pos.push(curPlace('dos').label + ' (dos)');
+      var data = { mock: u, logo: st.logoOrig, logoName: st.logoName, garment: p.name, color: color().name, face: '', place: pos.join(' et ') };
       try { sessionStorage.setItem('cmr-sim', JSON.stringify(data)); } catch (e) { try { data.logo = null; sessionStorage.setItem('cmr-sim', JSON.stringify(data)); } catch (e2) {} }
       location.href = 'devis.html';
     }, function () { err('Export impossible sur ce navigateur.'); });
   });
 
-  st.place = place().id; st.x = place().x; st.y = place().y; refresh();
+  /* ----- démarrage ----- */
+  fetch('Assets/produits/produits.json').then(function (r) { return r.json(); }).then(function (d) {
+    DATA = d;
+    var q = new URLSearchParams(location.search).get('produit');
+    if (q && d.products.some(function (p) { return p.id === q; })) st.pid = q;
+    st.ci = prod().base; initPlaces(); drawProducts(); drawColors();
+    prepare().then(function () { controlsFor(); drawSummary(); setTimeout(spinDemo, 350); });
+  }).catch(function () { err('Impossible de charger les produits. Rechargez la page.'); });
 })();

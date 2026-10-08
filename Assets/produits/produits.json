@@ -1,0 +1,1416 @@
+{
+ "categories": [
+  {
+   "id": "t-shirts-polos",
+   "name": "T-shirts & polos"
+  },
+  {
+   "id": "sweats",
+   "name": "Sweats"
+  },
+  {
+   "id": "vestes-gilets",
+   "name": "Vestes & gilets"
+  },
+  {
+   "id": "travail",
+   "name": "Vêtements de travail"
+  }
+ ],
+ "products": [
+  {
+   "id": "tshirt",
+   "name": "T-shirt",
+   "cat": "t-shirts-polos",
+   "desc": "T-shirt tubulaire à manches courtes en tailles adultes, avec coutures latérales en tailles enfant. Col rond côtelé 1x1. Encolure bordée de tissu assorti.",
+   "infos": [
+    "Tailles enfant disponibles",
+    "Coupe tubulaire pour les tailles adulte, coutures latérales pour les tailles enfant"
+   ],
+   "views": {
+    "face": "Assets/produits/tshirt/face.webp",
+    "dos": "Assets/produits/tshirt/dos.webp",
+    "gauche": "Assets/produits/tshirt/gauche.webp",
+    "droite": "Assets/produits/tshirt/droite.webp"
+   },
+   "bbox": {
+    "face": [
+     92,
+     58,
+     808,
+     902
+    ],
+    "dos": [
+     107,
+     58,
+     792,
+     902
+    ],
+    "gauche": [
+     264,
+     58,
+     636,
+     902
+    ],
+    "droite": [
+     264,
+     58,
+     636,
+     902
+    ]
+   },
+   "ambiance": [
+    "Assets/produits/tshirt/ambiance-1.webp"
+   ],
+   "colors": [
+    {
+     "name": "Noir",
+     "hex": "#1f1f1f"
+    },
+    {
+     "name": "Gris",
+     "hex": "#d8d8d8"
+    },
+    {
+     "name": "Gris",
+     "hex": "#9f8b9e"
+    },
+    {
+     "name": "Rose",
+     "hex": "#edc6d3"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#c04656"
+    },
+    {
+     "name": "Bordeaux",
+     "hex": "#420d16"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#cd8a7f"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#ef6f52"
+    },
+    {
+     "name": "Orange",
+     "hex": "#d58857"
+    },
+    {
+     "name": "Orange",
+     "hex": "#c77d60"
+    },
+    {
+     "name": "Orange",
+     "hex": "#d84e21"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#b31f26"
+    },
+    {
+     "name": "Beige",
+     "hex": "#dec29e"
+    },
+    {
+     "name": "Sable",
+     "hex": "#ccb596"
+    },
+    {
+     "name": "Jaune",
+     "hex": "#e3be06"
+    },
+    {
+     "name": "Vert kaki",
+     "hex": "#d4dccd"
+    },
+    {
+     "name": "Vert",
+     "hex": "#7dc76c"
+    },
+    {
+     "name": "Vert",
+     "hex": "#037524"
+    },
+    {
+     "name": "Turquoise",
+     "hex": "#a1bfbf"
+    },
+    {
+     "name": "Turquoise",
+     "hex": "#709fa5"
+    },
+    {
+     "name": "Turquoise",
+     "hex": "#02aad7"
+    },
+    {
+     "name": "Bleu canard",
+     "hex": "#2a5159"
+    },
+    {
+     "name": "Bleu ciel",
+     "hex": "#92bae4"
+    },
+    {
+     "name": "Bleu gris",
+     "hex": "#9aa4bf"
+    },
+    {
+     "name": "Bleu roi",
+     "hex": "#4564b5"
+    },
+    {
+     "name": "Bleu nuit",
+     "hex": "#34384e"
+    },
+    {
+     "name": "Bleu roi",
+     "hex": "#0b2575"
+    },
+    {
+     "name": "Bleu marine",
+     "hex": "#152232"
+    },
+    {
+     "name": "Violet",
+     "hex": "#6b569b"
+    },
+    {
+     "name": "Prune",
+     "hex": "#391837"
+    },
+    {
+     "name": "Fuchsia",
+     "hex": "#cc1d76"
+    }
+   ],
+   "base": 0,
+   "places": {
+    "face": [
+     {
+      "id": "pg",
+      "label": "Poitrine gauche",
+      "x": 563,
+      "y": 256,
+      "w": 123
+     },
+     {
+      "id": "pd",
+      "label": "Poitrine droite",
+      "x": 337,
+      "y": 256,
+      "w": 123
+     },
+     {
+      "id": "cp",
+      "label": "Centre poitrine",
+      "x": 450,
+      "y": 311,
+      "w": 236
+     },
+     {
+      "id": "gf",
+      "label": "Grand format",
+      "x": 450,
+      "y": 396,
+      "w": 369
+     }
+    ],
+    "dos": [
+     {
+      "id": "hd",
+      "label": "Haut du dos",
+      "x": 450,
+      "y": 201,
+      "w": 181
+     },
+     {
+      "id": "cd",
+      "label": "Centre du dos",
+      "x": 450,
+      "y": 328,
+      "w": 344
+     }
+    ]
+   }
+  },
+  {
+   "id": "polo",
+   "name": "Polo",
+   "cat": "t-shirts-polos",
+   "desc": "Polo en coton à manches courtes. Point piqué. Col et manches tissés 1x1. Patte de boutonnage à 3 boutons. Encolure bordée de tissu assorti. Fentes latérales à l'ourlet.",
+   "infos": [
+    "Matière : coton",
+    "Poche en option",
+    "Disponible en tailles enfants"
+   ],
+   "views": {
+    "face": "Assets/produits/polo/face.webp",
+    "dos": "Assets/produits/polo/dos.webp",
+    "gauche": "Assets/produits/polo/gauche.webp"
+   },
+   "bbox": {
+    "face": [
+     104,
+     58,
+     795,
+     902
+    ],
+    "dos": [
+     114,
+     58,
+     786,
+     901
+    ],
+    "gauche": [
+     294,
+     58,
+     605,
+     902
+    ]
+   },
+   "ambiance": [],
+   "colors": [
+    {
+     "name": "Blanc",
+     "hex": "#dedede"
+    },
+    {
+     "name": "Gris",
+     "hex": "#9d9b9e"
+    },
+    {
+     "name": "Anthracite",
+     "hex": "#3d3d3f"
+    },
+    {
+     "name": "Noir",
+     "hex": "#232323"
+    },
+    {
+     "name": "Noir",
+     "hex": "#161b26"
+    },
+    {
+     "name": "Fuchsia",
+     "hex": "#dc2b65"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#d10828"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#6e3a44"
+    },
+    {
+     "name": "Bordeaux",
+     "hex": "#820120"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#e08f82"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#da877b"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#cc686a"
+    },
+    {
+     "name": "Bordeaux",
+     "hex": "#311711"
+    },
+    {
+     "name": "Sable",
+     "hex": "#c6b394"
+    },
+    {
+     "name": "Jaune",
+     "hex": "#ecd42e"
+    },
+    {
+     "name": "Orange",
+     "hex": "#f27e25"
+    },
+    {
+     "name": "Vert kaki",
+     "hex": "#424536"
+    },
+    {
+     "name": "Vert kaki",
+     "hex": "#b8c6ac"
+    },
+    {
+     "name": "Vert",
+     "hex": "#059d29"
+    },
+    {
+     "name": "Vert",
+     "hex": "#028237"
+    },
+    {
+     "name": "Vert sauge",
+     "hex": "#659885"
+    },
+    {
+     "name": "Turquoise",
+     "hex": "#5a7974"
+    },
+    {
+     "name": "Vert bouteille",
+     "hex": "#01412a"
+    },
+    {
+     "name": "Menthe",
+     "hex": "#b1dedc"
+    },
+    {
+     "name": "Turquoise",
+     "hex": "#02a3d5"
+    },
+    {
+     "name": "Bleu gris",
+     "hex": "#3b5e70"
+    },
+    {
+     "name": "Bleu ciel",
+     "hex": "#a6b6cf"
+    },
+    {
+     "name": "Bleu ciel",
+     "hex": "#9bb5d2"
+    },
+    {
+     "name": "Bleu gris",
+     "hex": "#647fa6"
+    },
+    {
+     "name": "Bleu roi",
+     "hex": "#19487d"
+    },
+    {
+     "name": "Bleu gris",
+     "hex": "#484a6e"
+    },
+    {
+     "name": "Violet",
+     "hex": "#4a4156"
+    },
+    {
+     "name": "Prune",
+     "hex": "#640e60"
+    },
+    {
+     "name": "Rose",
+     "hex": "#edb8d1"
+    }
+   ],
+   "base": 3,
+   "places": {
+    "face": [
+     {
+      "id": "pg",
+      "label": "Poitrine gauche",
+      "x": 559,
+      "y": 286,
+      "w": 119
+     },
+     {
+      "id": "pd",
+      "label": "Poitrine droite",
+      "x": 340,
+      "y": 286,
+      "w": 119
+     },
+     {
+      "id": "cp",
+      "label": "Centre poitrine",
+      "x": 450,
+      "y": 345,
+      "w": 228
+     },
+     {
+      "id": "gf",
+      "label": "Grand format",
+      "x": 450,
+      "y": 421,
+      "w": 356
+     }
+    ],
+    "dos": [
+     {
+      "id": "hd",
+      "label": "Haut du dos",
+      "x": 450,
+      "y": 201,
+      "w": 177
+     },
+     {
+      "id": "cd",
+      "label": "Centre du dos",
+      "x": 450,
+      "y": 328,
+      "w": 337
+     }
+    ]
+   }
+  },
+  {
+   "id": "sweat",
+   "name": "Sweat col rond",
+   "cat": "sweats",
+   "desc": "Pull unisexe en polaire brossée à col rond. Col, poignets et ourlet en bord-côte 2x1 avec élasthanne. Bandes de renfort aux coutures dans le même tissu.",
+   "infos": [
+    "Unisexe",
+    "Disponible en tailles enfants",
+    "Marquage : prévoir une protection contre la migration des teintes"
+   ],
+   "views": {
+    "face": "Assets/produits/sweat/face.webp",
+    "dos": "Assets/produits/sweat/dos.webp",
+    "gauche": "Assets/produits/sweat/gauche.webp"
+   },
+   "bbox": {
+    "face": [
+     96,
+     58,
+     803,
+     902
+    ],
+    "dos": [
+     116,
+     58,
+     783,
+     902
+    ],
+    "gauche": [
+     295,
+     58,
+     604,
+     902
+    ]
+   },
+   "ambiance": [],
+   "colors": [
+    {
+     "name": "Blanc",
+     "hex": "#dcdcdc"
+    },
+    {
+     "name": "Gris",
+     "hex": "#bebbb3"
+    },
+    {
+     "name": "Gris",
+     "hex": "#b4b0ad"
+    },
+    {
+     "name": "Gris",
+     "hex": "#a7a7a9"
+    },
+    {
+     "name": "Anthracite",
+     "hex": "#57615a"
+    },
+    {
+     "name": "Anthracite",
+     "hex": "#40444a"
+    },
+    {
+     "name": "Noir",
+     "hex": "#1e2122"
+    },
+    {
+     "name": "Noir",
+     "hex": "#111111"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#714147"
+    },
+    {
+     "name": "Prune",
+     "hex": "#60071e"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#d88573"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#e16d57"
+    },
+    {
+     "name": "Orange",
+     "hex": "#ba8261"
+    },
+    {
+     "name": "Orange",
+     "hex": "#ed6020"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#c2282a"
+    },
+    {
+     "name": "Beige",
+     "hex": "#e7e3d9"
+    },
+    {
+     "name": "Beige",
+     "hex": "#e1c19e"
+    },
+    {
+     "name": "Sable",
+     "hex": "#cfbe99"
+    },
+    {
+     "name": "Jaune",
+     "hex": "#e6cf23"
+    },
+    {
+     "name": "Orange",
+     "hex": "#c57c36"
+    },
+    {
+     "name": "Vert kaki",
+     "hex": "#d3dcc9"
+    },
+    {
+     "name": "Vert anis",
+     "hex": "#85b854"
+    },
+    {
+     "name": "Vert sauge",
+     "hex": "#48563e"
+    },
+    {
+     "name": "Vert",
+     "hex": "#1b7859"
+    },
+    {
+     "name": "Vert bouteille",
+     "hex": "#0d3b27"
+    },
+    {
+     "name": "Turquoise",
+     "hex": "#3facc1"
+    },
+    {
+     "name": "Bleu gris",
+     "hex": "#536976"
+    },
+    {
+     "name": "Turquoise",
+     "hex": "#0278a9"
+    },
+    {
+     "name": "Bleu canard",
+     "hex": "#1b4c54"
+    },
+    {
+     "name": "Bleu ciel",
+     "hex": "#9dbdde"
+    },
+    {
+     "name": "Bleu gris",
+     "hex": "#8493b1"
+    },
+    {
+     "name": "Bleu roi",
+     "hex": "#01326e"
+    },
+    {
+     "name": "Bleu marine",
+     "hex": "#13192f"
+    },
+    {
+     "name": "Violet",
+     "hex": "#6b5a90"
+    },
+    {
+     "name": "Violet",
+     "hex": "#55485e"
+    },
+    {
+     "name": "Violet",
+     "hex": "#5c0c71"
+    },
+    {
+     "name": "Rose",
+     "hex": "#e6c7d9"
+    },
+    {
+     "name": "Fuchsia",
+     "hex": "#c61b7c"
+    }
+   ],
+   "base": 2,
+   "places": {
+    "face": [
+     {
+      "id": "pg",
+      "label": "Poitrine gauche",
+      "x": 545,
+      "y": 256,
+      "w": 103
+     },
+     {
+      "id": "pd",
+      "label": "Poitrine droite",
+      "x": 354,
+      "y": 256,
+      "w": 103
+     },
+     {
+      "id": "cp",
+      "label": "Centre poitrine",
+      "x": 450,
+      "y": 311,
+      "w": 198
+     },
+     {
+      "id": "gf",
+      "label": "Grand format",
+      "x": 450,
+      "y": 396,
+      "w": 309
+     }
+    ],
+    "dos": [
+     {
+      "id": "hd",
+      "label": "Haut du dos",
+      "x": 450,
+      "y": 201,
+      "w": 149
+     },
+     {
+      "id": "cd",
+      "label": "Centre du dos",
+      "x": 450,
+      "y": 328,
+      "w": 284
+     }
+    ]
+   }
+  },
+  {
+   "id": "capuche",
+   "name": "Sweat à capuche",
+   "cat": "sweats",
+   "desc": "Sweat-shirt en molleton gratté avec capuche doublée. Poignets et ceinture en bord-côte 2x1 avec élasthanne. Bande de propreté dans le même tissu. Cordon plat à la capuche. Coloris disponibles avec capuche contrastée et œillets métalliques ton sur ton.",
+   "infos": [
+    "Tailles enfant disponibles",
+    "Sweat à capuche enfant sans cordons"
+   ],
+   "views": {
+    "face": "Assets/produits/capuche/face.webp",
+    "dos": "Assets/produits/capuche/dos.webp",
+    "gauche": "Assets/produits/capuche/gauche.webp",
+    "droite": "Assets/produits/capuche/droite.webp"
+   },
+   "bbox": {
+    "face": [
+     119,
+     58,
+     780,
+     902
+    ],
+    "dos": [
+     140,
+     58,
+     759,
+     902
+    ],
+    "gauche": [
+     284,
+     58,
+     616,
+     902
+    ],
+    "droite": [
+     284,
+     58,
+     616,
+     902
+    ]
+   },
+   "ambiance": [],
+   "colors": [
+    {
+     "name": "Gris",
+     "hex": "#d8d8d8"
+    },
+    {
+     "name": "Gris",
+     "hex": "#cccccc"
+    },
+    {
+     "name": "Gris",
+     "hex": "#b4b4b6"
+    },
+    {
+     "name": "Anthracite",
+     "hex": "#5a655d"
+    },
+    {
+     "name": "Anthracite",
+     "hex": "#424242"
+    },
+    {
+     "name": "Noir",
+     "hex": "#161616"
+    },
+    {
+     "name": "Rose",
+     "hex": "#fcb6c9"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#6b3a3f"
+    },
+    {
+     "name": "Bordeaux",
+     "hex": "#70081b"
+    },
+    {
+     "name": "Bordeaux",
+     "hex": "#531620"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#fa755e"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#d98378"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#f22527"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#d82224"
+    },
+    {
+     "name": "Orange",
+     "hex": "#e45c14"
+    },
+    {
+     "name": "Orange",
+     "hex": "#8c6958"
+    },
+    {
+     "name": "Beige",
+     "hex": "#e4dfd5"
+    },
+    {
+     "name": "Beige",
+     "hex": "#d7c3ab"
+    },
+    {
+     "name": "Sable",
+     "hex": "#d2b99b"
+    },
+    {
+     "name": "Jaune",
+     "hex": "#e5d324"
+    },
+    {
+     "name": "Orange",
+     "hex": "#bc7531"
+    },
+    {
+     "name": "Vert kaki",
+     "hex": "#474b3a"
+    },
+    {
+     "name": "Vert kaki",
+     "hex": "#d5e2cb"
+    },
+    {
+     "name": "Vert",
+     "hex": "#037424"
+    },
+    {
+     "name": "Vert",
+     "hex": "#1f4b2c"
+    },
+    {
+     "name": "Vert bouteille",
+     "hex": "#034120"
+    },
+    {
+     "name": "Turquoise",
+     "hex": "#3e9db0"
+    },
+    {
+     "name": "Bleu gris",
+     "hex": "#4c6573"
+    },
+    {
+     "name": "Bleu canard",
+     "hex": "#344f56"
+    },
+    {
+     "name": "Bleu",
+     "hex": "#82aaca"
+    },
+    {
+     "name": "Bleu gris",
+     "hex": "#818fb0"
+    },
+    {
+     "name": "Bleu roi",
+     "hex": "#034d96"
+    },
+    {
+     "name": "Bleu marine",
+     "hex": "#161b2d"
+    },
+    {
+     "name": "Bleu marine",
+     "hex": "#0b1936"
+    },
+    {
+     "name": "Violet",
+     "hex": "#705c9c"
+    },
+    {
+     "name": "Violet",
+     "hex": "#564760"
+    },
+    {
+     "name": "Violet",
+     "hex": "#5c0572"
+    },
+    {
+     "name": "Rose",
+     "hex": "#e9b8cb"
+    },
+    {
+     "name": "Fuchsia",
+     "hex": "#d93976"
+    }
+   ],
+   "base": 5,
+   "places": {
+    "face": [
+     {
+      "id": "pg",
+      "label": "Poitrine gauche",
+      "x": 538,
+      "y": 303,
+      "w": 96
+     },
+     {
+      "id": "pd",
+      "label": "Poitrine droite",
+      "x": 361,
+      "y": 303,
+      "w": 96
+     },
+     {
+      "id": "cp",
+      "label": "Centre poitrine",
+      "x": 450,
+      "y": 362,
+      "w": 185
+     },
+     {
+      "id": "gf",
+      "label": "Grand format",
+      "x": 450,
+      "y": 446,
+      "w": 289
+     }
+    ],
+    "dos": [
+     {
+      "id": "hd",
+      "label": "Haut du dos",
+      "x": 450,
+      "y": 244,
+      "w": 139
+     },
+     {
+      "id": "cd",
+      "label": "Centre du dos",
+      "x": 450,
+      "y": 362,
+      "w": 263
+     }
+    ]
+   }
+  },
+  {
+   "id": "polaire",
+   "name": "Veste polaire",
+   "cat": "vestes-gilets",
+   "desc": "Veste polaire avec fermeture à glissière sur le devant. Col montant. Poignets avec bordure élastique. Poches zippées intégrées dans les coutures des panneaux latéraux. Coutures à chevrons bordées. Tous les accessoires assortis. Ajusteurs latéraux intérieurs en tailles adultes.",
+   "infos": [
+    "Tissu stretch",
+    "Disponible en tailles kids"
+   ],
+   "views": {
+    "face": "Assets/produits/polaire/face.webp",
+    "dos": "Assets/produits/polaire/dos.webp",
+    "gauche": "Assets/produits/polaire/gauche.webp",
+    "droite": "Assets/produits/polaire/droite.webp"
+   },
+   "bbox": {
+    "face": [
+     102,
+     58,
+     797,
+     902
+    ],
+    "dos": [
+     139,
+     58,
+     761,
+     902
+    ],
+    "gauche": [
+     284,
+     58,
+     616,
+     902
+    ],
+    "droite": [
+     284,
+     58,
+     616,
+     902
+    ]
+   },
+   "ambiance": [
+    "Assets/produits/polaire/ambiance-1.webp"
+   ],
+   "colors": [
+    {
+     "name": "Gris",
+     "hex": "#dadada"
+    },
+    {
+     "name": "Gris",
+     "hex": "#676874"
+    },
+    {
+     "name": "Anthracite",
+     "hex": "#555849"
+    },
+    {
+     "name": "Noir",
+     "hex": "#232323"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#bf1919"
+    },
+    {
+     "name": "Sable",
+     "hex": "#c9bba6"
+    },
+    {
+     "name": "Vert sauge",
+     "hex": "#314e36"
+    },
+    {
+     "name": "Bleu roi",
+     "hex": "#044093"
+    },
+    {
+     "name": "Bleu marine",
+     "hex": "#1e2344"
+    },
+    {
+     "name": "Violet",
+     "hex": "#601573"
+    },
+    {
+     "name": "Prune",
+     "hex": "#73173a"
+    }
+   ],
+   "base": 3,
+   "places": {
+    "face": [
+     {
+      "id": "pg",
+      "label": "Poitrine gauche",
+      "x": 550,
+      "y": 277,
+      "w": 108
+     },
+     {
+      "id": "pd",
+      "label": "Poitrine droite",
+      "x": 349,
+      "y": 277,
+      "w": 108
+     },
+     {
+      "id": "cp",
+      "label": "Centre poitrine",
+      "x": 450,
+      "y": 320,
+      "w": 209
+     },
+     {
+      "id": "gf",
+      "label": "Grand format",
+      "x": 450,
+      "y": 412,
+      "w": 325
+     }
+    ],
+    "dos": [
+     {
+      "id": "hd",
+      "label": "Haut du dos",
+      "x": 450,
+      "y": 227,
+      "w": 149
+     },
+     {
+      "id": "cd",
+      "label": "Centre du dos",
+      "x": 450,
+      "y": 345,
+      "w": 284
+     }
+    ]
+   }
+  },
+  {
+   "id": "softshell",
+   "name": "Softshell micropolaire",
+   "cat": "vestes-gilets",
+   "desc": "Veste softshell 3 couches avec fermeture à glissière sur le devant, déperlante et coupe-vent. Doublée de tissu micropolaire. Deux poches latérales et une poche poitrine droite avec fermetures à glissière et garnies du même tissu. Protège-menton dans le même tissu. Ajusteurs latéraux internes.",
+   "infos": [
+    "Résistante à l'eau (pression hydrostatique supérieure à 3000 mm H2O)",
+    "Marquage : l'impression DTF n'est pas recommandée pour ce modèle"
+   ],
+   "views": {
+    "face": "Assets/produits/softshell/face.webp",
+    "gauche": "Assets/produits/softshell/gauche.webp",
+    "droite": "Assets/produits/softshell/droite.webp"
+   },
+   "bbox": {
+    "face": [
+     115,
+     58,
+     785,
+     902
+    ],
+    "gauche": [
+     285,
+     58,
+     615,
+     902
+    ],
+    "droite": [
+     284,
+     58,
+     616,
+     902
+    ]
+   },
+   "ambiance": [
+    "Assets/produits/softshell/ambiance-1.webp",
+    "Assets/produits/softshell/ambiance-2.webp"
+   ],
+   "colors": [
+    {
+     "name": "Gris",
+     "hex": "#8f8f8f"
+    },
+    {
+     "name": "Anthracite",
+     "hex": "#4e504f"
+    },
+    {
+     "name": "Noir",
+     "hex": "#171717"
+    },
+    {
+     "name": "Kaki",
+     "hex": "#42422d"
+    },
+    {
+     "name": "Bleu gris",
+     "hex": "#6b7887"
+    },
+    {
+     "name": "Bleu roi",
+     "hex": "#075097"
+    },
+    {
+     "name": "Bleu marine",
+     "hex": "#1d263d"
+    }
+   ],
+   "base": 6,
+   "places": {
+    "face": [
+     {
+      "id": "pg",
+      "label": "Poitrine gauche",
+      "x": 546,
+      "y": 277,
+      "w": 105
+     },
+     {
+      "id": "pd",
+      "label": "Poitrine droite",
+      "x": 354,
+      "y": 277,
+      "w": 105
+     },
+     {
+      "id": "cp",
+      "label": "Centre poitrine",
+      "x": 450,
+      "y": 320,
+      "w": 201
+     },
+     {
+      "id": "gf",
+      "label": "Grand format",
+      "x": 450,
+      "y": 412,
+      "w": 314
+     }
+    ],
+    "dos": []
+   }
+  },
+  {
+   "id": "gilet",
+   "name": "Gilet softshell sans manches",
+   "cat": "vestes-gilets",
+   "desc": "Gilet softshell 2 couches avec fermeture à glissière sur le devant. Doublé de tissu micropolaire. Deux poches latérales et une poche poitrine droite avec fermetures à glissière inversées. Protège-menton dans le même tissu inversé. Ajusteurs latéraux internes.",
+   "infos": [
+    "Sans manches",
+    "Doublure micropolaire"
+   ],
+   "views": {
+    "face": "Assets/produits/gilet/face.webp",
+    "gauche": "Assets/produits/gilet/gauche.webp",
+    "droite": "Assets/produits/gilet/droite.webp"
+   },
+   "bbox": {
+    "face": [
+     212,
+     58,
+     687,
+     902
+    ],
+    "gauche": [
+     290,
+     58,
+     610,
+     902
+    ],
+    "droite": [
+     290,
+     58,
+     610,
+     902
+    ]
+   },
+   "ambiance": [
+    "Assets/produits/gilet/ambiance-1.webp",
+    "Assets/produits/gilet/ambiance-2.webp",
+    "Assets/produits/gilet/ambiance-3.webp"
+   ],
+   "colors": [
+    {
+     "name": "Anthracite",
+     "hex": "#3e4649"
+    },
+    {
+     "name": "Noir",
+     "hex": "#1e1e1e"
+    },
+    {
+     "name": "Rouge",
+     "hex": "#ce081c"
+    },
+    {
+     "name": "Ocre",
+     "hex": "#948874"
+    },
+    {
+     "name": "Bleu marine",
+     "hex": "#1c2332"
+    }
+   ],
+   "base": 1,
+   "places": {
+    "face": [
+     {
+      "id": "pg",
+      "label": "Poitrine gauche",
+      "x": 541,
+      "y": 269,
+      "w": 99
+     },
+     {
+      "id": "pd",
+      "label": "Poitrine droite",
+      "x": 358,
+      "y": 269,
+      "w": 99
+     },
+     {
+      "id": "cp",
+      "label": "Centre poitrine",
+      "x": 450,
+      "y": 320,
+      "w": 190
+     },
+     {
+      "id": "gf",
+      "label": "Grand format",
+      "x": 450,
+      "y": 412,
+      "w": 296
+     }
+    ],
+    "dos": []
+   }
+  },
+  {
+   "id": "combinaison",
+   "name": "Combinaison de travail",
+   "cat": "travail",
+   "desc": "Combinaison de travail à manches longues raglan. Fermeture à glissière avant bidirectionnelle. Ceinture élastiquée au dos. Poignets côtelés 1x1. Poche poitrine gauche avec fermeture éclair. Poches plaquées latérales.",
+   "infos": [
+    "Fermeture à glissière bidirectionnelle",
+    "Ceinture élastiquée au dos",
+    "Poche poitrine gauche zippée"
+   ],
+   "views": {
+    "face": "Assets/produits/combinaison/face.webp",
+    "dos": "Assets/produits/combinaison/dos.webp",
+    "gauche": "Assets/produits/combinaison/gauche.webp",
+    "droite": "Assets/produits/combinaison/droite.webp"
+   },
+   "bbox": {
+    "face": [
+     312,
+     58,
+     587,
+     901
+    ],
+    "dos": [
+     320,
+     58,
+     580,
+     902
+    ],
+    "gauche": [
+     372,
+     58,
+     527,
+     902
+    ],
+    "droite": [
+     373,
+     58,
+     527,
+     902
+    ]
+   },
+   "ambiance": [
+    "Assets/produits/combinaison/ambiance-1.webp"
+   ],
+   "colors": [
+    {
+     "name": "Anthracite",
+     "hex": "#474b56"
+    },
+    {
+     "name": "Noir",
+     "hex": "#1f1f1f"
+    },
+    {
+     "name": "Ocre",
+     "hex": "#a59275"
+    },
+    {
+     "name": "Vert",
+     "hex": "#038645"
+    },
+    {
+     "name": "Bleu roi",
+     "hex": "#1d337f"
+    },
+    {
+     "name": "Bleu nuit",
+     "hex": "#232c4c"
+    }
+   ],
+   "base": 1,
+   "places": {
+    "face": [
+     {
+      "id": "pg",
+      "label": "Poitrine gauche",
+      "x": 496,
+      "y": 176,
+      "w": 50
+     },
+     {
+      "id": "pd",
+      "label": "Poitrine droite",
+      "x": 403,
+      "y": 176,
+      "w": 50
+     },
+     {
+      "id": "cp",
+      "label": "Centre poitrine",
+      "x": 450,
+      "y": 218,
+      "w": 96
+     },
+     {
+      "id": "gf",
+      "label": "Grand format",
+      "x": 450,
+      "y": 286,
+      "w": 150
+     }
+    ],
+    "dos": [
+     {
+      "id": "hd",
+      "label": "Haut du dos",
+      "x": 450,
+      "y": 168,
+      "w": 73
+     },
+     {
+      "id": "cd",
+      "label": "Centre du dos",
+      "x": 450,
+      "y": 244,
+      "w": 138
+     }
+    ]
+   }
+  }
+ ]
+}

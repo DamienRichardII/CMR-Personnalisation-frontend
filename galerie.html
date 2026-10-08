@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Galerie produits | CMR Personnalisation</title>
+  <meta name="description" content="Galerie des textiles personnalisables par CMR Personnalisation : t-shirts, polos, sweats, vestes, gilets et vêtements de travail, photos et coloris. Tarifs sur devis.">
+
+  <meta name="theme-color" content="#060b13">
+  <meta name="color-scheme" content="dark light">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="CMR Personnalisation">
+  <meta property="og:title" content="Galerie produits | CMR Personnalisation">
+  <meta property="og:description" content="Galerie des textiles personnalisables par CMR Personnalisation : t-shirts, polos, sweats, vestes, gilets et vêtements de travail, photos et coloris. Tarifs sur devis.">
+  <meta property="og:image" content="https://www.cmrpersonnalisation.com/Assets/img/og-image.jpg">
+  <link rel="canonical" href="https://www.cmrpersonnalisation.com/galerie">
+  <meta property="og:url" content="https://www.cmrpersonnalisation.com/galerie">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" sizes="48x48" href="Assets/img/favicon-48.png">
+  <link rel="apple-touch-icon" href="Assets/img/favicon.png">
+  <link rel="preload" href="fonts/poppins-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <script>
+    (function () {
+      var t = 'dark';
+      try { t = localStorage.getItem('cmr-theme') || 'dark'; } catch (e) {}
+      var r = document.documentElement;
+      r.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+      r.classList.add('js');
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/galerie.css">
+</head>
+<body>
+
+<!-- Sprite d'icônes SVG -->
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="i-insta" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r=".7" fill="currentColor"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+    <symbol id="i-diamond" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M9 3 7.5 9 12 21l4.5-12L15 3"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21.5h4M12 2.5a6.5 6.5 0 0 0-3.8 11.8c.5.4.8 1 .8 1.7v.5h6V16c0-.7.3-1.3.8-1.7A6.5 6.5 0 0 0 12 2.5z"/><path d="M3.5 5.5l1.3 1.3M20.5 5.5l-1.3 1.3M1.5 11H3M21 11h1.5"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 9h4l3 3.5V16h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/><path d="M1 9h3M1 12h2"/></symbol>
+    <symbol id="i-france" viewBox="0 0 24 24"><path d="M13.5 2.5 16.5 4.5 17.5 6.5 19.5 7.5 20 10 19 12.5 20.5 15 20.5 18 16.5 19 14 19 12.5 21.5 8.5 22 5.5 20.5 6 17.5 5 13.5 5.5 10 2.5 9.5 2 7.5 4.5 5.5 6.5 6 6.5 3.5 9 5 11.5 4z"/><path d="M22 20.5v2"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+    <symbol id="i-serigraphie" viewBox="0 0 24 24"><rect x="4" y="9" width="16" height="11" rx="2"/><path d="M9 9V4.5h6V9M8 13h8M8 16.5h5"/></symbol>
+    <symbol id="i-broderie" viewBox="0 0 24 24"><path d="M20 3.5 8 16"/><path d="M18.5 5c1.8 1.6 1.8 3.4.2 5"/><path d="M8 16c-3 .6-5 2.4-4.5 4.2S7 21 8.5 18.5"/></symbol>
+    <symbol id="i-dtf" viewBox="0 0 24 24"><path d="M4 6h16v12H4zM8.5 6v12M15.5 6v12M4 10h4.5M4 14h4.5M15.5 10H20M15.5 14H20"/></symbol>
+    <symbol id="i-flocage" viewBox="0 0 24 24"><path d="M4 20 12 4l8 16M7.6 14h8.8"/></symbol>
+    <symbol id="i-sublimation" viewBox="0 0 24 24"><path d="M8 3 3 6l2 4 3-1v11h8V9l3 1 2-4-5-3c-.5 1.5-2 2.3-4 2.3S8.5 4.5 8 3z"/></symbol>
+    <symbol id="i-objets" viewBox="0 0 24 24"><path d="M5 8h11v7a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16M8 3v2M11 3v2M14 3v2"/></symbol>
+      <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
+      <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></symbol>
+  
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.5V14M12 17.2v.1"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H5v1a3 3 0 0 0 3 3M16 6h3v1a3 3 0 0 1-3 3M12 13v4M8 20h8M10 17h4"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 7.8-8 9-4.8-1.2-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+    <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><circle cx="18" cy="12" r="1.2" fill="currentColor"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-msg" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l4 4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  </defs>
+</svg>
+
+<a class="skip-link" href="#main">Aller au contenu</a>
+
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a class="brand" href="index.html" aria-label="CMR Personnalisation, retour à l'accueil">
+      <img class="only-dark" src="Assets/img/logo-blanc.png" alt="CMR Personnalisation" width="900" height="357">
+      <img class="only-light" src="Assets/img/logo-noir.png" alt="CMR Personnalisation" width="900" height="357">
+    </a>
+
+    <div class="nav-panel" id="nav-panel">
+      <nav class="main-nav" aria-label="Navigation principale">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="realisations.html">Réalisations</a></li>
+          <li><a href="galerie.html" aria-current="page">Galerie</a></li>
+          <li><a href="simulateur.html">Simulateur</a></li>
+          <li><a href="devis.html">Devis</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a class="icon-btn" href="compte.html" aria-label="Espace client : connexion">
+          <svg class="icon" aria-hidden="true"><use href="#i-user"/></svg>
+        </a>
+        <a class="icon-btn" href="#" aria-label="Instagram CMR Personnalisation">
+          <svg class="icon" aria-hidden="true"><use href="#i-insta"/></svg>
+        </a>
+        <button type="button" class="theme-switch" role="switch" aria-checked="true" aria-label="Activer le mode sombre">
+          <svg class="icon icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+          <svg class="icon icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+          <span class="theme-thumb" aria-hidden="true"></span>
+        </button>
+        <a class="btn btn-primary btn-sm" href="devis.html">
+          <span>Demander un devis</span>
+          <svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="nav-panel" aria-label="Ouvrir le menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-hero" aria-labelledby="gal-title">
+    <div class="container page-hero-inner is-single">
+      <p class="eyebrow hero-anim" style="--h:0">Galerie</p>
+      <h1 class="title page-title" id="gal-title">Nos produits à personnaliser.</h1>
+      <p class="lead hero-anim" style="--h:2">Découvrez les textiles que nous personnalisons dans notre atelier : photos sous tous les angles, coloris et caractéristiques. Tarifs sur devis.</p>
+    </div>
+  </section>
+  <section class="gal" aria-label="Galerie des produits">
+    <div class="container">
+      <div class="gal-filters" role="group" aria-label="Filtrer par catégorie"><button type="button" class="gal-chip is-on" data-f="all" aria-pressed="true">Tous les produits</button><button type="button" class="gal-chip" data-f="t-shirts-polos" aria-pressed="false">T-shirts &amp; polos</button><button type="button" class="gal-chip" data-f="sweats" aria-pressed="false">Sweats</button><button type="button" class="gal-chip" data-f="vestes-gilets" aria-pressed="false">Vestes &amp; gilets</button><button type="button" class="gal-chip" data-f="travail" aria-pressed="false">Vêtements de travail</button></div>
+      <section class="gal-sec" data-cat="t-shirts-polos" aria-labelledby="gal-t-shirts-polos"><h2 id="gal-t-shirts-polos">T-shirts &amp; polos</h2><div class="gal-grid"><article class="gal-card" data-cat="t-shirts-polos">
+          <button type="button" class="gal-open" data-id="tshirt" aria-label="Voir les photos : T-shirt"><span class="gal-ph"><img src="Assets/produits/tshirt/face.webp" width="450" height="480" loading="lazy" alt="T-shirt, vue de face"></span></button>
+          <div class="gal-body"><h3>T-shirt</h3><p class="gal-desc">T-shirt tubulaire à manches courtes en tailles adultes, avec coutures latérales en tailles enfant. Col rond côtelé 1x1. Encolure bordée de tissu assorti.</p>
+          <p class="gal-col"><span class="gal-dots" aria-hidden="true"><i style="background:#1f1f1f" title="Noir"></i><i style="background:#d8d8d8" title="Gris"></i><i style="background:#9f8b9e" title="Gris"></i><i style="background:#edc6d3" title="Rose"></i><i style="background:#c04656" title="Rouge"></i><i style="background:#420d16" title="Bordeaux"></i><i style="background:#cd8a7f" title="Rouge"></i><i style="background:#ef6f52" title="Rouge"></i><i style="background:#d58857" title="Orange"></i><i style="background:#c77d60" title="Orange"></i><i style="background:#d84e21" title="Orange"></i><i style="background:#b31f26" title="Rouge"></i></span><span>31 coloris</span></p>
+          <div class="gal-act"><button type="button" class="btn btn-outline btn-lg gal-open" data-id="tshirt"><span>Voir les photos</span></button><a class="gal-sim" href="simulateur.html?produit=tshirt">Simuler mon logo</a></div></div>
+          <script type="application/json" class="gal-data">{"id": "tshirt", "name": "T-shirt", "desc": "T-shirt tubulaire à manches courtes en tailles adultes, avec coutures latérales en tailles enfant. Col rond côtelé 1x1. Encolure bordée de tissu assorti.", "infos": ["Tailles enfant disponibles", "Coupe tubulaire pour les tailles adulte, coutures latérales pour les tailles enfant"], "imgs": [{"src": "Assets/produits/tshirt/face.webp", "alt": "T-shirt, face"}, {"src": "Assets/produits/tshirt/dos.webp", "alt": "T-shirt, dos"}, {"src": "Assets/produits/tshirt/gauche.webp", "alt": "T-shirt, côté gauche"}, {"src": "Assets/produits/tshirt/droite.webp", "alt": "T-shirt, côté droit"}, {"src": "Assets/produits/tshirt/ambiance-1.webp", "alt": "T-shirt, photo d'ambiance"}], "colors": [{"name": "Noir", "hex": "#1f1f1f"}, {"name": "Gris", "hex": "#d8d8d8"}, {"name": "Gris", "hex": "#9f8b9e"}, {"name": "Rose", "hex": "#edc6d3"}, {"name": "Rouge", "hex": "#c04656"}, {"name": "Bordeaux", "hex": "#420d16"}, {"name": "Rouge", "hex": "#cd8a7f"}, {"name": "Rouge", "hex": "#ef6f52"}, {"name": "Orange", "hex": "#d58857"}, {"name": "Orange", "hex": "#c77d60"}, {"name": "Orange", "hex": "#d84e21"}, {"name": "Rouge", "hex": "#b31f26"}, {"name": "Beige", "hex": "#dec29e"}, {"name": "Sable", "hex": "#ccb596"}, {"name": "Jaune", "hex": "#e3be06"}, {"name": "Vert kaki", "hex": "#d4dccd"}, {"name": "Vert", "hex": "#7dc76c"}, {"name": "Vert", "hex": "#037524"}, {"name": "Turquoise", "hex": "#a1bfbf"}, {"name": "Turquoise", "hex": "#709fa5"}, {"name": "Turquoise", "hex": "#02aad7"}, {"name": "Bleu canard", "hex": "#2a5159"}, {"name": "Bleu ciel", "hex": "#92bae4"}, {"name": "Bleu gris", "hex": "#9aa4bf"}, {"name": "Bleu roi", "hex": "#4564b5"}, {"name": "Bleu nuit", "hex": "#34384e"}, {"name": "Bleu roi", "hex": "#0b2575"}, {"name": "Bleu marine", "hex": "#152232"}, {"name": "Violet", "hex": "#6b569b"}, {"name": "Prune", "hex": "#391837"}, {"name": "Fuchsia", "hex": "#cc1d76"}]}</script>
+        </article>
+        <article class="gal-card" data-cat="t-shirts-polos">
+          <button type="button" class="gal-open" data-id="polo" aria-label="Voir les photos : Polo"><span class="gal-ph"><img src="Assets/produits/polo/face.webp" width="450" height="480" loading="lazy" alt="Polo, vue de face"></span></button>
+          <div class="gal-body"><h3>Polo</h3><p class="gal-desc">Polo en coton à manches courtes. Point piqué. Col et manches tissés 1x1. Patte de boutonnage à 3 boutons. Encolure bordée de tissu assorti. Fentes latérales à l&#x27;ourlet.</p>
+          <p class="gal-col"><span class="gal-dots" aria-hidden="true"><i style="background:#dedede" title="Blanc"></i><i style="background:#9d9b9e" title="Gris"></i><i style="background:#3d3d3f" title="Anthracite"></i><i style="background:#232323" title="Noir"></i><i style="background:#161b26" title="Noir"></i><i style="background:#dc2b65" title="Fuchsia"></i><i style="background:#d10828" title="Rouge"></i><i style="background:#6e3a44" title="Rouge"></i><i style="background:#820120" title="Bordeaux"></i><i style="background:#e08f82" title="Rouge"></i><i style="background:#da877b" title="Rouge"></i><i style="background:#cc686a" title="Rouge"></i></span><span>34 coloris</span></p>
+          <div class="gal-act"><button type="button" class="btn btn-outline btn-lg gal-open" data-id="polo"><span>Voir les photos</span></button><a class="gal-sim" href="simulateur.html?produit=polo">Simuler mon logo</a></div></div>
+          <script type="application/json" class="gal-data">{"id": "polo", "name": "Polo", "desc": "Polo en coton à manches courtes. Point piqué. Col et manches tissés 1x1. Patte de boutonnage à 3 boutons. Encolure bordée de tissu assorti. Fentes latérales à l'ourlet.", "infos": ["Matière : coton", "Poche en option", "Disponible en tailles enfants"], "imgs": [{"src": "Assets/produits/polo/face.webp", "alt": "Polo, face"}, {"src": "Assets/produits/polo/dos.webp", "alt": "Polo, dos"}, {"src": "Assets/produits/polo/gauche.webp", "alt": "Polo, côté gauche"}], "colors": [{"name": "Blanc", "hex": "#dedede"}, {"name": "Gris", "hex": "#9d9b9e"}, {"name": "Anthracite", "hex": "#3d3d3f"}, {"name": "Noir", "hex": "#232323"}, {"name": "Noir", "hex": "#161b26"}, {"name": "Fuchsia", "hex": "#dc2b65"}, {"name": "Rouge", "hex": "#d10828"}, {"name": "Rouge", "hex": "#6e3a44"}, {"name": "Bordeaux", "hex": "#820120"}, {"name": "Rouge", "hex": "#e08f82"}, {"name": "Rouge", "hex": "#da877b"}, {"name": "Rouge", "hex": "#cc686a"}, {"name": "Bordeaux", "hex": "#311711"}, {"name": "Sable", "hex": "#c6b394"}, {"name": "Jaune", "hex": "#ecd42e"}, {"name": "Orange", "hex": "#f27e25"}, {"name": "Vert kaki", "hex": "#424536"}, {"name": "Vert kaki", "hex": "#b8c6ac"}, {"name": "Vert", "hex": "#059d29"}, {"name": "Vert", "hex": "#028237"}, {"name": "Vert sauge", "hex": "#659885"}, {"name": "Turquoise", "hex": "#5a7974"}, {"name": "Vert bouteille", "hex": "#01412a"}, {"name": "Menthe", "hex": "#b1dedc"}, {"name": "Turquoise", "hex": "#02a3d5"}, {"name": "Bleu gris", "hex": "#3b5e70"}, {"name": "Bleu ciel", "hex": "#a6b6cf"}, {"name": "Bleu ciel", "hex": "#9bb5d2"}, {"name": "Bleu gris", "hex": "#647fa6"}, {"name": "Bleu roi", "hex": "#19487d"}, {"name": "Bleu gris", "hex": "#484a6e"}, {"name": "Violet", "hex": "#4a4156"}, {"name": "Prune", "hex": "#640e60"}, {"name": "Rose", "hex": "#edb8d1"}]}</script>
+        </article>
+        </div></section><section class="gal-sec" data-cat="sweats" aria-labelledby="gal-sweats"><h2 id="gal-sweats">Sweats</h2><div class="gal-grid"><article class="gal-card" data-cat="sweats">
+          <button type="button" class="gal-open" data-id="sweat" aria-label="Voir les photos : Sweat col rond"><span class="gal-ph"><img src="Assets/produits/sweat/face.webp" width="450" height="480" loading="lazy" alt="Sweat col rond, vue de face"></span></button>
+          <div class="gal-body"><h3>Sweat col rond</h3><p class="gal-desc">Pull unisexe en polaire brossée à col rond. Col, poignets et ourlet en bord-côte 2x1 avec élasthanne. Bandes de renfort aux coutures dans le même tissu.</p>
+          <p class="gal-col"><span class="gal-dots" aria-hidden="true"><i style="background:#dcdcdc" title="Blanc"></i><i style="background:#bebbb3" title="Gris"></i><i style="background:#b4b0ad" title="Gris"></i><i style="background:#a7a7a9" title="Gris"></i><i style="background:#57615a" title="Anthracite"></i><i style="background:#40444a" title="Anthracite"></i><i style="background:#1e2122" title="Noir"></i><i style="background:#111111" title="Noir"></i><i style="background:#714147" title="Rouge"></i><i style="background:#60071e" title="Prune"></i><i style="background:#d88573" title="Rouge"></i><i style="background:#e16d57" title="Rouge"></i></span><span>38 coloris</span></p>
+          <div class="gal-act"><button type="button" class="btn btn-outline btn-lg gal-open" data-id="sweat"><span>Voir les photos</span></button><a class="gal-sim" href="simulateur.html?produit=sweat">Simuler mon logo</a></div></div>
+          <script type="application/json" class="gal-data">{"id": "sweat", "name": "Sweat col rond", "desc": "Pull unisexe en polaire brossée à col rond. Col, poignets et ourlet en bord-côte 2x1 avec élasthanne. Bandes de renfort aux coutures dans le même tissu.", "infos": ["Unisexe", "Disponible en tailles enfants", "Marquage : prévoir une protection contre la migration des teintes"], "imgs": [{"src": "Assets/produits/sweat/face.webp", "alt": "Sweat col rond, face"}, {"src": "Assets/produits/sweat/dos.webp", "alt": "Sweat col rond, dos"}, {"src": "Assets/produits/sweat/gauche.webp", "alt": "Sweat col rond, côté gauche"}], "colors": [{"name": "Blanc", "hex": "#dcdcdc"}, {"name": "Gris", "hex": "#bebbb3"}, {"name": "Gris", "hex": "#b4b0ad"}, {"name": "Gris", "hex": "#a7a7a9"}, {"name": "Anthracite", "hex": "#57615a"}, {"name": "Anthracite", "hex": "#40444a"}, {"name": "Noir", "hex": "#1e2122"}, {"name": "Noir", "hex": "#111111"}, {"name": "Rouge", "hex": "#714147"}, {"name": "Prune", "hex": "#60071e"}, {"name": "Rouge", "hex": "#d88573"}, {"name": "Rouge", "hex": "#e16d57"}, {"name": "Orange", "hex": "#ba8261"}, {"name": "Orange", "hex": "#ed6020"}, {"name": "Rouge", "hex": "#c2282a"}, {"name": "Beige", "hex": "#e7e3d9"}, {"name": "Beige", "hex": "#e1c19e"}, {"name": "Sable", "hex": "#cfbe99"}, {"name": "Jaune", "hex": "#e6cf23"}, {"name": "Orange", "hex": "#c57c36"}, {"name": "Vert kaki", "hex": "#d3dcc9"}, {"name": "Vert anis", "hex": "#85b854"}, {"name": "Vert sauge", "hex": "#48563e"}, {"name": "Vert", "hex": "#1b7859"}, {"name": "Vert bouteille", "hex": "#0d3b27"}, {"name": "Turquoise", "hex": "#3facc1"}, {"name": "Bleu gris", "hex": "#536976"}, {"name": "Turquoise", "hex": "#0278a9"}, {"name": "Bleu canard", "hex": "#1b4c54"}, {"name": "Bleu ciel", "hex": "#9dbdde"}, {"name": "Bleu gris", "hex": "#8493b1"}, {"name": "Bleu roi", "hex": "#01326e"}, {"name": "Bleu marine", "hex": "#13192f"}, {"name": "Violet", "hex": "#6b5a90"}, {"name": "Violet", "hex": "#55485e"}, {"name": "Violet", "hex": "#5c0c71"}, {"name": "Rose", "hex": "#e6c7d9"}, {"name": "Fuchsia", "hex": "#c61b7c"}]}</script>
+        </article>
+        <article class="gal-card" data-cat="sweats">
+          <button type="button" class="gal-open" data-id="capuche" aria-label="Voir les photos : Sweat à capuche"><span class="gal-ph"><img src="Assets/produits/capuche/face.webp" width="450" height="480" loading="lazy" alt="Sweat à capuche, vue de face"></span></button>
+          <div class="gal-body"><h3>Sweat à capuche</h3><p class="gal-desc">Sweat-shirt en molleton gratté avec capuche doublée. Poignets et ceinture en bord-côte 2x1 avec élasthanne. Bande de propreté dans le même tissu. Cordon plat à la capuche. Coloris disponibles avec capuche contrastée et œillets métalliques ton sur ton.</p>
+          <p class="gal-col"><span class="gal-dots" aria-hidden="true"><i style="background:#d8d8d8" title="Gris"></i><i style="background:#cccccc" title="Gris"></i><i style="background:#b4b4b6" title="Gris"></i><i style="background:#5a655d" title="Anthracite"></i><i style="background:#424242" title="Anthracite"></i><i style="background:#161616" title="Noir"></i><i style="background:#fcb6c9" title="Rose"></i><i style="background:#6b3a3f" title="Rouge"></i><i style="background:#70081b" title="Bordeaux"></i><i style="background:#531620" title="Bordeaux"></i><i style="background:#fa755e" title="Rouge"></i><i style="background:#d98378" title="Rouge"></i></span><span>39 coloris</span></p>
+          <div class="gal-act"><button type="button" class="btn btn-outline btn-lg gal-open" data-id="capuche"><span>Voir les photos</span></button><a class="gal-sim" href="simulateur.html?produit=capuche">Simuler mon logo</a></div></div>
+          <script type="application/json" class="gal-data">{"id": "capuche", "name": "Sweat à capuche", "desc": "Sweat-shirt en molleton gratté avec capuche doublée. Poignets et ceinture en bord-côte 2x1 avec élasthanne. Bande de propreté dans le même tissu. Cordon plat à la capuche. Coloris disponibles avec capuche contrastée et œillets métalliques ton sur ton.", "infos": ["Tailles enfant disponibles", "Sweat à capuche enfant sans cordons"], "imgs": [{"src": "Assets/produits/capuche/face.webp", "alt": "Sweat à capuche, face"}, {"src": "Assets/produits/capuche/dos.webp", "alt": "Sweat à capuche, dos"}, {"src": "Assets/produits/capuche/gauche.webp", "alt": "Sweat à capuche, côté gauche"}, {"src": "Assets/produits/capuche/droite.webp", "alt": "Sweat à capuche, côté droit"}], "colors": [{"name": "Gris", "hex": "#d8d8d8"}, {"name": "Gris", "hex": "#cccccc"}, {"name": "Gris", "hex": "#b4b4b6"}, {"name": "Anthracite", "hex": "#5a655d"}, {"name": "Anthracite", "hex": "#424242"}, {"name": "Noir", "hex": "#161616"}, {"name": "Rose", "hex": "#fcb6c9"}, {"name": "Rouge", "hex": "#6b3a3f"}, {"name": "Bordeaux", "hex": "#70081b"}, {"name": "Bordeaux", "hex": "#531620"}, {"name": "Rouge", "hex": "#fa755e"}, {"name": "Rouge", "hex": "#d98378"}, {"name": "Rouge", "hex": "#f22527"}, {"name": "Rouge", "hex": "#d82224"}, {"name": "Orange", "hex": "#e45c14"}, {"name": "Orange", "hex": "#8c6958"}, {"name": "Beige", "hex": "#e4dfd5"}, {"name": "Beige", "hex": "#d7c3ab"}, {"name": "Sable", "hex": "#d2b99b"}, {"name": "Jaune", "hex": "#e5d324"}, {"name": "Orange", "hex": "#bc7531"}, {"name": "Vert kaki", "hex": "#474b3a"}, {"name": "Vert kaki", "hex": "#d5e2cb"}, {"name": "Vert", "hex": "#037424"}, {"name": "Vert", "hex": "#1f4b2c"}, {"name": "Vert bouteille", "hex": "#034120"}, {"name": "Turquoise", "hex": "#3e9db0"}, {"name": "Bleu gris", "hex": "#4c6573"}, {"name": "Bleu canard", "hex": "#344f56"}, {"name": "Bleu", "hex": "#82aaca"}, {"name": "Bleu gris", "hex": "#818fb0"}, {"name": "Bleu roi", "hex": "#034d96"}, {"name": "Bleu marine", "hex": "#161b2d"}, {"name": "Bleu marine", "hex": "#0b1936"}, {"name": "Violet", "hex": "#705c9c"}, {"name": "Violet", "hex": "#564760"}, {"name": "Violet", "hex": "#5c0572"}, {"name": "Rose", "hex": "#e9b8cb"}, {"name": "Fuchsia", "hex": "#d93976"}]}</script>
+        </article>
+        </div></section><section class="gal-sec" data-cat="vestes-gilets" aria-labelledby="gal-vestes-gilets"><h2 id="gal-vestes-gilets">Vestes &amp; gilets</h2><div class="gal-grid"><article class="gal-card" data-cat="vestes-gilets">
+          <button type="button" class="gal-open" data-id="polaire" aria-label="Voir les photos : Veste polaire"><span class="gal-ph"><img src="Assets/produits/polaire/face.webp" width="450" height="480" loading="lazy" alt="Veste polaire, vue de face"></span></button>
+          <div class="gal-body"><h3>Veste polaire</h3><p class="gal-desc">Veste polaire avec fermeture à glissière sur le devant. Col montant. Poignets avec bordure élastique. Poches zippées intégrées dans les coutures des panneaux latéraux. Coutures à chevrons bordées. Tous les accessoires assortis. Ajusteurs latéraux intérieurs en tailles adultes.</p>
+          <p class="gal-col"><span class="gal-dots" aria-hidden="true"><i style="background:#dadada" title="Gris"></i><i style="background:#676874" title="Gris"></i><i style="background:#555849" title="Anthracite"></i><i style="background:#232323" title="Noir"></i><i style="background:#bf1919" title="Rouge"></i><i style="background:#c9bba6" title="Sable"></i><i style="background:#314e36" title="Vert sauge"></i><i style="background:#044093" title="Bleu roi"></i><i style="background:#1e2344" title="Bleu marine"></i><i style="background:#601573" title="Violet"></i><i style="background:#73173a" title="Prune"></i></span><span>11 coloris</span></p>
+          <div class="gal-act"><button type="button" class="btn btn-outline btn-lg gal-open" data-id="polaire"><span>Voir les photos</span></button><a class="gal-sim" href="simulateur.html?produit=polaire">Simuler mon logo</a></div></div>
+          <script type="application/json" class="gal-data">{"id": "polaire", "name": "Veste polaire", "desc": "Veste polaire avec fermeture à glissière sur le devant. Col montant. Poignets avec bordure élastique. Poches zippées intégrées dans les coutures des panneaux latéraux. Coutures à chevrons bordées. Tous les accessoires assortis. Ajusteurs latéraux intérieurs en tailles adultes.", "infos": ["Tissu stretch", "Disponible en tailles kids"], "imgs": [{"src": "Assets/produits/polaire/face.webp", "alt": "Veste polaire, face"}, {"src": "Assets/produits/polaire/dos.webp", "alt": "Veste polaire, dos"}, {"src": "Assets/produits/polaire/gauche.webp", "alt": "Veste polaire, côté gauche"}, {"src": "Assets/produits/polaire/droite.webp", "alt": "Veste polaire, côté droit"}, {"src": "Assets/produits/polaire/ambiance-1.webp", "alt": "Veste polaire, photo d'ambiance"}], "colors": [{"name": "Gris", "hex": "#dadada"}, {"name": "Gris", "hex": "#676874"}, {"name": "Anthracite", "hex": "#555849"}, {"name": "Noir", "hex": "#232323"}, {"name": "Rouge", "hex": "#bf1919"}, {"name": "Sable", "hex": "#c9bba6"}, {"name": "Vert sauge", "hex": "#314e36"}, {"name": "Bleu roi", "hex": "#044093"}, {"name": "Bleu marine", "hex": "#1e2344"}, {"name": "Violet", "hex": "#601573"}, {"name": "Prune", "hex": "#73173a"}]}</script>
+        </article>
+        <article class="gal-card" data-cat="vestes-gilets">
+          <button type="button" class="gal-open" data-id="softshell" aria-label="Voir les photos : Softshell micropolaire"><span class="gal-ph"><img src="Assets/produits/softshell/face.webp" width="450" height="480" loading="lazy" alt="Softshell micropolaire, vue de face"></span></button>
+          <div class="gal-body"><h3>Softshell micropolaire</h3><p class="gal-desc">Veste softshell 3 couches avec fermeture à glissière sur le devant, déperlante et coupe-vent. Doublée de tissu micropolaire. Deux poches latérales et une poche poitrine droite avec fermetures à glissière et garnies du même tissu. Protège-menton dans le même tissu. Ajusteurs latéraux internes.</p>
+          <p class="gal-col"><span class="gal-dots" aria-hidden="true"><i style="background:#8f8f8f" title="Gris"></i><i style="background:#4e504f" title="Anthracite"></i><i style="background:#171717" title="Noir"></i><i style="background:#42422d" title="Kaki"></i><i style="background:#6b7887" title="Bleu gris"></i><i style="background:#075097" title="Bleu roi"></i><i style="background:#1d263d" title="Bleu marine"></i></span><span>7 coloris</span></p>
+          <div class="gal-act"><button type="button" class="btn btn-outline btn-lg gal-open" data-id="softshell"><span>Voir les photos</span></button><a class="gal-sim" href="simulateur.html?produit=softshell">Simuler mon logo</a></div></div>
+          <script type="application/json" class="gal-data">{"id": "softshell", "name": "Softshell micropolaire", "desc": "Veste softshell 3 couches avec fermeture à glissière sur le devant, déperlante et coupe-vent. Doublée de tissu micropolaire. Deux poches latérales et une poche poitrine droite avec fermetures à glissière et garnies du même tissu. Protège-menton dans le même tissu. Ajusteurs latéraux internes.", "infos": ["Résistante à l'eau (pression hydrostatique supérieure à 3000 mm H2O)", "Marquage : l'impression DTF n'est pas recommandée pour ce modèle"], "imgs": [{"src": "Assets/produits/softshell/face.webp", "alt": "Softshell micropolaire, face"}, {"src": "Assets/produits/softshell/gauche.webp", "alt": "Softshell micropolaire, côté gauche"}, {"src": "Assets/produits/softshell/droite.webp", "alt": "Softshell micropolaire, côté droit"}, {"src": "Assets/produits/softshell/ambiance-1.webp", "alt": "Softshell micropolaire, photo d'ambiance"}, {"src": "Assets/produits/softshell/ambiance-2.webp", "alt": "Softshell micropolaire, photo d'ambiance"}], "colors": [{"name": "Gris", "hex": "#8f8f8f"}, {"name": "Anthracite", "hex": "#4e504f"}, {"name": "Noir", "hex": "#171717"}, {"name": "Kaki", "hex": "#42422d"}, {"name": "Bleu gris", "hex": "#6b7887"}, {"name": "Bleu roi", "hex": "#075097"}, {"name": "Bleu marine", "hex": "#1d263d"}]}</script>
+        </article>
+        <article class="gal-card" data-cat="vestes-gilets">
+          <button type="button" class="gal-open" data-id="gilet" aria-label="Voir les photos : Gilet softshell sans manches"><span class="gal-ph"><img src="Assets/produits/gilet/face.webp" width="450" height="480" loading="lazy" alt="Gilet softshell sans manches, vue de face"></span></button>
+          <div class="gal-body"><h3>Gilet softshell sans manches</h3><p class="gal-desc">Gilet softshell 2 couches avec fermeture à glissière sur le devant. Doublé de tissu micropolaire. Deux poches latérales et une poche poitrine droite avec fermetures à glissière inversées. Protège-menton dans le même tissu inversé. Ajusteurs latéraux internes.</p>
+          <p class="gal-col"><span class="gal-dots" aria-hidden="true"><i style="background:#3e4649" title="Anthracite"></i><i style="background:#1e1e1e" title="Noir"></i><i style="background:#ce081c" title="Rouge"></i><i style="background:#948874" title="Ocre"></i><i style="background:#1c2332" title="Bleu marine"></i></span><span>5 coloris</span></p>
+          <div class="gal-act"><button type="button" class="btn btn-outline btn-lg gal-open" data-id="gilet"><span>Voir les photos</span></button><a class="gal-sim" href="simulateur.html?produit=gilet">Simuler mon logo</a></div></div>
+          <script type="application/json" class="gal-data">{"id": "gilet", "name": "Gilet softshell sans manches", "desc": "Gilet softshell 2 couches avec fermeture à glissière sur le devant. Doublé de tissu micropolaire. Deux poches latérales et une poche poitrine droite avec fermetures à glissière inversées. Protège-menton dans le même tissu inversé. Ajusteurs latéraux internes.", "infos": ["Sans manches", "Doublure micropolaire"], "imgs": [{"src": "Assets/produits/gilet/face.webp", "alt": "Gilet softshell sans manches, face"}, {"src": "Assets/produits/gilet/gauche.webp", "alt": "Gilet softshell sans manches, côté gauche"}, {"src": "Assets/produits/gilet/droite.webp", "alt": "Gilet softshell sans manches, côté droit"}, {"src": "Assets/produits/gilet/ambiance-1.webp", "alt": "Gilet softshell sans manches, photo d'ambiance"}, {"src": "Assets/produits/gilet/ambiance-2.webp", "alt": "Gilet softshell sans manches, photo d'ambiance"}, {"src": "Assets/produits/gilet/ambiance-3.webp", "alt": "Gilet softshell sans manches, photo d'ambiance"}], "colors": [{"name": "Anthracite", "hex": "#3e4649"}, {"name": "Noir", "hex": "#1e1e1e"}, {"name": "Rouge", "hex": "#ce081c"}, {"name": "Ocre", "hex": "#948874"}, {"name": "Bleu marine", "hex": "#1c2332"}]}</script>
+        </article>
+        </div></section><section class="gal-sec" data-cat="travail" aria-labelledby="gal-travail"><h2 id="gal-travail">Vêtements de travail</h2><div class="gal-grid"><article class="gal-card" data-cat="travail">
+          <button type="button" class="gal-open" data-id="combinaison" aria-label="Voir les photos : Combinaison de travail"><span class="gal-ph"><img src="Assets/produits/combinaison/face.webp" width="450" height="480" loading="lazy" alt="Combinaison de travail, vue de face"></span></button>
+          <div class="gal-body"><h3>Combinaison de travail</h3><p class="gal-desc">Combinaison de travail à manches longues raglan. Fermeture à glissière avant bidirectionnelle. Ceinture élastiquée au dos. Poignets côtelés 1x1. Poche poitrine gauche avec fermeture éclair. Poches plaquées latérales.</p>
+          <p class="gal-col"><span class="gal-dots" aria-hidden="true"><i style="background:#474b56" title="Anthracite"></i><i style="background:#1f1f1f" title="Noir"></i><i style="background:#a59275" title="Ocre"></i><i style="background:#038645" title="Vert"></i><i style="background:#1d337f" title="Bleu roi"></i><i style="background:#232c4c" title="Bleu nuit"></i></span><span>6 coloris</span></p>
+          <div class="gal-act"><button type="button" class="btn btn-outline btn-lg gal-open" data-id="combinaison"><span>Voir les photos</span></button><a class="gal-sim" href="simulateur.html?produit=combinaison">Simuler mon logo</a></div></div>
+          <script type="application/json" class="gal-data">{"id": "combinaison", "name": "Combinaison de travail", "desc": "Combinaison de travail à manches longues raglan. Fermeture à glissière avant bidirectionnelle. Ceinture élastiquée au dos. Poignets côtelés 1x1. Poche poitrine gauche avec fermeture éclair. Poches plaquées latérales.", "infos": ["Fermeture à glissière bidirectionnelle", "Ceinture élastiquée au dos", "Poche poitrine gauche zippée"], "imgs": [{"src": "Assets/produits/combinaison/face.webp", "alt": "Combinaison de travail, face"}, {"src": "Assets/produits/combinaison/dos.webp", "alt": "Combinaison de travail, dos"}, {"src": "Assets/produits/combinaison/gauche.webp", "alt": "Combinaison de travail, côté gauche"}, {"src": "Assets/produits/combinaison/droite.webp", "alt": "Combinaison de travail, côté droit"}, {"src": "Assets/produits/combinaison/ambiance-1.webp", "alt": "Combinaison de travail, photo d'ambiance"}], "colors": [{"name": "Anthracite", "hex": "#474b56"}, {"name": "Noir", "hex": "#1f1f1f"}, {"name": "Ocre", "hex": "#a59275"}, {"name": "Vert", "hex": "#038645"}, {"name": "Bleu roi", "hex": "#1d337f"}, {"name": "Bleu nuit", "hex": "#232c4c"}]}</script>
+        </article>
+        </div></section>
+      <div class="gal-cta"><p>Un produit vous intéresse ? Visualisez votre logo dessus ou demandez directement votre devis.</p><div class="page-hero-cta"><a class="btn btn-primary btn-lg" href="simulateur.html"><span>Ouvrir le simulateur</span><svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a> <a class="btn btn-outline btn-lg" href="devis.html"><span>Demander un devis</span><svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></div>
+    </div>
+  </section>
+  <dialog class="gal-lb" id="gal-lb" aria-labelledby="gal-lb-t">
+    <div class="gal-lb-in">
+      <button type="button" class="gal-x" id="gal-x" aria-label="Fermer">&times;</button>
+      <div class="gal-lb-view"><button type="button" class="gal-nav gal-prev" aria-label="Photo précédente">&#8249;</button><img id="gal-lb-img" alt=""><button type="button" class="gal-nav gal-next" aria-label="Photo suivante">&#8250;</button></div>
+      <div class="gal-thumbs" id="gal-thumbs"></div>
+      <div class="gal-lb-txt"><h2 id="gal-lb-t"></h2><p id="gal-lb-d"></p><ul id="gal-lb-i"></ul><p class="gal-col" id="gal-lb-c"></p><div class="page-hero-cta"><a class="btn btn-primary btn-lg" id="gal-lb-s" href="simulateur.html"><span>Simuler mon logo</span></a><a class="btn btn-outline btn-lg" href="devis.html"><span>Demander un devis</span></a></div></div>
+    </div>
+  </dialog>
+</main>
+
+<footer class="site-footer" id="contact">
+  <div class="container">
+    <div class="footer-grid" data-stagger>
+      <div class="footer-brand fade-up">
+        <a href="index.html" aria-label="CMR Personnalisation, retour en haut">
+          <img class="only-dark" src="Assets/img/logo-blanc.png" alt="CMR Personnalisation" width="900" height="357" loading="lazy">
+          <img class="only-light" src="Assets/img/logo-noir.png" alt="CMR Personnalisation" width="900" height="357" loading="lazy">
+        </a>
+        <span class="footer-rule" aria-hidden="true"></span>
+        <p class="footer-tagline">Personnaliser. <span>Valoriser.</span> Marquer.</p>
+      </div>
+
+      <nav class="footer-col fade-up" aria-label="Navigation du pied de page">
+        <h2 class="footer-title">Navigation</h2>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="realisations.html">Réalisations</a></li>
+          <li><a href="galerie.html">Galerie</a></li>
+          <li><a href="simulateur.html">Simulateur</a></li>
+          <li><a href="devis.html">Devis</a></li>
+          <li><a href="a-propos.html">À propos</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-col fade-up">
+        <h2 class="footer-title">Contact</h2>
+        <ul class="contact-list">
+          <li><span class="contact-ic" aria-hidden="true"><svg class="icon"><use href="#i-phone"/></svg></span><a href="tel:+33769829961">07 69 82 99 61</a></li>
+          <li><span class="contact-ic" aria-hidden="true"><svg class="icon"><use href="#i-mail"/></svg></span><a href="mailto:cmr.personnalisation@gmail.com">cmr.personnalisation@gmail.com</a></li>
+          <li><span class="contact-ic" aria-hidden="true"><svg class="icon"><use href="#i-pin"/></svg></span><span>Atelier basé dans l'Oise<small>Compiègne et ses alentours</small></span></li>
+        </ul>
+      </div>
+
+      <div class="footer-col fade-up">
+        <h2 class="footer-title">Suivez-nous</h2>
+        <a class="social" href="#" aria-label="Instagram CMR Personnalisation">
+          <svg class="icon" aria-hidden="true"><use href="#i-insta"/></svg>
+          <span>Instagram</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-legal">
+        <p>&copy; 2026 CMR Personnalisation. Tous droits réservés.</p>
+        <ul>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+          <li><a href="confidentialite.html">Politique de confidentialité</a></li>
+        </ul>
+      </div>
+      <p class="footer-banner">
+        <span>Des textiles</span>
+        <strong>qui font la différence.</strong>
+        <em>L'équipe CMR Personnalisation</em>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/supabase-config.js"></script>
+<script src="js/main.js" defer></script>
+<script src="js/pages.js" defer></script>
+<script src="js/cms.js" defer></script>
+<script src="js/galerie.js" defer></script>
+</body>
+</html>

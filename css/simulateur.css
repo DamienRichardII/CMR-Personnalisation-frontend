@@ -30,10 +30,20 @@
 
 /* ---------- aperçu ---------- */
 .sim-stage { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 22px; box-shadow: 0 1px 2px rgba(17, 17, 17, 0.04), 0 30px 60px -44px rgba(17, 17, 17, 0.28); overflow: hidden; }
-.sim-stage svg { display: block; width: 100%; height: auto; max-height: min(72vh, 780px); margin-inline: auto; padding: clamp(40px, 4vw, 52px) clamp(8px, 2vw, 24px) 0; touch-action: none; }
+.sim-view { position: relative; width: min(100%, calc(min(72vh, 780px) * 0.9375)); margin: 0 auto; aspect-ratio: 900 / 960; background: #fff; touch-action: pan-y; cursor: grab; }
+.sim-view canvas, .sim-view svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.sim-view svg { touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.sim-stage.is-rot .sim-view { cursor: grabbing; }
+.sim-stage.is-loading canvas { opacity: .55; }
+.sim-rot { appearance: none; position: absolute; top: 50%; translate: 0 -50%; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255,255,255,.92); color: var(--ink); display: grid; place-items: center; cursor: pointer; transition: transform .2s var(--ease), box-shadow .2s ease; }
+.sim-rot:hover { box-shadow: 0 6px 16px -8px rgba(17,17,17,.4); }
+.sim-rot svg { position: static; width: 20px; height: 20px; }
+.sim-rot-l { left: 10px; } .sim-rot-r { right: 10px; }
+.sim-360 { position: absolute; right: 12px; top: 12px; padding: .25rem .6rem; border-radius: 999px; background: var(--ink); color: #fff; font-size: .72rem; font-weight: 600; letter-spacing: .04em; pointer-events: none; }
+.sim-empty { z-index: 2; }
 .sim-stage svg.is-swap { animation: cfgSwap 0.24s var(--ease); }
 @keyframes cfgSwap { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-.sim-empty { position: absolute; left: 50%; top: 14px; transform: translateX(-50%); margin: 0; padding: 0.4rem 0.9rem; border-radius: 999px; background: var(--ink); color: #fff; font-size: 0.78rem; white-space: nowrap; pointer-events: none; }
+.sim-empty { position: absolute; left: 12px; top: 12px; max-width: calc(100% - 90px); overflow: hidden; text-overflow: ellipsis; margin: 0; padding: 0.4rem 0.9rem; border-radius: 999px; background: var(--ink); color: #fff; font-size: 0.78rem; white-space: nowrap; pointer-events: none; }
 .cfg-stagebar { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 16px 18px; flex-wrap: wrap; position: relative; }
 .cfg-stagebar .cfg-ghost { position: absolute; right: 16px; }
 .sim-disclaimer { margin: 14px 6px 0; font-size: 0.75rem; line-height: 1.55; color: var(--mut); }
@@ -155,7 +165,7 @@
   .cfg-preview { grid-row: 1; }
   .cfg-panel { grid-row: 2; }
   .cfg-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .sim-stage svg { max-height: 44vh; padding-top: 38px; }
+  .sim-view { width: min(100%, calc(48vh * 0.9375)); }
   .cfg-title { font-size: clamp(1.4rem, 6vw, 1.9rem); }
   .cfg-bar { padding: 8px 0; padding-bottom: max(8px, env(safe-area-inset-bottom)); }
   .cfg-cta { min-height: 52px; }
@@ -179,3 +189,9 @@
 @media (prefers-reduced-motion: reduce) {
   .cfg *, .cfg *::before, .cfg *::after { animation: none !important; transition: none !important; }
 }
+
+.cfg-card img { width: 100%; max-width: 64px; height: auto; aspect-ratio: 900/960; object-fit: contain; }
+.cfg-swatches { max-height: 232px; overflow-y: auto; padding-right: 4px; }
+#sim-dos-row { margin-bottom: 12px; }
+.cfg-opts, .cfg-range { clear: both; }
+#sim-dos-row[hidden] { display: none; }
