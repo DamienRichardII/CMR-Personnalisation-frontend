@@ -9,13 +9,14 @@
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var DATA = null, imgCache = {}, colCache = {}, colOrder = [];
 
-  var st = { t: { g: 0, c: 0, f: 0, p: 0 }, sel: false, pid: 'tshirt', ci: 0, angle: 0, anim: null, spun: false,
+  var st = { grp: 'vetements', t: { g: 0, c: 0, f: 0, p: 0 }, sel: false, pid: 'tshirt', ci: 0, angle: 0, anim: null, spun: false,
     pl: null, logo: null, logoEl: null, logoOrig: null, logoName: '', ratio: 366 / 900, demo: true };
   st.ratio = 900 / 366;
 
   function el(tag, attrs, parent) { var n = document.createElementNS(NS, tag); Object.keys(attrs || {}).forEach(function (k) { n.setAttribute(k, attrs[k]); }); if (parent) parent.appendChild(n); return n; }
   function prod() { return DATA.products.filter(function (p) { return p.id === st.pid; })[0]; }
-  function color() { return prod().colors[st.ci]; }
+  function color() { var p = prod(); return p.colors[st.ci] || { name: 'Selon photo', hex: '#ffffff' }; }
+  function canRot(p) { return Object.keys(p.views).length > 1; }
   function norm(a) { return ((a % 360) + 360) % 360; }
   function dAng(a, b) { var d = norm(a - b); return d > 180 ? d - 360 : d; }
   function bw(p, k) { var b = p.bbox[k]; return b[2] - b[0]; }
@@ -52,8 +53,10 @@
     x.putImageData(d, 0, 0); return c;
   }
   function viewSource(p, key, ci) {
+    var cc = p.colors[ci];
+    if (cc && cc.views && cc.views[key]) return loadImg(cc.views[key]);
     var base = loadImg(p.views[key]);
-    if (ci === p.base) return base;
+    if (ci === p.base || !cc) return base;
     var ck = p.id + '|' + key + '|' + p.colors[ci].hex;
     if (colCache[ck]) return Promise.resolve(colCache[ck]);
     return base.then(function (img) {
@@ -73,10 +76,11 @@
     });
   }
 
+  function photoHex() { var p = prod(), c = p.colors[st.ci]; return (c && c.hex) || ({ gourde: '#b98a76', agenda: '#1c2a4a', 'tapis-souris': '#d8232a', 'jeton-caddie': '#d8232a', 'porte-cle-jeton': '#1c4fd1', 'lunch-box': '#1c2a4a', 'sac-isotherme': '#111111', 'sac-a-dos': '#1c2230' }[p.id] || '#ffffff'); }
   /* ----- logo d'exemple CMR (remplacé dès que le client ajoute le sien) ----- */
   function demoLogo() {
     if (!st.demo) return;
-    var src = lum(color().hex) < 140 ? 'Assets/img/logo-blanc.png' : 'Assets/img/logo-noir.png';
+    var src = lum(photoHex()) < 140 ? 'Assets/img/logo-blanc.png' : 'Assets/img/logo-noir.png';
     if (st.logo === src) return;
     st.logo = src; st.ratio = 900 / 366;
     loadImg(src).then(function (i) { if (st.demo && st.logo === src) { st.logoEl = i; } });
@@ -86,6 +90,7 @@
   var shown = { fk: null, sx: 1, op: 1, dd: 0, best: null };
   function render() {
     var p = prod(); if (!p || !cur.face) return;
+    var stc = !canRot(p); stage.classList.toggle('is-static', stc); var hh = $('#sim-hint'); if (hh) hh.hidden = stc;
     var vs = viewList(p), a = norm(st.angle), best = null, bd = 999;
     vs.forEach(function (v) { var d = Math.abs(dAng(a, v.angle)); if (d < bd) { bd = d; best = v; } });
     var dd = dAng(a, best.angle), dir = dd >= 0 ? 1 : -1, nb = null, nd = 999;
@@ -149,12 +154,12 @@
     animateTo(a + dAng(target, a), 560);
   }
   function stepRot(sgn) {
-    var p = prod(); st.t.f = 1;
+    var p = prod(); st.t.f = 1; if (!canRot(p)) return;
     if (!hasBack(p)) { var a0 = st.angle; animateTo(Math.max(-90, Math.min(90, Math.round(a0 / 90) * 90 + sgn * 90)), 420); return; }
     animateTo(Math.round(st.angle / 90) * 90 + sgn * 90, 480);
   }
   function spinDemo() {
-    if (reduce || st.spun) return; st.spun = true;
+    if (reduce || st.spun || !canRot(prod())) return; st.spun = true;
     if (hasBack(prod())) animateTo(360, 3000);
     else { animateTo(70, 1000); setTimeout(function () { if (!rot && !st.anim) animateTo(0, 1000); }, 1250); }
   }
@@ -170,6 +175,7 @@
     }
     if (st.sel) { st.sel = false; drawLogo(); }
     if (st.anim) { cancelAnimationFrame(st.anim.id); st.anim = null; }
+    if (!canRot(prod())) return;
     rot = { x: ev.clientX, a: st.angle, moved: false }; svg.setPointerCapture(ev.pointerId); stage.classList.add('is-rot');
   });
   svg.addEventListener('pointermove', function (ev) {
@@ -218,7 +224,8 @@
   function currentFace() { return shown.fk || (shown.best && shown.best.angle > 90 && shown.best.angle < 270 ? 'dos' : 'face'); }
   function drawProducts() {
     var gs = $('#sim-garments'); gs.textContent = '';
-    DATA.products.forEach(function (p) {
+    var gg = $('#sim-grp'); if (gg) { buttons(gg, [{ id: 'vetements', label: 'Vêtements' }, { id: 'objets', label: 'Objets' }], st.grp, 'cfg-segbtn', function (id) { st.grp = id; drawProducts(); chooseProduct(DATA.products.filter(function (p) { return p.sim && p.grp === id; })[0].id); }, 'grp:'); }
+    DATA.products.filter(function (p) { return p.sim && p.grp === st.grp; }).forEach(function (p) {
       var b = document.createElement('button'); b.type = 'button'; b.className = 'cfg-card' + (p.id === st.pid ? ' is-on' : ''); b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', p.id === st.pid ? 'true' : 'false'); b.dataset.k = 'g:' + p.id;
       var im = document.createElement('img'); im.src = p.views.face; im.alt = ''; im.width = 90; im.height = 96; im.loading = 'lazy'; im.decoding = 'async'; b.appendChild(im);
       var t = document.createElement('span'); t.textContent = p.name; b.appendChild(t);
@@ -227,11 +234,12 @@
   }
   function drawColors() {
     var p = prod(), cs = $('#sim-colors'); cs.textContent = '';
+    $('#cfg-s2').hidden = p.colors.length < 2;
     p.colors.forEach(function (c, i) {
       var b = document.createElement('button'); b.type = 'button'; b.className = 'sim-swatch' + (i === st.ci ? ' is-on' : ''); b.style.setProperty('--sw', c.hex); b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', i === st.ci ? 'true' : 'false'); b.setAttribute('aria-label', c.name); b.title = c.name; b.dataset.k = 'c:' + i;
       b.addEventListener('click', function () { if (i === st.ci) return; st.ci = i; st.t.c = 1; drawColors(); prepare(); }); cs.appendChild(b);
     });
-    $('#sim-colorname').textContent = color().name + ' · ' + p.colors.length + ' coloris';
+    $('#sim-colorname').textContent = p.colors.length > 1 ? color().name + ' · ' + p.colors.length + ' coloris' : '';
   }
   function controlsFor() {
     var p = prod(), fk = currentFace(), back = hasBack(p);
@@ -263,7 +271,7 @@
   function drawSummary() {
     var p = DATA && prod(); if (!p || !st.pl) return;
     var user = !!st.logo && !st.demo;
-    $('#sum-g').textContent = p.name; $('#sum-c').textContent = color().name;
+    $('#sum-g').textContent = p.name; $('#sum-c').textContent = p.colors.length ? color().name : 'Selon photo';
     var both = user && st.pl.dos.on && hasBack(p);
     $('#sum-f').textContent = hasBack(p) ? (both ? 'Avant et dos' : (currentFace() === 'dos' ? 'Dos' : 'Avant')) : 'Avant';
     $('#sum-l').textContent = user ? 'Logo personnalisé' : 'Aucun logo';
@@ -367,7 +375,7 @@
   fetch('Assets/produits/produits.json').then(function (r) { return r.json(); }).then(function (d) {
     DATA = d;
     var q = new URLSearchParams(location.search).get('produit');
-    if (q && d.products.some(function (p) { return p.id === q; })) st.pid = q;
+    var qp = q && d.products.filter(function (p) { return p.id === q && p.sim; })[0]; if (qp) { st.pid = q; st.grp = qp.grp; }
     st.ci = prod().base; initPlaces(); drawProducts(); drawColors();
     prepare().then(function () { controlsFor(); drawSummary(); setTimeout(spinDemo, 350); });
   }).catch(function () { err('Impossible de charger les produits. Rechargez la page.'); });

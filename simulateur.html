@@ -126,7 +126,7 @@
       <p class="cfg-eyebrow">Personnalisez</p>
       <h1 class="cfg-title" id="sim-title">Visualisez votre logo directement sur votre vêtement.</h1>
       <ol class="cfg-steps" id="cfg-steps" aria-label="Étapes de configuration">
-        <li><a href="#cfg-s1"><span class="cfg-dot">1</span><span class="cfg-lab">Vêtement</span></a></li>
+        <li><a href="#cfg-s1"><span class="cfg-dot">1</span><span class="cfg-lab">Produit</span></a></li>
         <li><a href="#cfg-s2"><span class="cfg-dot">2</span><span class="cfg-lab">Couleur</span></a></li>
         <li><a href="#cfg-s3"><span class="cfg-dot">3</span><span class="cfg-lab">Face</span></a></li>
         <li><a href="#cfg-s4"><span class="cfg-dot">4</span><span class="cfg-lab">Logo</span></a></li>
@@ -159,7 +159,8 @@
 
       <div class="cfg-panel">
         <fieldset class="cfg-step" id="cfg-s1">
-          <legend><span class="cfg-n">01</span>Vêtement</legend>
+          <legend><span class="cfg-n">01</span>Produit</legend>
+          <div class="cfg-seg cfg-grp" id="sim-grp" role="radiogroup" aria-label="Type de produit"></div>
           <div class="cfg-cards" id="sim-garments" role="radiogroup" aria-label="Vêtement"></div>
         </fieldset>
         <fieldset class="cfg-step" id="cfg-s2">
@@ -168,7 +169,7 @@
         </fieldset>
         <fieldset class="cfg-step" id="cfg-s3">
           <legend><span class="cfg-n">03</span>Face</legend>
-          <div id="sim-face-group"><div class="cfg-seg" id="sim-faces" role="radiogroup" aria-label="Face du vêtement"></div><p class="cfg-hint">Faites glisser le vêtement pour le faire tourner à 360°.</p></div>
+          <div id="sim-face-group"><div class="cfg-seg" id="sim-faces" role="radiogroup" aria-label="Face du vêtement"></div><p class="cfg-hint" id="sim-hint">Faites glisser le vêtement pour le faire tourner à 360°.</p></div>
         </fieldset>
         <fieldset class="cfg-step" id="cfg-s4">
           <legend><span class="cfg-n">04</span>Votre logo</legend>
@@ -192,7 +193,7 @@
         <div class="cfg-sum" aria-label="Votre configuration">
           <h2>Votre configuration</h2>
           <dl>
-            <div><dt>Vêtement</dt><dd id="sum-g"></dd></div>
+            <div><dt>Produit</dt><dd id="sum-g"></dd></div>
             <div><dt>Couleur</dt><dd id="sum-c"></dd></div>
             <div><dt>Face</dt><dd id="sum-f"></dd></div>
             <div><dt>Logo</dt><dd id="sum-l"></dd></div>

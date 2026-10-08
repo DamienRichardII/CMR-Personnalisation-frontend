@@ -195,3 +195,7 @@
 #sim-dos-row { margin-bottom: 12px; }
 .cfg-opts, .cfg-range { clear: both; }
 #sim-dos-row[hidden] { display: none; }
+.sim-stage.is-static .sim-rot, .sim-stage.is-static .sim-360 { display: none; }
+.sim-stage.is-static .sim-view, .sim-stage.is-static .sim-view svg { cursor: default; }
+.cfg-grp { margin-bottom: 12px; }
+#cfg-s2[hidden] { display: none; }

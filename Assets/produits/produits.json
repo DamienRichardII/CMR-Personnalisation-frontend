@@ -13,8 +13,16 @@
    "name": "Vestes & gilets"
   },
   {
+   "id": "hautes-visibilites",
+   "name": "Hautes visibilités"
+  },
+  {
    "id": "travail",
    "name": "Vêtements de travail"
+  },
+  {
+   "id": "objets",
+   "name": "Objets personnalisables"
   }
  ],
  "products": [
@@ -236,7 +244,9 @@
       "w": 344
      }
     ]
-   }
+   },
+   "grp": "vetements",
+   "sim": true
   },
   {
    "id": "polo",
@@ -460,7 +470,9 @@
       "w": 337
      }
     ]
-   }
+   },
+   "grp": "vetements",
+   "sim": true
   },
   {
    "id": "sweat",
@@ -700,7 +712,9 @@
       "w": 284
      }
     ]
-   }
+   },
+   "grp": "vetements",
+   "sim": true
   },
   {
    "id": "capuche",
@@ -950,7 +964,9 @@
       "w": 263
      }
     ]
-   }
+   },
+   "grp": "vetements",
+   "sim": true
   },
   {
    "id": "polaire",
@@ -1090,7 +1106,9 @@
       "w": 284
      }
     ]
-   }
+   },
+   "grp": "vetements",
+   "sim": true
   },
   {
    "id": "softshell",
@@ -1193,7 +1211,9 @@
      }
     ],
     "dos": []
-   }
+   },
+   "grp": "vetements",
+   "sim": true
   },
   {
    "id": "gilet",
@@ -1289,7 +1309,9 @@
      }
     ],
     "dos": []
-   }
+   },
+   "grp": "vetements",
+   "sim": true
   },
   {
    "id": "combinaison",
@@ -1410,7 +1432,618 @@
       "w": 138
      }
     ]
-   }
+   },
+   "grp": "vetements",
+   "sim": true
+  },
+  {
+   "id": "parka",
+   "name": "Parka rembourée",
+   "cat": "vestes-gilets",
+   "grp": "vetements",
+   "desc": "Parka rembourée.",
+   "infos": [],
+   "views": {
+    "face": "Assets/produits/parka/face.webp"
+   },
+   "bbox": {
+    "face": [
+     0,
+     0,
+     900,
+     960
+    ]
+   },
+   "ambiance": [],
+   "gallery": [],
+   "colors": [
+    {
+     "name": "Beige",
+     "hex": "#cfc2a6"
+    }
+   ],
+   "base": 0,
+   "places": {
+    "face": [
+     {
+      "id": "pg",
+      "label": "Poitrine gauche",
+      "x": 540,
+      "y": 440,
+      "w": 110
+     },
+     {
+      "id": "pd",
+      "label": "Poitrine droite",
+      "x": 230,
+      "y": 440,
+      "w": 110
+     }
+    ],
+    "dos": []
+   },
+   "sim": true
+  },
+  {
+   "id": "tablier",
+   "name": "Tablier",
+   "cat": "travail",
+   "grp": "vetements",
+   "desc": "Tablier à bavette.",
+   "infos": [],
+   "views": {
+    "face": "Assets/produits/tablier/face.webp"
+   },
+   "bbox": {
+    "face": [
+     0,
+     0,
+     900,
+     960
+    ]
+   },
+   "ambiance": [],
+   "gallery": [],
+   "colors": [
+    {
+     "name": "Gris anthracite",
+     "hex": "#4a4a4a"
+    }
+   ],
+   "base": 0,
+   "places": {
+    "face": [
+     {
+      "id": "bv",
+      "label": "Bavette",
+      "x": 435,
+      "y": 420,
+      "w": 170
+     },
+     {
+      "id": "po",
+      "label": "Poche",
+      "x": 435,
+      "y": 650,
+      "w": 150
+     }
+    ],
+    "dos": []
+   },
+   "sim": true
+  },
+  {
+   "id": "haute-visibilite",
+   "name": "Veste haute visibilité",
+   "cat": "hautes-visibilites",
+   "grp": "vetements",
+   "desc": "Veste haute visibilité à bandes réfléchissantes.",
+   "infos": [],
+   "views": {
+    "face": "Assets/produits/haute-visibilite/face.webp"
+   },
+   "bbox": {
+    "face": [
+     130,
+     60,
+     769,
+     900
+    ]
+   },
+   "ambiance": [
+    "Assets/produits/haute-visibilite/ambiance-1.webp"
+   ],
+   "gallery": [],
+   "colors": [
+    {
+     "name": "Jaune fluo",
+     "hex": "#d6f20a",
+     "views": {
+      "face": "Assets/produits/haute-visibilite/face.webp"
+     }
+    },
+    {
+     "name": "Orange fluo",
+     "hex": "#ff6a10",
+     "views": {
+      "face": "Assets/produits/haute-visibilite/face-orange.webp"
+     }
+    }
+   ],
+   "base": 0,
+   "places": {
+    "face": [
+     {
+      "id": "pg",
+      "label": "Poitrine gauche",
+      "x": 520,
+      "y": 290,
+      "w": 90
+     },
+     {
+      "id": "pd",
+      "label": "Poitrine droite",
+      "x": 385,
+      "y": 290,
+      "w": 90
+     }
+    ],
+    "dos": []
+   },
+   "sim": true
+  },
+  {
+   "id": "gourde",
+   "name": "Gourde isotherme",
+   "cat": "objets",
+   "grp": "objets",
+   "desc": "",
+   "infos": [],
+   "views": {
+    "face": "Assets/produits/gourde/face.webp"
+   },
+   "bbox": {
+    "face": [
+     270,
+     60,
+     630,
+     900
+    ]
+   },
+   "ambiance": [],
+   "gallery": [
+    {
+     "src": "Assets/produits/gourde/ambiance-1.webp",
+     "alt": "Gourde isotherme, photo supplémentaire"
+    }
+   ],
+   "colors": [],
+   "base": 0,
+   "places": {
+    "face": [
+     {
+      "id": "fa",
+      "label": "Face avant",
+      "x": 400,
+      "y": 480,
+      "w": 150
+     }
+    ],
+    "dos": []
+   },
+   "sim": true
+  },
+  {
+   "id": "gobelet",
+   "name": "Gobelet isotherme",
+   "cat": "objets",
+   "grp": "objets",
+   "desc": "",
+   "infos": [],
+   "views": {
+    "face": "Assets/produits/gobelet/face.webp"
+   },
+   "bbox": {
+    "face": [
+     181,
+     60,
+     719,
+     900
+    ]
+   },
+   "ambiance": [],
+   "gallery": [
+    {
+     "src": "Assets/produits/gobelet/ambiance-1.webp",
+     "alt": "Gobelet isotherme, photo supplémentaire"
+    }
+   ],
+   "colors": [],
+   "base": 0,
+   "places": {
+    "face": [],
+    "dos": []
+   },
+   "sim": false
+  },
+  {
+   "id": "agenda",
+   "name": "Agenda en cuir",
+   "cat": "objets",
+   "grp": "objets",
+   "desc": "",
+   "infos": [],
+   "views": {
+    "face": "Assets/produits/agenda/face.webp"
+   },
+   "bbox": {
+    "face": [
+     191,
+     60,
+     709,
+     900
+    ]
+   },
+   "ambiance": [],
+   "gallery": [],
+   "colors": [],
+   "base": 0,
+   "places": {
+    "face": [
+     {
+      "id": "ce",
+      "label": "Centre",
+      "x": 450,
+      "y": 520,
+      "w": 220
+     },
+     {
+      "id": "ba",
+      "label": "Bas de couverture",
+      "x": 450,
+      "y": 740,
+      "w": 220
+     }
+    ],
+    "dos": []
+   },
+   "sim": true
+  },
+  {
+   "id": "calendrier-bureau",
+   "name": "Calendrier de bureau",
+   "cat": "objets",
+   "grp": "objets",
+   "desc": "",
+   "infos": [],
+   "views": {
+    "face": "Assets/produits/calendrier-bureau/face.webp"
+   },
+   "bbox": {
+    "face": [
+     67,
+     60,
+     833,
+     900
+    ]
+   },
+   "ambiance": [],
+   "gallery": [],
+   "colors": [],
+   "base": 0,
+   "places": {
+    "face": [
+     {
+      "id": "so",
+      "label": "Socle",
+      "x": 400,
+      "y": 745,
+      "w": 200
+     }
+    ],
+    "dos": []
+   },
+   "sim": true
+  },
+  {
+   "id": "tapis-souris",
+   "name": "Tapis de souris calendrier",
+   "cat": "objets",
+   "grp": "objets",
+   "desc": "",
+   "infos": [],
+   "views": {
+    "face": "Assets/produits/tapis-souris/face.webp"
+   },
+   "bbox": {
+    "face": [
+     50,
+     220,
+     850,
+     740
+    ]
+   },
+   "ambiance": [],
+   "gallery": [],
+   "colors": [],
+   "base": 0,
+   "places": {
+    "face": [
+     {
+      "id": "zr",
+      "label": "Zone rouge",
+      "x": 185,
+      "y": 520,
+      "w": 140
+     }
+    ],
+    "dos": []
+   },
+   "sim": true
+  },
+  {
+   "id": "coffret-stylos",
+   "name": "Coffret de stylos",
+   "cat": "objets",
+   "grp": "objets",
+   "desc": "",
+   "infos": [],
+   "views": {
+    "face": "Assets/produits/coffret-stylos/face.webp"
+   },
+   "bbox": {
+    "face": [
+     50,
+     192,
+     850,
+     768
+    ]
+   },
+   "ambiance": [],
+   "gallery": [],
+   "colors": [],
+   "base": 0,
+   "places": {
+    "face": [],
+    "dos": []
+   },
+   "sim": false
+  },
+  {
+   "id": "jeton-caddie",
+   "name": "Porte-clés jeton de caddie",
+   "cat": "objets",
+   "grp": "objets",
+   "desc": "",
+   "infos": [],
+   "views": {
+    "face": "Assets/produits/jeton-caddie/face.webp"
+   },
+   "bbox": {
+    "face": [
+     310,
+     60,
+     589,
+     900
+    ]
+   },
+   "ambiance": [],
+   "gallery": [],
+   "colors": [],
+   "base": 0,
+   "places": {
+    "face": [
+     {
+      "id": "di",
+      "label": "Jeton",
+      "x": 445,
+      "y": 765,
+      "w": 110
+     }
+    ],
+    "dos": []
+   },
+   "sim": true
+  },
+  {
+   "id": "porte-cle-jeton",
+   "name": "Porte-clés jeton",
+   "cat": "objets",
+   "grp": "objets",
+   "desc": "",
+   "infos": [],
+   "views": {
+    "face": "Assets/produits/porte-cle-jeton/face.webp"
+   },
+   "bbox": {
+    "face": [
+     330,
+     60,
+     570,
+     900
+    ]
+   },
+   "ambiance": [],
+   "gallery": [],
+   "colors": [],
+   "base": 0,
+   "places": {
+    "face": [
+     {
+      "id": "pl",
+      "label": "Plaque",
+      "x": 435,
+      "y": 500,
+      "w": 130
+     }
+    ],
+    "dos": []
+   },
+   "sim": true
+  },
+  {
+   "id": "lunch-box",
+   "name": "Lunch box",
+   "cat": "objets",
+   "grp": "objets",
+   "desc": "",
+   "infos": [],
+   "views": {
+    "face": "Assets/produits/lunch-box/face.webp"
+   },
+   "bbox": {
+    "face": [
+     50,
+     196,
+     850,
+     763
+    ]
+   },
+   "ambiance": [],
+   "gallery": [],
+   "colors": [],
+   "base": 0,
+   "places": {
+    "face": [
+     {
+      "id": "co",
+      "label": "Couvercle",
+      "x": 300,
+      "y": 545,
+      "w": 250
+     }
+    ],
+    "dos": []
+   },
+   "sim": true
+  },
+  {
+   "id": "sac-isotherme",
+   "name": "Sac isotherme",
+   "cat": "objets",
+   "grp": "objets",
+   "desc": "",
+   "infos": [],
+   "views": {
+    "face": "Assets/produits/sac-isotherme/face.webp"
+   },
+   "bbox": {
+    "face": [
+     50,
+     106,
+     850,
+     854
+    ]
+   },
+   "ambiance": [],
+   "gallery": [],
+   "colors": [],
+   "base": 0,
+   "places": {
+    "face": [
+     {
+      "id": "fa",
+      "label": "Face avant",
+      "x": 455,
+      "y": 650,
+      "w": 190
+     }
+    ],
+    "dos": []
+   },
+   "sim": true
+  },
+  {
+   "id": "sac-a-dos",
+   "name": "Sac à dos",
+   "cat": "objets",
+   "grp": "objets",
+   "desc": "",
+   "infos": [],
+   "views": {
+    "face": "Assets/produits/sac-a-dos/face.webp"
+   },
+   "bbox": {
+    "face": [
+     117,
+     60,
+     783,
+     900
+    ]
+   },
+   "ambiance": [],
+   "gallery": [],
+   "colors": [],
+   "base": 0,
+   "places": {
+    "face": [
+     {
+      "id": "fa",
+      "label": "Face avant",
+      "x": 440,
+      "y": 610,
+      "w": 200
+     }
+    ],
+    "dos": []
+   },
+   "sim": true
+  },
+  {
+   "id": "stylo",
+   "name": "Stylo",
+   "cat": "objets",
+   "grp": "objets",
+   "desc": "",
+   "infos": [],
+   "views": {
+    "face": "Assets/produits/stylo/face.webp"
+   },
+   "bbox": {
+    "face": [
+     411,
+     60,
+     488,
+     900
+    ]
+   },
+   "ambiance": [],
+   "gallery": [],
+   "colors": [],
+   "base": 0,
+   "places": {
+    "face": [],
+    "dos": []
+   },
+   "sim": false
+  },
+  {
+   "id": "tote-bag",
+   "name": "Tote bag",
+   "cat": "objets",
+   "grp": "objets",
+   "desc": "",
+   "infos": [],
+   "views": {
+    "face": "Assets/produits/tote-bag/face.webp"
+   },
+   "bbox": {
+    "face": [
+     96,
+     60,
+     804,
+     900
+    ]
+   },
+   "ambiance": [],
+   "gallery": [],
+   "colors": [],
+   "base": 0,
+   "places": {
+    "face": [],
+    "dos": []
+   },
+   "sim": false
   }
  ]
 }
