@@ -224,7 +224,7 @@
   function currentFace() { return shown.fk || (shown.best && shown.best.angle > 90 && shown.best.angle < 270 ? 'dos' : 'face'); }
   function drawProducts() {
     var gs = $('#sim-garments'); gs.textContent = '';
-    var gg = $('#sim-grp'); if (gg) { buttons(gg, [{ id: 'vetements', label: 'Vêtements' }, { id: 'objets', label: 'Objets' }], st.grp, 'cfg-segbtn', function (id) { st.grp = id; drawProducts(); chooseProduct(DATA.products.filter(function (p) { return p.sim && p.grp === id; })[0].id); }, 'grp:'); }
+    var gg = $('#sim-grp'); if (gg) { buttons(gg, [{ id: 'vetements', label: 'Vêtements' }, { id: 'objets', label: 'Objets' }], st.grp, 'cfg-segbtn', function (id) { st.grp = id; var f = DATA.products.filter(function (p) { return p.sim && p.grp === id; })[0]; drawProducts(); if (f) chooseProduct(f.id); }, 'grp:'); }
     DATA.products.filter(function (p) { return p.sim && p.grp === st.grp; }).forEach(function (p) {
       var b = document.createElement('button'); b.type = 'button'; b.className = 'cfg-card' + (p.id === st.pid ? ' is-on' : ''); b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', p.id === st.pid ? 'true' : 'false'); b.dataset.k = 'g:' + p.id;
       var im = document.createElement('img'); im.src = p.views.face; im.alt = ''; im.width = 90; im.height = 96; im.loading = 'lazy'; im.decoding = 'async'; b.appendChild(im);
@@ -372,7 +372,7 @@
   });
 
   /* ----- démarrage ----- */
-  fetch('Assets/produits/produits.json').then(function (r) { return r.json(); }).then(function (d) {
+  fetch('Assets/produits/produits.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) {
     DATA = d;
     var q = new URLSearchParams(location.search).get('produit');
     var qp = q && d.products.filter(function (p) { return p.id === q && p.sim; })[0]; if (qp) { st.pid = q; st.grp = qp.grp; }
