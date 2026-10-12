@@ -289,7 +289,7 @@
 
   /* ============================== Coquille + routeur ============================== */
   var ROUTES = [
-    ['dashboard', 'Tableau de bord'], ['demandes', 'Demandes'], ['commandes', 'Commandes'], ['clients', 'Clients'], ['stock', 'Stock'],
+    ['dashboard', 'Tableau de bord'], ['demandes', 'Demandes'], ['commandes', 'Commandes'], ['clients', 'Clients'], ['stock', 'Stock'], ['produits', 'Produits du site'],
     ['realisations', 'Réalisations'], ['contenus', 'Contenus du site'], ['medias', 'Médias']
   ];
   var VIEWS = {};
@@ -689,8 +689,70 @@
     });
   }
 
+
+  /* ============================== Produits du site (galerie + simulateur) ============================== */
+  var PROD_CATS = [['t-shirts-polos', 'T-shirts & polos'], ['sweats', 'Sweats'], ['vestes-gilets', 'Vestes & gilets'], ['hautes-visibilites', 'Hautes visibilités'], ['travail', 'Vêtements de travail'], ['objets', 'Objets personnalisables']];
+  VIEWS.produits = function (box, actions) {
+    actions.appendChild(h('button', { class: 'btn-a', type: 'button', text: '+ Nouveau produit', onclick: function () { editProduit(null, 0); } }));
+    return sb.from('produits_publies').select('*').order('ordre').order('created_at').then(function (r) {
+      var rows = ensure(r); clear(box);
+      box.appendChild(h('p', { class: 'muted', style: 'margin-bottom:14px;font-size:.86rem', text: 'Ces produits s\'ajoutent à la page « Galerie » du site (et au simulateur si l\'option est cochée), à la suite des produits déjà présents. Aucun prix n\'est affiché. Lier un produit à un article du stock affiche « En stock » ou « Sur commande » automatiquement.' }));
+      if (!rows.length) { box.appendChild(h('div', { class: 'card-a empty-a', text: 'Aucun produit ajouté pour l\'instant.' })); return; }
+      function move(i, d) {
+        var j = i + d; if (j < 0 || j >= rows.length) return;
+        var a = rows.slice(); var t = a[i]; a[i] = a[j]; a[j] = t;
+        Promise.all(a.map(function (x, k) { return x.ordre === k + 1 ? null : sb.from('produits_publies').update({ ordre: k + 1 }).eq('id', x.id); }).filter(Boolean)).then(reload);
+      }
+      var idx = {}; rows.forEach(function (x, i) { idx[x.id] = i; });
+      box.appendChild(tableOf([
+        { label: '', cell: function (x) { return x.image_url ? h('img', { class: 'thumb', src: img(x.image_url), alt: '', loading: 'lazy' }) : h('div', { class: 'thumb empty', text: 'Photo' }); } },
+        { label: 'Produit', cell: function (x) { return h('span', null, h('b', { text: x.nom }), h('div', { class: 'muted', style: 'font-size:.78rem', text: label(PROD_CATS, x.categorie) })); } },
+        { label: 'Stock', cell: function (x) { return x.stock_item_id ? h('span', { class: 'pill ' + (x.en_stock ? 's-ok' : 's-low'), text: x.en_stock ? 'En stock' : 'Rupture' }) : h('span', { class: 'muted', text: '—' }); } },
+        { label: 'Simulateur', cell: function (x) { return x.simulateur ? 'Oui' : '—'; }, muted: true },
+        { label: 'Visible', cell: function (x) { return h('span', { class: 'pill ' + (x.publie ? 's-ok' : 's-off'), text: x.publie ? 'Publié' : 'Masqué' }); } },
+        { label: 'Ordre', cell: function (x) {
+          var i = idx[x.id];
+          return h('span', { style: 'display:inline-flex;gap:6px', onclick: function (e) { e.stopPropagation(); } },
+            h('button', { class: 'btn-a ghost sm', type: 'button', 'aria-label': 'Monter', text: '↑', disabled: i === 0, onclick: function () { move(i, -1); } }),
+            h('button', { class: 'btn-a ghost sm', type: 'button', 'aria-label': 'Descendre', text: '↓', disabled: i === rows.length - 1, onclick: function () { move(i, 1); } }));
+        } }
+      ], rows, function (x) { editProduit(x, rows.length); }));
+    });
+  };
+  function editProduit(x, count) {
+    var isNew = !x;
+    sb.from('stock_items').select('id,nom,couleur,taille,quantite').order('nom').limit(1000).then(function (r) {
+      var items = (r && r.data) || [];
+      var opts = [['', '— Aucun (pas de suivi de stock)']].concat(items.map(function (s) { return [s.id, s.nom + (s.couleur ? ' · ' + s.couleur : '') + (s.taille ? ' · ' + s.taille : '') + ' (' + s.quantite + ')']; }));
+      formModal({
+        title: isNew ? 'Nouveau produit' : x.nom, wide: true, values: x || { publie: true, simulateur: false, categorie: 'objets' },
+        fields: [
+          { name: 'nom', label: 'Nom du produit', required: true, full: true, maxlength: 120 },
+          { name: 'categorie', label: 'Catégorie', type: 'select', options: PROD_CATS, required: true },
+          { name: 'stock_item_id', label: 'Article du stock lié', type: 'select', options: opts, hint: 'Optionnel : affiche « En stock » / « Rupture » sur le site.' },
+          { name: 'description', label: 'Description courte', type: 'textarea', full: true, rows: 3, maxlength: 600, hint: 'Les infos utiles au client (matière, usage…). Pas de prix.' },
+          { name: 'caracteristiques', label: 'Caractéristiques', type: 'textarea', full: true, rows: 3, hint: 'Une par ligne. Ex. Matière : coton / Disponible en tailles enfants.' },
+          { name: 'coloris', label: 'Coloris', full: true, hint: 'Séparés par des virgules. Ex. Noir, Blanc, Bleu marine.' },
+          { name: 'image_url', custom: function (v) { return imageField(v, 'Photo principale (fond blanc recommandé)'); } },
+          { name: 'image2_url', custom: function (v) { return imageField(v, 'Photo 2 (facultatif)'); } },
+          { name: 'image3_url', custom: function (v) { return imageField(v, 'Photo 3 (facultatif)'); } },
+          { name: 'simulateur', label: 'Proposer ce produit dans le simulateur (nécessite une photo principale)', type: 'checkbox', full: true },
+          { name: 'publie', label: 'Afficher sur le site', type: 'checkbox', full: true }
+        ],
+        onSave: function (v) {
+          if (isNew) v.ordre = (count || 0) + 1;
+          if (v.simulateur && !v.image_url) return new Error('Ajoutez une photo principale pour le simulateur.');
+          var q = isNew ? sb.from('produits_publies').insert(v) : sb.from('produits_publies').update(v).eq('id', x.id);
+          return q.then(function (r) { if (r.error) return r.error; toast('Produit enregistré.', 'ok'); reload(); });
+        },
+        onDelete: isNew ? null : function () { return sb.from('produits_publies').delete().eq('id', x.id).then(function (r) { if (!r.error) { toast('Produit supprimé.', 'ok'); reload(); } return r.error; }); },
+        deleteMsg: 'Supprimer ce produit du site ?'
+      });
+    });
+  }
+
   /* ============================== Réalisations ============================== */
-  function imageField(value) {
+  function imageField(value, labelText) {
     var url = value || '', wrap = h('div', { class: 'fld full' });
     var pv = h('div'), msg = h('div', { class: 'hint' });
     var file = h('input', { type: 'file', accept: 'image/png,image/jpeg,image/webp', hidden: true });
@@ -704,7 +766,7 @@
       uploadImage(file.files[0]).then(function (u) { url = u; msg.textContent = ''; draw(); }).catch(function (e) { msg.textContent = errText(e); });
       file.value = '';
     });
-    wrap.appendChild(h('label', { text: 'Image' }));
+    wrap.appendChild(h('label', { text: labelText || 'Image' }));
     wrap.appendChild(h('div', { style: 'display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap' }, pv,
       h('div', { style: 'display:grid;gap:8px;justify-items:start' },
         h('button', { class: 'btn-a ghost sm', type: 'button', text: 'Téléverser une image', onclick: function () { file.click(); } }),

@@ -29,6 +29,33 @@
     show(0); lb.showModal(); document.documentElement.style.overflow = 'hidden';
   }
   document.querySelectorAll('.gal-open').forEach(function (b) { b.addEventListener('click', function () { open(b.dataset.id, b); }); });
+  /* ----- produits ajoutés depuis l'administration (Supabase, lecture publique) ----- */
+  function safeImg(u) { return u && (/^https:\/\//.test(u) || /^Assets\//.test(u)) ? u : ''; }
+  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+  function addProduct(p) {
+    var grid = document.querySelector('.gal-sec[data-cat="' + p.categorie + '"] .gal-grid'); if (!grid) return;
+    var id = 'db-' + p.id, main = safeImg(p.image_url); if (!main) return;
+    var imgs = [main, safeImg(p.image2_url), safeImg(p.image3_url)].filter(Boolean).map(function (u, i) { return { src: u, alt: p.nom + (i ? ', photo ' + (i + 1) : '') }; });
+    var cols = (p.coloris || '').split(',').map(function (c) { return c.trim(); }).filter(Boolean).map(function (n) { return { name: n }; });
+    data[id] = { id: id, name: p.nom, desc: p.description || '', infos: (p.caracteristiques || '').split('\n').map(function (t) { return t.trim(); }).filter(Boolean), imgs: imgs, colors: cols, sim: !!p.simulateur, stock: p.stock_item_id ? !!p.en_stock : null };
+    var card = el('article', 'gal-card'); card.dataset.cat = p.categorie;
+    var op = el('button', 'gal-open'); op.type = 'button'; op.dataset.id = id; op.setAttribute('aria-label', 'Voir les photos : ' + p.nom);
+    var ph = el('span', 'gal-ph'), im = document.createElement('img'); im.src = main; im.width = 450; im.height = 480; im.loading = 'lazy'; im.alt = p.nom; ph.appendChild(im); op.appendChild(ph); card.appendChild(op);
+    var body = el('div', 'gal-body'); body.appendChild(el('h3', null, p.nom));
+    if (data[id].stock !== null) body.appendChild(el('p', 'gal-stock ' + (data[id].stock ? 'is-in' : 'is-out'), data[id].stock ? 'En stock' : 'Sur commande'));
+    if (p.description) body.appendChild(el('p', 'gal-desc', p.description));
+    if (cols.length > 1) body.appendChild(el('p', 'gal-col', cols.length + ' coloris'));
+    var act = el('div', 'gal-act'), b2 = el('button', 'btn btn-outline btn-lg gal-open'); b2.type = 'button'; b2.dataset.id = id; b2.appendChild(el('span', null, 'Voir les photos')); act.appendChild(b2);
+    if (p.simulateur) { var a = el('a', 'gal-sim', 'Simuler mon logo'); a.href = 'simulateur.html?produit=' + encodeURIComponent(id); act.appendChild(a); }
+    body.appendChild(act); card.appendChild(body); grid.appendChild(card);
+    [op, b2].forEach(function (b) { b.addEventListener('click', function () { open(id, b); }); });
+  }
+  var cfg = window.CMR_SUPABASE;
+  if (cfg && window.fetch) {
+    fetch(cfg.url + '/rest/v1/produits_publies?select=*&publie=eq.true&order=ordre.asc,created_at.asc', { headers: { apikey: cfg.key, Authorization: 'Bearer ' + cfg.key } })
+      .then(function (r) { return r.ok ? r.json() : []; }).then(function (rows) { (rows || []).forEach(addProduct); }).catch(function () {});
+  }
+
   $('#gal-x').addEventListener('click', function () { lb.close(); });
   $('.gal-prev').addEventListener('click', function () { show(idx - 1); });
   $('.gal-next').addEventListener('click', function () { show(idx + 1); });

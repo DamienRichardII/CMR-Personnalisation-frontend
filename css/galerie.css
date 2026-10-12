@@ -48,3 +48,6 @@
   .gal-lb-view { max-height: 52vh; }
 }
 @media (prefers-reduced-motion: reduce) { .gal-ph img { transition: none; } }
+.gal-stock { margin: 0; align-self: flex-start; padding: 2px 10px; border-radius: 999px; font-size: .74rem; font-weight: 600; }
+.gal-stock.is-in { background: rgba(40, 180, 100, .16); color: #4ad08a; }
+.gal-stock.is-out { background: rgba(140, 165, 220, .16); color: var(--color-muted); }

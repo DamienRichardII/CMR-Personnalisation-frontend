@@ -32,8 +32,16 @@
 
   /* ----- images + recoloration ----- */
   function loadImg(src) {
-    if (!imgCache[src]) imgCache[src] = new Promise(function (res, rej) { var i = new Image(); i.onload = function () { res(i); }; i.onerror = rej; i.src = src; });
+    if (!imgCache[src]) imgCache[src] = new Promise(function (res, rej) { var i = new Image(); if (/^https?:/.test(src)) i.crossOrigin = 'anonymous'; i.onload = function () { res(i); }; i.onerror = rej; i.src = src; });
     return imgCache[src];
+  }
+  function loadFit(src) {
+    var k = 'fit|' + src;
+    if (!imgCache[k]) imgCache[k] = loadImg(src).then(function (i) {
+      var c = document.createElement('canvas'); c.width = W; c.height = H; var x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, W, H);
+      var s = Math.min(800 / i.naturalWidth, 840 / i.naturalHeight); var w = i.naturalWidth * s, h = i.naturalHeight * s; x.drawImage(i, (W - w) / 2, (H - h) / 2, w, h); return c;
+    });
+    return imgCache[k];
   }
   function hexRgb(h) { return [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)]; }
   function lum(hex) { var c = hexRgb(hex); return 0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2]; }
@@ -55,7 +63,7 @@
   function viewSource(p, key, ci) {
     var cc = p.colors[ci];
     if (cc && cc.views && cc.views[key]) return loadImg(cc.views[key]);
-    var base = loadImg(p.views[key]);
+    var base = p.db ? loadFit(p.views[key]) : loadImg(p.views[key]);
     if (ci === p.base || !cc) return base;
     var ck = p.id + '|' + key + '|' + p.colors[ci].hex;
     if (colCache[ck]) return Promise.resolve(colCache[ck]);
@@ -371,9 +379,23 @@
     }, function () { err('Export impossible sur ce navigateur.'); });
   });
 
+  /* ----- produits ajoutés depuis l'administration ----- */
+  function loadDb(d) {
+    var cfg = window.CMR_SUPABASE; if (!cfg || !window.fetch) return Promise.resolve();
+    return fetch(cfg.url + '/rest/v1/produits_publies?select=*&publie=eq.true&simulateur=eq.true&order=ordre.asc,created_at.asc', { headers: { apikey: cfg.key, Authorization: 'Bearer ' + cfg.key } })
+      .then(function (r) { return r.ok ? r.json() : []; }).then(function (rows) {
+        (rows || []).forEach(function (p) {
+          if (!p.image_url || !(/^https:\/\//.test(p.image_url) || /^Assets\//.test(p.image_url))) return;
+          d.products.push({ id: 'db-' + p.id, db: true, name: p.nom, cat: p.categorie, grp: p.categorie === 'objets' ? 'objets' : 'vetements', sim: true, desc: p.description || '', infos: [], views: { face: p.image_url }, bbox: { face: [0, 0, W, H] },
+            colors: [], base: 0, places: { face: [{ id: 'ce', label: 'Centre', x: 450, y: 480, w: 200 }, { id: 'ha', label: 'Haut', x: 450, y: 330, w: 170 }, { id: 'ba', label: 'Bas', x: 450, y: 640, w: 200 }], dos: [] } });
+        });
+      }).catch(function () {});
+  }
   /* ----- démarrage ----- */
   fetch('Assets/produits/produits.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) {
     DATA = d;
+    return loadDb(d).then(function () { return d; });
+  }).then(function (d) {
     var q = new URLSearchParams(location.search).get('produit');
     var qp = q && d.products.filter(function (p) { return p.id === q && p.sim; })[0]; if (qp) { st.pid = q; st.grp = qp.grp; }
     st.ci = prod().base; initPlaces(); drawProducts(); drawColors();
