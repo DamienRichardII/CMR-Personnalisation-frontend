@@ -266,7 +266,11 @@
         if (!radioVal('technique')) { setError(n, 'Choisissez une technique — ou « Je ne sais pas », nous vous conseillerons.'); return false; }
         if (!radioVal('logo')) { setError(n, 'Indiquez si vous avez déjà votre logo ou votre visuel.'); return false; }
       }
-      if (n === 4 && !radioVal('quantite')) { setError(n, 'Choisissez une quantité approximative.'); return false; }
+      if (n === 4) {
+        var qn = val('q-qte');
+        if (!/^\d+$/.test(qn) || parseInt(qn, 10) < 1) { setError(n, 'Indiquez le nombre exact de pièces (un nombre entier, au moins 1).'); quizForm.querySelector('#q-qte').setAttribute('aria-invalid', 'true'); return false; }
+        quizForm.querySelector('#q-qte').removeAttribute('aria-invalid');
+      }
       if (n === 5 && val('q-description').length < 10) {
         setError(n, 'Décrivez brièvement votre projet (quelques mots suffisent).');
         quizForm.querySelector('#q-description').setAttribute('aria-invalid', 'true');
@@ -333,7 +337,8 @@
         [2, 'Produits', checkedVals('produits').join(', ')],
         [3, 'Technique', radioVal('technique')],
         [3, 'Logo / visuel', radioVal('logo') === 'Oui' ? 'Oui' + (logoFiles ? ' — ' + logoFiles + ' fichier(s)' : ' (à nous transmettre)') : 'Non, besoin d\'accompagnement'],
-        [4, 'Quantité', radioVal('quantite')],
+        [4, 'Quantité', val('q-qte') + ' pièce' + (parseInt(val('q-qte'), 10) > 1 ? 's' : '')],
+        [4, 'Répartition', val('q-repart') || 'Non précisée'],
         [4, 'Délai', delai || 'Pas de contrainte indiquée'],
         [5, 'Projet', desc + (refFiles ? '  (+ ' + refFiles + ' fichier(s) de référence)' : '')],
         [6, 'Coordonnées', contact]
@@ -354,7 +359,7 @@
         ['Besoin', radioVal('besoin')], ['Produits', checkedVals('produits').join(', ')],
         ['Technique', radioVal('technique')], ['Logo / visuel existant', radioVal('logo')],
         ['Fichiers logo (à joindre)', logoNames.join(', ')],
-        ['Quantité', radioVal('quantite')], ['Date souhaitée', val('q-date')], ['Urgent', quizForm.querySelector('#q-urgent').checked ? 'Oui' : ''],
+        ['Quantité', val('q-qte') ? val('q-qte') + ' pièces' : ''], ['Répartition par produit / taille', val('q-repart')], ['Date souhaitée', val('q-date')], ['Urgent', quizForm.querySelector('#q-urgent').checked ? 'Oui' : ''],
         ['Description', val('q-description')], ['Fichiers de référence (à joindre)', refNames.join(', ')],
         ['Prénom', val('q-prenom')], ['Nom', val('q-nom')], ['Entreprise / association', val('q-entreprise')],
         ['E-mail', val('q-email')], ['Téléphone', val('q-tel')], ['Ville / code postal', val('q-ville')]

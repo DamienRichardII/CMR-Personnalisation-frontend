@@ -436,7 +436,7 @@
     var m = openModal({ title: 'Demande de devis — ' + ([d.prenom, d.nom].filter(Boolean).join(' ') || d.email), wide: true });
     m.body.appendChild(h('p', { class: 'muted', style: 'margin-bottom:12px;font-size:.82rem', text: 'Reçue le ' + fmtDate(d.created_at, true) }));
     m.body.appendChild(h('h3', { class: 'sec', style: 'margin-top:0', text: 'Projet' }));
-    m.body.appendChild(kv([['Besoin', d.besoin], ['Produits', d.produits], ['Technique', d.technique], ['Logo / visuel', d.logo_existant], ['Quantité', d.quantite],
+    m.body.appendChild(kv([['Besoin', d.besoin], ['Produits', d.produits], ['Technique', d.technique], ['Logo / visuel', d.logo_existant], ['Quantité', d.quantite], ['Répartition', d.donnees && d.donnees['Répartition par produit / taille']],
       ['Date souhaitée', d.date_souhaitee ? fmtDate(d.date_souhaitee) : null], ['Urgent', d.urgent ? 'Oui' : null], ['Description', d.description]]));
     m.body.appendChild(h('h3', { class: 'sec', text: 'Contact' }));
     m.body.appendChild(kv([['Nom', [d.prenom, d.nom].filter(Boolean).join(' ')], ['Entreprise / association', d.entreprise], ['E-mail', d.email], ['Téléphone', d.telephone], ['Ville / CP', d.ville]]));
