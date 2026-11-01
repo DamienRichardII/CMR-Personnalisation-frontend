@@ -149,7 +149,7 @@ async function main() {
   if (complete && rows.length < 200) { complete = false; console.log('Moins de 200 modèles reçus : résultat suspect, aucun modèle masqué.'); }
   if (complete) {                       // synchro complète réussie : on masque les modèles disparus du catalogue Roly
     const stamp = rows.reduce((a, r) => (r.maj < a ? r.maj : a), rows[0].maj);
-    await sb('roly_produits?maj=lt.' + encodeURIComponent(stamp), { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({ actif: false }) });
+    await sb('roly_produits?brand=eq.roly&maj=lt.' + encodeURIComponent(stamp), { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({ actif: false }) });
     console.log('Modèles retirés par Roly : masqués.');
   } else console.log('Synchro partielle : aucun modèle masqué.');
   if (failed) { console.error(failed + ' catégorie(s) en échec.'); process.exitCode = 1; }
