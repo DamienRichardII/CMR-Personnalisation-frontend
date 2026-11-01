@@ -10,9 +10,11 @@
  *   node scripts/sync-roly.mjs                       synchronisation complète
  *   node scripts/sync-roly.mjs --category=highviscoats --dry     test sur une catégorie, sans écriture
  *   node scripts/sync-roly.mjs --file=reponse.json --dry         lit un fichier getcatalog déjà téléchargé
+ *   node scripts/sync-roly.mjs --dir=roly-fichiers               lit un dossier : un fichier <id-categorie>.json par catégorie
+ *                                                                (+ categories.json = réponse de /item/categories, pour les sous-catégories)
  *
  * Aucune commande, aucun stock, aucun prix : uniquement les fiches produits. */
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 
 const BASE = (process.env.ROLY_API_BASE_URL || 'https://clientsws.gorfactory.es:2096').replace(/\/$/, '');
 const LANG = 'fr-FR', BRAND = 'roly';
@@ -111,9 +113,16 @@ const arg = (n) => { const a = process.argv.find((x) => x.startsWith('--' + n + 
 const flag = (n) => process.argv.includes('--' + n);
 
 async function main() {
-  const dry = flag('dry'), onlyCat = arg('category'), file = arg('file');
-  const models = new Map(); let complete = true;
-  if (file) {
+  const dry = flag('dry'), onlyCat = arg('category'), file = arg('file'), dir = arg('dir');
+  const models = new Map(); let complete = true, failed = 0;
+  if (dir) {
+    let anc = {}; try { anc = ancestors(JSON.parse(readFileSync(dir + '/categories.json', 'utf8'))); } catch { console.log('(pas de categories.json : sous-catégories non reliées)'); }
+    const files = readdirSync(dir).filter((f) => /\.json$/i.test(f) && !/^categories\.json$/i.test(f)); complete = false;
+    for (const f of files) {
+      const id = f.replace(/\.json$/i, ''), j = JSON.parse(readFileSync(dir + '/' + f, 'utf8')), items = Array.isArray(j) ? j : j.item || [];
+      groupModels(items, id, anc, models); console.log('  ' + id.padEnd(22) + String(items.length).padStart(6) + ' lignes → ' + models.size + ' modèles au total');
+    }
+  } else if (file) {
     const j = JSON.parse(readFileSync(file, 'utf8')); groupModels(Array.isArray(j) ? j : j.item || [], arg('cat') || 'fichier', {}, models); complete = false;
   } else {
     const token = await login(); console.log('Connexion Roly : OK');
@@ -128,7 +137,7 @@ async function main() {
         const items = Array.isArray(j) ? j : j.item || [];
         groupModels(items, c.id, anc, models);
         console.log('  ' + c.id.padEnd(22) + String(items.length).padStart(6) + ' lignes → ' + models.size + ' modèles au total');
-      } catch (e) { complete = false; console.error('  ' + c.id + ' : ÉCHEC (' + e.message + ')'); }
+      } catch (e) { complete = false; failed++; console.error('  ' + c.id + ' : ÉCHEC (' + e.message + ')'); }
     }
   }
   const rows = toRows(models);
@@ -137,10 +146,12 @@ async function main() {
   for (let i = 0; i < rows.length; i += 100)
     await sb('roly_produits?on_conflict=modelcode', { method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=minimal' }, body: JSON.stringify(rows.slice(i, i + 100)) });
   console.log('Supabase : ' + rows.length + ' fiches enregistrées.');
+  if (complete && rows.length < 200) { complete = false; console.log('Moins de 200 modèles reçus : résultat suspect, aucun modèle masqué.'); }
   if (complete) {                       // synchro complète réussie : on masque les modèles disparus du catalogue Roly
     const stamp = rows.reduce((a, r) => (r.maj < a ? r.maj : a), rows[0].maj);
     await sb('roly_produits?maj=lt.' + encodeURIComponent(stamp), { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({ actif: false }) });
     console.log('Modèles retirés par Roly : masqués.');
   } else console.log('Synchro partielle : aucun modèle masqué.');
+  if (failed) { console.error(failed + ' catégorie(s) en échec.'); process.exitCode = 1; }
 }
 if (import.meta.url === 'file://' + process.argv[1] || process.argv[1]?.endsWith('sync-roly.mjs')) main().catch((e) => { console.error('Erreur : ' + e.message); process.exit(1); });

@@ -1,0 +1,33 @@
+name: Synchronisation catalogue Roly
+
+# Met à jour la table Supabase `roly_produits` à partir de l'API Roly (lecture seule).
+# Identifiants à enregistrer dans GitHub > Settings > Secrets and variables > Actions :
+#   ROLY_USERNAME, ROLY_PASSWORD, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
+on:
+  schedule:
+    - cron: '17 3 * * 1'      # chaque lundi à 03h17 UTC
+  workflow_dispatch:           # lancement manuel : onglet Actions > Run workflow
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-roly
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Synchroniser le catalogue
+        env:
+          ROLY_USERNAME: ${{ secrets.ROLY_USERNAME }}
+          ROLY_PASSWORD: ${{ secrets.ROLY_PASSWORD }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scripts/sync-roly.mjs
