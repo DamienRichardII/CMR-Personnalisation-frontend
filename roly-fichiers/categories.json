@@ -1,0 +1,803 @@
+[
+  {
+    "category": "T-shirts et polos techniques",
+    "id": "cam_sp",
+    "models": "52",
+    "parentCategory": "Sport collection",
+    "parentId": "sports",
+    "brand": "roly",
+    "branchOrder": "0\r"
+  },
+  {
+    "category": "GILETS",
+    "id": "cha",
+    "models": "8",
+    "parentCategory": "Vestes",
+    "parentId": "coats",
+    "brand": "roly",
+    "branchOrder": "0\r"
+  },
+  {
+    "category": "T-shirts et polos",
+    "id": "cam_po",
+    "models": "71",
+    "parentCategory": "",
+    "parentId": "",
+    "brand": "roly",
+    "branchOrder": "0\r"
+  },
+  {
+    "category": "Polos à manches courtes",
+    "id": "pmc",
+    "models": "16",
+    "parentCategory": "Polos",
+    "parentId": "pol_s",
+    "brand": "roly",
+    "branchOrder": "0\r"
+  },
+  {
+    "category": "Débardeurs",
+    "id": "cat",
+    "models": "8",
+    "parentCategory": "T-shirts",
+    "parentId": "t_shirts",
+    "brand": "roly",
+    "branchOrder": "0\r"
+  },
+  {
+    "category": "T-shirts",
+    "id": "t_shirts",
+    "models": "51",
+    "parentCategory": "T-shirts et polos",
+    "parentId": "cam_po",
+    "brand": "roly",
+    "branchOrder": "0\r"
+  },
+  {
+    "category": "Sweats",
+    "id": "swe",
+    "models": "22",
+    "parentCategory": "Sweats et vestes",
+    "parentId": "sud_cha",
+    "brand": "roly",
+    "branchOrder": "0\r"
+  },
+  {
+    "category": "Sweats sans capuche",
+    "id": "swe_sh",
+    "models": "11",
+    "parentCategory": "Sweats",
+    "parentId": "swe",
+    "brand": "roly",
+    "branchOrder": "0\r"
+  },
+  {
+    "category": "T-shirts de sport ",
+    "id": "sp_tshi",
+    "models": "41",
+    "parentCategory": "T-shirts et polos techniques",
+    "parentId": "cam_sp",
+    "brand": "roly",
+    "branchOrder": "0\r"
+  },
+  {
+    "category": "Shorts ",
+    "id": "sh_pant",
+    "models": "18",
+    "parentCategory": "Pantalons de sport",
+    "parentId": "pd",
+    "brand": "roly",
+    "branchOrder": "0\r"
+  },
+  {
+    "category": "Vêtements thermiques",
+    "id": "winter_shirts",
+    "models": "3",
+    "parentCategory": "Winter Sport",
+    "parentId": "wint_sp",
+    "brand": "roly",
+    "branchOrder": "0\r"
+  },
+  {
+    "category": "T-shirts haute visibilité",
+    "id": "highvistshirts",
+    "models": "2",
+    "parentCategory": "Haute visibilité ",
+    "parentId": "highviz",
+    "brand": "roly",
+    "branchOrder": "0\r"
+  },
+  {
+    "category": "Blouse",
+    "id": "sanitarycasaca",
+    "models": "3",
+    "parentCategory": "Santé et Esthétique",
+    "parentId": "san_est",
+    "brand": "roly",
+    "branchOrder": "0\r"
+  },
+  {
+    "category": "Blouse et chasuble ",
+    "id": "foodindustrybata",
+    "models": "2",
+    "parentCategory": "Industrie alimentaire",
+    "parentId": "food",
+    "brand": "roly",
+    "branchOrder": "0\r"
+  },
+  {
+    "category": "Chemises",
+    "id": "horecacamisas",
+    "models": "10",
+    "parentCategory": "HORECA",
+    "parentId": "horeca",
+    "brand": "roly",
+    "branchOrder": "0\r"
+  },
+  {
+    "category": "T-shirts ignifuges",
+    "id": "industrytshirts",
+    "models": "1",
+    "parentCategory": "Industrie - Ignifuge",
+    "parentId": "fire_retardant",
+    "brand": "roly",
+    "branchOrder": "0\r"
+  },
+  {
+    "category": "Combinaisons - industrie",
+    "id": "serviciosmonos",
+    "models": "1",
+    "parentCategory": "Industrie - Services",
+    "parentId": "industry_services",
+    "brand": "roly",
+    "branchOrder": "0\r"
+  },
+  {
+    "category": "Textiles",
+    "id": "textiles",
+    "models": "6",
+    "parentCategory": "Autres produits",
+    "parentId": "other_products",
+    "brand": "roly",
+    "branchOrder": "0\r"
+  },
+  {
+    "category": "WRK Footwear",
+    "id": "foot_wrk",
+    "models": "18",
+    "parentCategory": "Roly WRK",
+    "parentId": "workwear",
+    "brand": "roly",
+    "branchOrder": "0\r"
+  },
+  {
+    "category": "Maillots de bain",
+    "id": "bdr",
+    "models": "2",
+    "parentCategory": "Autres produits",
+    "parentId": "other_products",
+    "brand": "roly",
+    "branchOrder": "1\r"
+  },
+  {
+    "category": "Haute visibilité ",
+    "id": "highviz",
+    "models": "26",
+    "parentCategory": "Roly WRK",
+    "parentId": "workwear",
+    "brand": "roly",
+    "branchOrder": "1\r"
+  },
+  {
+    "category": "Pantalons de sport",
+    "id": "pd",
+    "models": "42",
+    "parentCategory": "Sport collection",
+    "parentId": "sports",
+    "brand": "roly",
+    "branchOrder": "1\r"
+  },
+  {
+    "category": "Sweats et vestes",
+    "id": "sud_cha",
+    "models": "22",
+    "parentCategory": "",
+    "parentId": "",
+    "brand": "roly",
+    "branchOrder": "1\r"
+  },
+  {
+    "category": "T-shirts à manches courtes",
+    "id": "cam",
+    "models": "35",
+    "parentCategory": "T-shirts",
+    "parentId": "t_shirts",
+    "brand": "roly",
+    "branchOrder": "1\r"
+  },
+  {
+    "category": "Polos",
+    "id": "pol_s",
+    "models": "20",
+    "parentCategory": "T-shirts et polos",
+    "parentId": "cam_po",
+    "brand": "roly",
+    "branchOrder": "1\r"
+  },
+  {
+    "category": "Polos à manches longues",
+    "id": "pol_w",
+    "models": "4",
+    "parentCategory": "Polos",
+    "parentId": "pol_s",
+    "brand": "roly",
+    "branchOrder": "1\r"
+  },
+  {
+    "category": "Sweats à capuche",
+    "id": "swe_h",
+    "models": "11",
+    "parentCategory": "Sweats",
+    "parentId": "swe",
+    "brand": "roly",
+    "branchOrder": "1\r"
+  },
+  {
+    "category": "Polaires ",
+    "id": "pol",
+    "models": "11",
+    "parentCategory": "Vestes",
+    "parentId": "coats",
+    "brand": "roly",
+    "branchOrder": "1\r"
+  },
+  {
+    "category": "Polos de sport ",
+    "id": "sp_polshi",
+    "models": "7",
+    "parentCategory": "T-shirts et polos techniques",
+    "parentId": "cam_sp",
+    "brand": "roly",
+    "branchOrder": "1\r"
+  },
+  {
+    "category": "Pantalons",
+    "id": "lo_pant",
+    "models": "11",
+    "parentCategory": "Pantalons de sport",
+    "parentId": "pd",
+    "brand": "roly",
+    "branchOrder": "1\r"
+  },
+  {
+    "category": "Vestes",
+    "id": "w_coats",
+    "models": "8",
+    "parentCategory": "Winter Sport",
+    "parentId": "wint_sp",
+    "brand": "roly",
+    "branchOrder": "1\r"
+  },
+  {
+    "category": "Polos haute visibilité",
+    "id": "highvispolo",
+    "models": "8",
+    "parentCategory": "Haute visibilité ",
+    "parentId": "highviz",
+    "brand": "roly",
+    "branchOrder": "1\r"
+  },
+  {
+    "category": "Pantalon - Santé et Esthétique",
+    "id": "sanitarypantalon",
+    "models": "3",
+    "parentCategory": "Santé et Esthétique",
+    "parentId": "san_est",
+    "brand": "roly",
+    "branchOrder": "1\r"
+  },
+  {
+    "category": "Bonnet ",
+    "id": "foodindustrygorro",
+    "models": "2",
+    "parentCategory": "Industrie alimentaire",
+    "parentId": "food",
+    "brand": "roly",
+    "branchOrder": "1\r"
+  },
+  {
+    "category": "Veste HORECA",
+    "id": "horecachaqueta",
+    "models": "6",
+    "parentCategory": "HORECA",
+    "parentId": "horeca",
+    "brand": "roly",
+    "branchOrder": "1\r"
+  },
+  {
+    "category": "Polos - ignifuges",
+    "id": "industrypolos",
+    "models": "1",
+    "parentCategory": "Industrie - Ignifuge",
+    "parentId": "fire_retardant",
+    "brand": "roly",
+    "branchOrder": "1\r"
+  },
+  {
+    "category": "Gilets ",
+    "id": "servicioschalecos",
+    "models": "3",
+    "parentCategory": "Industrie - Services",
+    "parentId": "industry_services",
+    "brand": "roly",
+    "branchOrder": "1\r"
+  },
+  {
+    "category": "Vestes",
+    "id": "coats",
+    "models": "46",
+    "parentCategory": "",
+    "parentId": "",
+    "brand": "roly",
+    "branchOrder": "2\r"
+  },
+  {
+    "category": "Vestes",
+    "id": "subcoats",
+    "models": "17",
+    "parentCategory": "Vestes",
+    "parentId": "coats",
+    "brand": "roly",
+    "branchOrder": "2\r"
+  },
+  {
+    "category": "Winter Sport",
+    "id": "wint_sp",
+    "models": "20",
+    "parentCategory": "Sport collection",
+    "parentId": "sports",
+    "brand": "roly",
+    "branchOrder": "2\r"
+  },
+  {
+    "category": "T-shirts à manches longues",
+    "id": "cam_w",
+    "models": "7",
+    "parentCategory": "T-shirts",
+    "parentId": "t_shirts",
+    "brand": "roly",
+    "branchOrder": "2\r"
+  },
+  {
+    "category": "Leggings et collants",
+    "id": "leggins",
+    "models": "14",
+    "parentCategory": "Pantalons de sport",
+    "parentId": "pd",
+    "brand": "roly",
+    "branchOrder": "2\r"
+  },
+  {
+    "category": "Coupe-vent",
+    "id": "windbreak",
+    "models": "4",
+    "parentCategory": "Winter Sport",
+    "parentId": "wint_sp",
+    "brand": "roly",
+    "branchOrder": "2\r"
+  },
+  {
+    "category": "Sous-vêtements",
+    "id": "inw",
+    "models": "2",
+    "parentCategory": "Autres produits",
+    "parentId": "other_products",
+    "brand": "roly",
+    "branchOrder": "2\r"
+  },
+  {
+    "category": "Industrie - Ignifuge",
+    "id": "fire_retardant",
+    "models": "5",
+    "parentCategory": "Roly WRK",
+    "parentId": "workwear",
+    "brand": "roly",
+    "branchOrder": "2\r"
+  },
+  {
+    "category": "Sweats",
+    "id": "highvisjackets",
+    "models": "1",
+    "parentCategory": "Haute visibilité ",
+    "parentId": "highviz",
+    "brand": "roly",
+    "branchOrder": "2\r"
+  },
+  {
+    "category": "Blouse",
+    "id": "sanitarybata",
+    "models": "4",
+    "parentCategory": "Santé et Esthétique",
+    "parentId": "san_est",
+    "brand": "roly",
+    "branchOrder": "2\r"
+  },
+  {
+    "category": "Pantalon  - Industrie Agroalimentaire",
+    "id": "foodpantalon",
+    "models": "1",
+    "parentCategory": "Industrie alimentaire",
+    "parentId": "food",
+    "brand": "roly",
+    "branchOrder": "2\r"
+  },
+  {
+    "category": "Pantalon - HORECA",
+    "id": "horecapantalon",
+    "models": "10",
+    "parentCategory": "HORECA",
+    "parentId": "horeca",
+    "brand": "roly",
+    "branchOrder": "2\r"
+  },
+  {
+    "category": "Vestes ignifuges",
+    "id": "industryjackets",
+    "models": "1",
+    "parentCategory": "Industrie - Ignifuge",
+    "parentId": "fire_retardant",
+    "brand": "roly",
+    "branchOrder": "2\r"
+  },
+  {
+    "category": "T-shirt industriel",
+    "id": "serviciostshirts",
+    "models": "2",
+    "parentCategory": "Industrie - Services",
+    "parentId": "industry_services",
+    "brand": "roly",
+    "branchOrder": "2\r"
+  },
+  {
+    "category": "Roly Control Dry",
+    "id": "c_dry",
+    "models": "20",
+    "parentCategory": "T-shirts et polos techniques",
+    "parentId": "cam_sp",
+    "brand": "roly",
+    "branchOrder": "2\r"
+  },
+  {
+    "category": "Kits de sport ",
+    "id": "equip",
+    "models": "10",
+    "parentCategory": "Sport collection",
+    "parentId": "sports",
+    "brand": "roly",
+    "branchOrder": "3\r"
+  },
+  {
+    "category": "Industrie - Services",
+    "id": "industry_services",
+    "models": "42",
+    "parentCategory": "Roly WRK",
+    "parentId": "workwear",
+    "brand": "roly",
+    "branchOrder": "3\r"
+  },
+  {
+    "category": "Sacs à dos",
+    "id": "moc",
+    "models": "13",
+    "parentCategory": "Autres produits",
+    "parentId": "other_products",
+    "brand": "roly",
+    "branchOrder": "3\r"
+  },
+  {
+    "category": "Softshell",
+    "id": "softshell",
+    "models": "8",
+    "parentCategory": "Vestes",
+    "parentId": "coats",
+    "brand": "roly",
+    "branchOrder": "3\r"
+  },
+  {
+    "category": "Sweats",
+    "id": "winter_sweatshirts",
+    "models": "6",
+    "parentCategory": "Winter Sport",
+    "parentId": "wint_sp",
+    "brand": "roly",
+    "branchOrder": "3\r"
+  },
+  {
+    "category": "Parka",
+    "id": "highviscoats",
+    "models": "2",
+    "parentCategory": "Haute visibilité ",
+    "parentId": "highviz",
+    "brand": "roly",
+    "branchOrder": "3\r"
+  },
+  {
+    "category": "Bonnet",
+    "id": "sanitarygorro",
+    "models": "1",
+    "parentCategory": "Santé et Esthétique",
+    "parentId": "san_est",
+    "brand": "roly",
+    "branchOrder": "3\r"
+  },
+  {
+    "category": "Tablier",
+    "id": "horecadelantal",
+    "models": "9",
+    "parentCategory": "HORECA",
+    "parentId": "horeca",
+    "brand": "roly",
+    "branchOrder": "3\r"
+  },
+  {
+    "category": "Pantalon ignifuge",
+    "id": "industrypantalon",
+    "models": "1",
+    "parentCategory": "Industrie - Ignifuge",
+    "parentId": "fire_retardant",
+    "brand": "roly",
+    "branchOrder": "3\r"
+  },
+  {
+    "category": "Pantalones largos",
+    "id": "serviciospantalones_",
+    "models": "18",
+    "parentCategory": "Industrie - Services",
+    "parentId": "industry_services",
+    "brand": "roly",
+    "branchOrder": "3\r"
+  },
+  {
+    "category": "Pantalons",
+    "id": "pant_c",
+    "models": "17",
+    "parentCategory": "",
+    "parentId": "",
+    "brand": "roly",
+    "branchOrder": "3\r"
+  },
+  {
+    "category": "Sport collection",
+    "id": "sports",
+    "models": "120",
+    "parentCategory": "",
+    "parentId": "",
+    "brand": "roly",
+    "branchOrder": "4\r"
+  },
+  {
+    "category": "HORECA",
+    "id": "horeca",
+    "models": "35",
+    "parentCategory": "Roly WRK",
+    "parentId": "workwear",
+    "brand": "roly",
+    "branchOrder": "4\r"
+  },
+  {
+    "category": "Survêtements",
+    "id": "chnd",
+    "models": "11",
+    "parentCategory": "Sport collection",
+    "parentId": "sports",
+    "brand": "roly",
+    "branchOrder": "4\r"
+  },
+  {
+    "category": "imperméables",
+    "id": "chuba",
+    "models": "7",
+    "parentCategory": "Vestes",
+    "parentId": "coats",
+    "brand": "roly",
+    "branchOrder": "4\r"
+  },
+  {
+    "category": "Casquettes",
+    "id": "gor",
+    "models": "19",
+    "parentCategory": "Autres produits",
+    "parentId": "other_products",
+    "brand": "roly",
+    "branchOrder": "4\r"
+  },
+  {
+    "category": "Softshell haute visibilité",
+    "id": "highvissoftshell",
+    "models": "1",
+    "parentCategory": "Haute visibilité ",
+    "parentId": "highviz",
+    "brand": "roly",
+    "branchOrder": "4\r"
+  },
+  {
+    "category": "Combinaisons ignifuge ",
+    "id": "industrymonos",
+    "models": "1",
+    "parentCategory": "Industrie - Ignifuge",
+    "parentId": "fire_retardant",
+    "brand": "roly",
+    "branchOrder": "4\r"
+  },
+  {
+    "category": "Bermudas ",
+    "id": "serviciospantalones",
+    "models": "6",
+    "parentCategory": "Industrie - Services",
+    "parentId": "industry_services",
+    "brand": "roly",
+    "branchOrder": "4\r"
+  },
+  {
+    "category": "FOOTWEAR",
+    "id": "footwear",
+    "models": "8",
+    "parentCategory": "",
+    "parentId": "",
+    "brand": "roly",
+    "branchOrder": "5\r"
+  },
+  {
+    "category": "Industrie alimentaire",
+    "id": "food",
+    "models": "8",
+    "parentCategory": "Roly WRK",
+    "parentId": "workwear",
+    "brand": "roly",
+    "branchOrder": "5\r"
+  },
+  {
+    "category": "Accessoires",
+    "id": "acc",
+    "models": "16",
+    "parentCategory": "Autres produits",
+    "parentId": "other_products",
+    "brand": "roly",
+    "branchOrder": "5\r"
+  },
+  {
+    "category": "Polos - industrie",
+    "id": "serviciospolos",
+    "models": "4",
+    "parentCategory": "Industrie - Services",
+    "parentId": "industry_services",
+    "brand": "roly",
+    "branchOrder": "5\r"
+  },
+  {
+    "category": "Gilets",
+    "id": "highvischalecos",
+    "models": "4",
+    "parentCategory": "Haute visibilité ",
+    "parentId": "highviz",
+    "brand": "roly",
+    "branchOrder": "5\r"
+  },
+  {
+    "category": "Santé et Esthétique",
+    "id": "san_est",
+    "models": "12",
+    "parentCategory": "Roly WRK",
+    "parentId": "workwear",
+    "brand": "roly",
+    "branchOrder": "6\r"
+  },
+  {
+    "category": "ECO",
+    "id": "rolyeco",
+    "models": "35",
+    "parentCategory": "",
+    "parentId": "",
+    "brand": "roly",
+    "branchOrder": "6\r"
+  },
+  {
+    "category": "Sweat de services  industrie",
+    "id": "serviciossudaderas",
+    "models": "1",
+    "parentCategory": "Industrie - Services",
+    "parentId": "industry_services",
+    "brand": "roly",
+    "branchOrder": "6\r"
+  },
+  {
+    "category": "Vestes polaires haute visibilité",
+    "id": "highvischaquetas",
+    "models": "1",
+    "parentCategory": "Haute visibilité ",
+    "parentId": "highviz",
+    "brand": "roly",
+    "branchOrder": "6\r"
+  },
+  {
+    "category": "Autres produits",
+    "id": "other_products",
+    "models": "58",
+    "parentCategory": "",
+    "parentId": "",
+    "brand": "roly",
+    "branchOrder": "7\r"
+  },
+  {
+    "category": "Pantalon haute visibilité",
+    "id": "highvispantalones",
+    "models": "7",
+    "parentCategory": "Haute visibilité ",
+    "parentId": "highviz",
+    "brand": "roly",
+    "branchOrder": "7\r"
+  },
+  {
+    "category": "Vestes Industrie ",
+    "id": "servicioschaqutas",
+    "models": "8",
+    "parentCategory": "Industrie - Services",
+    "parentId": "industry_services",
+    "brand": "roly",
+    "branchOrder": "7\r"
+  },
+  {
+    "category": "Basics",
+    "id": "basic",
+    "models": "82",
+    "parentCategory": "Roly WRK",
+    "parentId": "workwear",
+    "brand": "roly",
+    "branchOrder": "7\r"
+  },
+  {
+    "category": "Roly WRK",
+    "id": "workwear",
+    "models": "213",
+    "parentCategory": "",
+    "parentId": "",
+    "brand": "roly",
+    "branchOrder": "8\r"
+  },
+  {
+    "category": "NOUVEAUTÉS",
+    "id": "novelty_roly",
+    "models": "41",
+    "parentCategory": "",
+    "parentId": "",
+    "brand": "roly",
+    "branchOrder": "9\r"
+  },
+  {
+    "category": "Outlet",
+    "id": "outlet",
+    "models": "28",
+    "parentCategory": "",
+    "parentId": "",
+    "brand": "roly",
+    "branchOrder": "10\r"
+  },
+  {
+    "category": "Phares",
+    "id": "featured_roly",
+    "models": "18",
+    "parentCategory": "",
+    "parentId": "",
+    "brand": "roly",
+    "branchOrder": "24\r"
+  },
+  {
+    "category": "New Prices",
+    "id": "new-prices",
+    "models": "5",
+    "parentCategory": "",
+    "parentId": "",
+    "brand": "roly",
+    "branchOrder": "30\r"
+  }
+]
