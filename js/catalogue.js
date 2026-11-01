@@ -5,7 +5,7 @@
   var PAGE = 24, state = { b: 'roly', f: 'all', q: '', offset: 0, total: 0, req: 0 }, rows = {};
   var CHIPS = {
     roly: [['all', 'Tous'], ['novelty_roly', 'Nouveautés'], ['cam_po', 'T-shirts & polos'], ['sud_cha', 'Sweats & vestes'], ['coats', 'Vestes'], ['pant_c', 'Pantalons'], ['highviz', 'Haute visibilité'], ['horeca', 'Restauration'], ['workwear', 'Vêtements de travail'], ['sports', 'Sport'], ['other_products', 'Casquettes, sacs & accessoires'], ['footwear', 'Chaussures']],
-    jhk: [['all', 'Tous']]
+    jhk: [['all', 'Tous'], ['homme', 'Homme'], ['femme', 'Femme'], ['enfant', 'Enfant'], ['tee-shirts', 'Tee-shirts'], ['polos', 'Polos'], ['sweatshirts', 'Sweatshirts'], ['polaire', 'Polaires'], ['chemises', 'Chemises'], ['pantalons', 'Pantalons'], ['jackets', 'Softshell'], ['windbreaker', 'Coupe-vent'], ['body-bebe', 'Body bébé'], ['workwear', 'Workwear'], ['sport', 'Sport'], ['winter', 'Hiver'], ['professional', 'Professional']]
   };
   var $ = function (id) { return document.getElementById(id); };
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
@@ -41,7 +41,7 @@
       (list || []).forEach(function (p) { var c = card(p); if (c) grid.appendChild(c); });
       state.offset += PAGE; var shown = grid.children.length;
       $('cat-count').textContent = state.total ? plural(state.total, 'modèle') : '';
-      $('cat-soon').hidden = !(state.b === 'jhk' && shown === 0 && !state.q); $('cat-empty').hidden = shown > 0 || !$('cat-soon').hidden; $('cat-more').hidden = state.offset >= state.total;
+      $('cat-soon').hidden = !(state.b === 'jhk' && shown === 0 && !state.q && state.f === 'all'); $('cat-empty').hidden = shown > 0 || !$('cat-soon').hidden; $('cat-more').hidden = state.offset >= state.total;
     }).catch(function () { if (my !== state.req) return; $('cat-count').textContent = ''; $('cat-empty').hidden = false; $('cat-empty').textContent = 'Le catalogue est momentanément indisponible. Réessayez dans un instant.'; });
   }
   function drawChips() {
@@ -82,6 +82,8 @@
     var th = $('cat-thumbs'); th.textContent = '';
     imgs.forEach(function (u, k) { var b = el('button'); b.type = 'button'; b.setAttribute('aria-label', 'Photo ' + (k + 1)); var t = document.createElement('img'); t.src = u; t.alt = ''; t.loading = 'lazy'; t.referrerPolicy = 'no-referrer'; b.appendChild(t); b.addEventListener('click', function () { show(k); }); th.appendChild(b); });
     show(0); quoteLink();
+    var same = cur.coloris.length > 1 && cur.coloris.every(function (x) { return x.image === cur.coloris[0].image; });
+    $('cat-note').textContent = 'Tarifs et disponibilités sur devis.' + (same ? ' Photo d\u2019illustration : le coloris choisi peut différer.' : '');
   }
   function quoteLink() {
     var c = cur.coloris[col] || {}, a = $('cat-lb-q');
@@ -91,7 +93,7 @@
     cur = p; opener = btn; if (!(p.coloris && p.coloris.length)) return;
     $('cat-lb-t').textContent = p.nom; $('cat-lb-m').textContent = [p.genre, p.famille].filter(Boolean).join(' · ');
     var cs = $('cat-colors'); cs.textContent = '';
-    p.coloris.forEach(function (c, i) { var b = el('button'); b.type = 'button'; b.title = c.nom || ''; b.setAttribute('aria-label', 'Coloris ' + (c.nom || i + 1)); var u = safeImg(c.image) || photos(c)[0]; if (u) { var t = document.createElement('img'); t.src = u; t.alt = ''; t.loading = 'lazy'; t.referrerPolicy = 'no-referrer'; b.appendChild(t); } b.addEventListener('click', function () { pickColor(i); }); cs.appendChild(b); });
+    p.coloris.forEach(function (c, i) { var b = el('button'); b.type = 'button'; b.title = c.nom || ''; b.setAttribute('aria-label', 'Coloris ' + (c.nom || i + 1)); var u = safeImg(c.swatch) || safeImg(c.image) || photos(c)[0]; if (u) { var t = document.createElement('img'); t.src = u; t.alt = ''; t.loading = 'lazy'; t.referrerPolicy = 'no-referrer'; b.appendChild(t); } b.addEventListener('click', function () { pickColor(i); }); cs.appendChild(b); });
     cs.hidden = p.coloris.length < 2;
     $('cat-sizes').textContent = (p.tailles && p.tailles.length) ? 'Tailles : ' + p.tailles.join(', ') : '';
     var ul = $('cat-lb-i'); ul.textContent = ''; String(p.description || '').split('\n').filter(Boolean).slice(0, 12).forEach(function (t) { ul.appendChild(el('li', null, t)); });
