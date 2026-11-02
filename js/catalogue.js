@@ -9,7 +9,7 @@
   function scope() { return (state.q.trim() || (state.f === 'best' && state.c !== 'all')) ? 'all' : state.f; }
   var $ = function (id) { return document.getElementById(id); };
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
-  function safeImg(u) { return typeof u === 'string' && /^https:\/\//.test(u) ? u : ''; }
+  function safeImg(u) { u = typeof u === 'string' ? u.split(',')[0].trim() : ''; return /^https:\/\//.test(u) ? u : ''; }
   function plural(n, w) { return n + ' ' + w + (n > 1 ? 's' : ''); }
   var COLS = 'best,ref,nom,image,genre,rubrique,tailles,coloris,nouveaute,description,composition';
 

@@ -53,7 +53,7 @@ export function groupModels(items, catId, anc = {}, into = new Map(), brand = 'r
     if (l.sizename) m.tailles.add(clean(l.sizename));
     const cc = clean(l.colorcode) || clean(l.colorname);
     if (cc && !m.colors.has(cc)) {
-      const front = httpsOnly(l.productimage);
+      const front = httpsOnly(String(l.productimage || '').split(',')[0]);
       const views = list(l.viewsimages);
       m.colors.set(cc, { code: clean(l.colorcode), nom: titleCase(l.colorname), image: front || views[0] || '', views });
     }
