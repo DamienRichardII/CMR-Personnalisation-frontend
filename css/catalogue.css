@@ -20,3 +20,6 @@
 .gal-lb-txt .cat-comp { font-size: .82rem; }
 @media (max-width: 760px) { .cat .gal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } .cat .gal-body { padding: 12px; } .cat .gal-act .btn { width: 100%; } }
 #cat-genres { margin-bottom: 12px; }
+
+#cat-colors-f { margin-bottom: 12px; }
+.cat-dot { display: inline-block; width: 12px; height: 12px; margin-right: 8px; border-radius: 50%; border: 1px solid rgba(128,128,128,.5); vertical-align: -1px; }

@@ -2,9 +2,11 @@
 (function () {
   'use strict';
   var cfg = window.CMR_SUPABASE, grid = document.getElementById('cat-grid'); if (!cfg || !grid || !window.fetch) return;
-  var PAGE = 24, state = { f: 'best', g: 'all', q: '', offset: 0, total: 0, req: 0 }, rows = {};
-  var CHIPS = [['best', 'Best sellers'], ['sweats', 'Sweats & polaires'], ['tshirts', 'T-shirts'], ['polos', 'Polos'], ['vestes', 'Vestes & blousons'], ['hv', 'Haute visibilité'], ['chemises', 'Chemises'], ['pantalons', 'Pantalons & shorts'], ['metiers', 'Métiers & travail'], ['sport', 'Sport'], ['chaussures', 'Chaussures'], ['bebe', 'Bébé'], ['accessoires', 'Accessoires'], ['new', 'Nouveautés']];
+  var PAGE = 24, state = { f: 'best', g: 'all', c: 'all', q: '', offset: 0, total: 0, req: 0 }, rows = {};
+  var CHIPS = [['best', 'Best sellers'], ['sweats', 'Sweats & polaires'], ['tshirts', 'T-shirts'], ['polos', 'Polos'], ['vestes', 'Vestes & blousons'], ['hv', 'Haute visibilité'], ['chemises', 'Chemises'], ['pantalons', 'Pantalons'], ['metiers', 'Métiers & travail'], ['sport', 'Sport'], ['chaussures', 'Chaussures'], ['bebe', 'Bébé'], ['accessoires', 'Accessoires'], ['new', 'Nouveautés']];
   var GENRES = [['all', 'Tout public'], ['Homme', 'Homme'], ['Femme', 'Femme'], ['Enfant', 'Enfant'], ['Mixte', 'Mixte']];
+  var COLORS = [['all', 'Toutes les couleurs', ''], ['Noir', 'Noir', '#111'], ['Blanc', 'Blanc', '#fff'], ['Gris', 'Gris', '#8a8f98'], ['Bleu', 'Bleu', '#1f4fbf'], ['Rouge', 'Rouge', '#d12b2b'], ['Vert', 'Vert', '#2e8b57'], ['Jaune', 'Jaune', '#f2c200'], ['Orange', 'Orange', '#f28c28'], ['Rose', 'Rose', '#ee7fb0'], ['Violet', 'Violet', '#7a4fb5'], ['Marron', 'Marron', '#8b5e3c']];
+  function scope() { return (state.q.trim() || (state.f === 'best' && state.c !== 'all')) ? 'all' : state.f; }
   var $ = function (id) { return document.getElementById(id); };
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
   function safeImg(u) { return typeof u === 'string' && /^https:\/\//.test(u) ? u : ''; }
@@ -12,8 +14,9 @@
   var COLS = 'best,ref,nom,image,genre,rubrique,tailles,coloris,nouveaute,description,composition';
 
   function url() {
-    var q0 = state.q.trim(), p = ['select=' + COLS, (!q0 && state.f === 'best' ? 'order=best.asc' : 'order=nom.asc,ref.asc'), 'limit=' + PAGE, 'offset=' + state.offset];
-    if (!q0) { if (state.f === 'best') p.push('best=not.is.null'); else if (state.f === 'new') p.push('nouveaute=eq.true'); else p.push('rubrique=eq.' + encodeURIComponent(state.f)); }
+    var q0 = state.q.trim(), sc = scope(), p = ['select=' + COLS, (sc === 'best' ? 'order=best.asc' : 'order=nom.asc,ref.asc'), 'limit=' + PAGE, 'offset=' + state.offset];
+    if (sc === 'best') p.push('best=not.is.null'); else if (sc === 'new') p.push('nouveaute=eq.true'); else if (sc !== 'all') p.push('rubrique=eq.' + encodeURIComponent(sc));
+    if (state.c !== 'all') p.push('couleurs=cs.' + encodeURIComponent('{' + state.c + '}'));
     if (state.g !== 'all') p.push('genre=eq.' + encodeURIComponent(state.g));
     var q = state.q.replace(/[*%,()\\"]/g, ' ').trim(); if (q) p.push('nom=ilike.' + encodeURIComponent('*' + q + '*'));
     return cfg.url + '/rest/v1/catalogue_public?' + p.join('&');
@@ -46,11 +49,11 @@
   function drawBar(box, list, key) {
     box.textContent = '';
     list.forEach(function (c) {
-      var on = c[0] === state[key] && !(key === 'f' && state.q.trim()), b = el('button', 'gal-chip' + (on ? ' is-on' : ''), c[1]); b.type = 'button'; b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      var on = key === 'f' ? c[0] === scope() : c[0] === state[key], b = el('button', 'gal-chip' + (on ? ' is-on' : ''), c[1]); b.type = 'button'; if (c[2]) { var d = el('span', 'cat-dot'); d.style.background = c[2]; d.setAttribute('aria-hidden', 'true'); b.insertBefore(d, b.firstChild); } b.setAttribute('aria-pressed', on ? 'true' : 'false');
       b.addEventListener('click', function () { state[key] = c[0]; draw(); load(true); }); box.appendChild(b);
     });
   }
-  function draw() { drawBar($('cat-genres'), GENRES, 'g'); drawBar($('cat-chips'), CHIPS, 'f'); }
+  function draw() { drawBar($('cat-genres'), GENRES, 'g'); drawBar($('cat-colors-f'), COLORS, 'c'); drawBar($('cat-chips'), CHIPS, 'f'); }
   var tmr; $('cat-q').addEventListener('input', function (e) { clearTimeout(tmr); tmr = setTimeout(function () { state.q = e.target.value; draw(); load(true); }, 300); });
   $('cat-more').addEventListener('click', function () { load(false); });
 
