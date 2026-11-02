@@ -23,3 +23,4 @@
 
 #cat-colors-f { margin-bottom: 12px; }
 .cat-dot { display: inline-block; width: 12px; height: 12px; margin-right: 8px; border-radius: 50%; border: 1px solid rgba(128,128,128,.5); vertical-align: -1px; }
+@media (max-width: 720px) { #cat-chips, #cat-colors-f, #cat-genres { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 6px; scrollbar-width: thin; } #cat-chips .gal-chip, #cat-colors-f .gal-chip, #cat-genres .gal-chip { flex: 0 0 auto; white-space: nowrap; } }

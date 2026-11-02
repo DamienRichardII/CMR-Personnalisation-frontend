@@ -3,7 +3,7 @@
   'use strict';
   var cfg = window.CMR_SUPABASE, grid = document.getElementById('cat-grid'); if (!cfg || !grid || !window.fetch) return;
   var PAGE = 24, state = { f: 'best', g: 'all', c: 'all', q: '', offset: 0, total: 0, req: 0 }, rows = {};
-  var CHIPS = [['best', 'Best sellers'], ['sweats', 'Sweats & polaires'], ['tshirts', 'T-shirts'], ['polos', 'Polos'], ['vestes', 'Vestes & blousons'], ['hv', 'Haute visibilité'], ['chemises', 'Chemises'], ['pantalons', 'Pantalons'], ['metiers', 'Métiers & travail'], ['sport', 'Sport'], ['chaussures', 'Chaussures'], ['bebe', 'Bébé'], ['accessoires', 'Accessoires'], ['new', 'Nouveautés']];
+  var CHIPS = [['best', 'Best sellers'], ['sweats', 'Sweats & polaires'], ['tshirts', 'T-shirts'], ['polos', 'Polos'], ['vestes', 'Vestes & blousons'], ['hv', 'Haute visibilité'], ['chemises', 'Chemises'], ['pantalons', 'Pantalons'], ['metiers', 'Métiers & travail'], ['sport', 'Sport'], ['chaussures', 'Chaussures'], ['bebe', 'Bébé'], ['casquettes', 'Casquettes & bonnets'], ['sacs', 'Sacs'], ['boissons', 'Gourdes, mugs & tasses'], ['cles', 'Porte-clés & badges'], ['bureau', 'Stylos & papeterie'], ['tech', 'High-tech'], ['accessoires', 'Autres objets'], ['new', 'Nouveautés']];
   var GENRES = [['all', 'Tout public'], ['Homme', 'Homme'], ['Femme', 'Femme'], ['Enfant', 'Enfant'], ['Mixte', 'Mixte']];
   var COLORS = [['all', 'Toutes les couleurs', ''], ['Noir', 'Noir', '#111'], ['Blanc', 'Blanc', '#fff'], ['Gris', 'Gris', '#8a8f98'], ['Bleu', 'Bleu', '#1f4fbf'], ['Rouge', 'Rouge', '#d12b2b'], ['Vert', 'Vert', '#2e8b57'], ['Jaune', 'Jaune', '#f2c200'], ['Orange', 'Orange', '#f28c28'], ['Rose', 'Rose', '#ee7fb0'], ['Violet', 'Violet', '#7a4fb5'], ['Marron', 'Marron', '#8b5e3c']];
   function scope() { return (state.q.trim() || (state.f === 'best' && state.c !== 'all')) ? 'all' : state.f; }
@@ -18,7 +18,7 @@
     if (sc === 'best') p.push('best=not.is.null'); else if (sc === 'new') p.push('nouveaute=eq.true'); else if (sc !== 'all') p.push('rubrique=eq.' + encodeURIComponent(sc));
     if (state.c !== 'all') p.push('couleurs=cs.' + encodeURIComponent('{' + state.c + '}'));
     if (state.g !== 'all') p.push('genre=eq.' + encodeURIComponent(state.g));
-    var q = state.q.replace(/[*%,()\\"]/g, ' ').trim(); if (q) p.push('nom=ilike.' + encodeURIComponent('*' + q + '*'));
+    var q = state.q.replace(/[*%,()\\"]/g, ' ').trim(); if (q) p.push('or=' + encodeURIComponent('(nom.ilike.*' + q + '*,description.ilike.*' + q + '*)'));
     return cfg.url + '/rest/v1/catalogue_public?' + p.join('&');
   }
   function card(p) {
