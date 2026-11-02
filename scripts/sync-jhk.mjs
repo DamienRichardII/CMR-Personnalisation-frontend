@@ -20,7 +20,11 @@ const clean = (s) => String(s == null ? '' : s).replace(/\s+/g, ' ').trim();
 const https = (u) => { u = clean(u); if (u.startsWith('//')) u = 'https:' + u; return /^https:\/\//.test(u) ? u : ''; };
 const FR = { white: 'Blanc', black: 'Noir', navy: 'Marine', red: 'Rouge', green: 'Vert', blue: 'Bleu', yellow: 'Jaune', orange: 'Orange', pink: 'Rose', purple: 'Violet', brown: 'Marron', beige: 'Beige', burgundy: 'Bordeaux', natural: 'Naturel', khaki: 'Kaki', grey: 'Gris', gray: 'Gris', 'royal blue': 'Bleu roi', 'sky blue': 'Bleu ciel', 'light grey': 'Gris clair', 'dark grey': 'Gris foncé', 'light blue': 'Bleu clair', 'dark navy': 'Marine foncé', 'bottle green': 'Vert bouteille', 'lime green': 'Vert citron', 'fluor yellow': 'Jaune fluo', 'fluor orange': 'Orange fluo' };
 const colorName = (n) => { n = clean(n); return FR[n.toLowerCase()] || n; };
-const decode = (s) => s.replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#0?39;|&apos;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+const NAMED = { nbsp: ' ', amp: '&', quot: '"', apos: "'", lt: '<', gt: '>', eacute: 'é', Eacute: 'É', egrave: 'è', Egrave: 'È', ecirc: 'ê', agrave: 'à', Agrave: 'À', acirc: 'â', ocirc: 'ô', ucirc: 'û', ugrave: 'ù', icirc: 'î', iuml: 'ï', euml: 'ë', ccedil: 'ç', Ccedil: 'Ç', oacute: 'ó', uacute: 'ú', aacute: 'á', iacute: 'í', ntilde: 'ñ', sup2: '²', deg: '°', rsquo: '’', lsquo: '‘', laquo: '«', raquo: '»' };
+const decode = (s) => s.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+\d?);/gi, (m, e) => {
+  if (e[0] === '#') { const n = e[1].toLowerCase() === 'x' ? parseInt(e.slice(2), 16) : parseInt(e.slice(1), 10); return n > 0 && n < 0x110000 ? String.fromCodePoint(n) : m; }
+  return Object.prototype.hasOwnProperty.call(NAMED, e) ? NAMED[e] : m;
+});
 export function htmlToLines(html) {
   return decode(String(html || '').replace(/<\/(p|li|h\d|div)>|<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '')).split('\n').map(clean).filter(Boolean);
 }
