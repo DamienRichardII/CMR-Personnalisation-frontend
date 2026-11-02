@@ -17,13 +17,13 @@
 import { readFileSync, readdirSync } from 'node:fs';
 
 const BASE = (process.env.ROLY_API_BASE_URL || 'https://clientsws.gorfactory.es:2096').replace(/\/$/, '');
-const LANG = 'fr-FR', BRAND = 'roly';
+const LANG = 'fr-FR', BRANDS = ['roly', 'stamina'];   // marques Roly documentées par l'API (roly = vêtements, stamina = objets et accessoires)
 const VIRTUAL = new Set(['outlet', 'new-prices']); // rayons commerciaux, sans intérêt pour le catalogue
 
 /* ---------- transformation (pure, testable) ---------- */
 const titleCase = (s) => String(s || '').toLowerCase().replace(/(^|[\s/(-])([a-zà-ÿ])/g, (m, a, b) => a + b.toUpperCase());
 const clean = (s) => String(s || '').replace(/\s+/g, ' ').trim();
-const httpsOnly = (u) => { u = clean(u); return /^https:\/\/static\.gorfactory\.es\//.test(u) ? u : ''; };
+const httpsOnly = (u) => { u = clean(u); return /^https:\/\/([\w-]+\.)*gorfactory\.es\//.test(u) ? u : ''; };
 const list = (s) => String(s || '').split(',').map(httpsOnly).filter(Boolean);
 
 export function modelTitle(line) {
@@ -36,12 +36,13 @@ const SIZE_ORDER = ['XXXS', 'XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '2XL', 'XXX
 const sizeRank = (s) => { const i = SIZE_ORDER.indexOf(String(s).toUpperCase()); return i < 0 ? 100 + (parseFloat(s) || 0) : i; };
 
 /* items : lignes getcatalog (une ligne = un modèle × un coloris × une taille). anc : id catégorie -> [ancêtres incl. soi]. */
-export function groupModels(items, catId, anc = {}, into = new Map()) {
+export function groupModels(items, catId, anc = {}, into = new Map(), brand = 'roly') {
   for (const l of items) {
-    const key = clean(l.modelcode); if (!key) continue;
+    const code = clean(l.modelcode); if (!code) continue;
+    const key = brand === 'roly' ? code : brand.slice(0, 3).toUpperCase() + '-' + code;
     let m = into.get(key);
     if (!m) {
-      m = { modelcode: key, brand: BRAND, nom: modelTitle(l), description: String(l.description || '').split('·').map(clean).filter(Boolean).join('\n') || null,
+      m = { modelcode: key, brand, nom: modelTitle(l), description: String(l.description || '').split('·').map(clean).filter(Boolean).join('\n') || null,
         composition: clean(l.composition) || null, observations: String(l.observations || '').split('·').map(clean).filter(Boolean).join('\n') || null,
         genre: titleCase(l.gender) || null, famille: titleCase(l.family) || null, cat_ids: new Set(), categories: new Set(), tailles: new Set(),
         colors: new Map(), nouveaute: String(l.isnovelty).toLowerCase() === 'true', enfant: String(l.isforchildren).toLowerCase() === 'true', image: '' };
@@ -114,7 +115,7 @@ const flag = (n) => process.argv.includes('--' + n);
 
 async function main() {
   const dry = flag('dry'), onlyCat = arg('category'), file = arg('file'), dir = arg('dir');
-  const models = new Map(); let complete = true, failed = 0;
+  const models = new Map(), okBrands = []; let complete = true, failed = 0;
   if (dir) {
     let anc = {}; try { anc = ancestors(JSON.parse(readFileSync(dir + '/categories.json', 'utf8'))); } catch { console.log('(pas de categories.json : sous-catégories non reliées)'); }
     const files = readdirSync(dir).filter((f) => /\.json$/i.test(f) && !/^categories\.json$/i.test(f)); complete = false;
@@ -126,18 +127,26 @@ async function main() {
     const j = JSON.parse(readFileSync(file, 'utf8')); groupModels(Array.isArray(j) ? j : j.item || [], arg('cat') || 'fichier', {}, models); complete = false;
   } else {
     const token = await login(); console.log('Connexion Roly : OK');
-    const cats = await api('/api/v1/item/categories?lang=' + LANG + '&brand=' + BRAND, token);
-    const anc = ancestors(cats), parents = new Set(cats.map((c) => c.parentId).filter(Boolean));
-    let todo = cats.filter((c) => !parents.has(c.id) && !VIRTUAL.has(c.id));        // feuilles = catégories sans enfants
-    if (onlyCat) { todo = cats.filter((c) => c.id === onlyCat); complete = false; if (!todo.length) throw new Error('Catégorie inconnue : ' + onlyCat); }
-    console.log(todo.length + ' catégories à lire…');
-    for (const c of todo) {
+    const only = arg('brand');
+    for (const brand of BRANDS.filter((x) => !only || x === only)) {
+      const bm = new Map(); let bOk = true;
       try {
-        const j = await api('/api/v1/item/getcatalog?lang=' + LANG + '&brand=' + BRAND + '&category=' + encodeURIComponent(c.id), token);
-        const items = Array.isArray(j) ? j : j.item || [];
-        groupModels(items, c.id, anc, models);
-        console.log('  ' + c.id.padEnd(22) + String(items.length).padStart(6) + ' lignes → ' + models.size + ' modèles au total');
-      } catch (e) { complete = false; failed++; console.error('  ' + c.id + ' : ÉCHEC (' + e.message + ')'); }
+        const cats = await api('/api/v1/item/categories?lang=' + LANG + '&brand=' + brand, token);
+        const anc = ancestors(cats), parents = new Set(cats.map((c) => c.parentId).filter(Boolean));
+        let todo = cats.filter((c) => !parents.has(c.id) && !VIRTUAL.has(c.id));        // feuilles = catégories sans enfants
+        if (onlyCat) { todo = cats.filter((c) => c.id === onlyCat); bOk = false; if (!todo.length) { console.log('Catégorie inconnue pour ' + brand + ' : ' + onlyCat); continue; } }
+        console.log('[' + brand + '] ' + todo.length + ' catégories à lire…');
+        for (const c of todo) {
+          try {
+            const j = await api('/api/v1/item/getcatalog?lang=' + LANG + '&brand=' + brand + '&category=' + encodeURIComponent(c.id), token);
+            const items = Array.isArray(j) ? j : j.item || [];
+            groupModels(items, c.id, anc, bm, brand);
+            console.log('  ' + c.id.padEnd(22) + String(items.length).padStart(6) + ' lignes → ' + bm.size + ' modèles au total');
+          } catch (e) { bOk = false; failed++; console.error('  ' + c.id + ' : ÉCHEC (' + e.message + ')'); }
+        }
+      } catch (e) { bOk = false; failed++; console.error('[' + brand + '] ÉCHEC : ' + e.message); }
+      for (const [k, v] of bm) models.set(k, v);
+      if (!bOk) complete = false; else okBrands.push(brand);
     }
   }
   const rows = toRows(models);
@@ -146,12 +155,16 @@ async function main() {
   for (let i = 0; i < rows.length; i += 100)
     await sb('roly_produits?on_conflict=modelcode', { method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=minimal' }, body: JSON.stringify(rows.slice(i, i + 100)) });
   console.log('Supabase : ' + rows.length + ' fiches enregistrées.');
-  if (complete && rows.length < 200) { complete = false; console.log('Moins de 200 modèles reçus : résultat suspect, aucun modèle masqué.'); }
-  if (complete) {                       // synchro complète réussie : on masque les modèles disparus du catalogue Roly
-    const stamp = rows.reduce((a, r) => (r.maj < a ? r.maj : a), rows[0].maj);
-    await sb('roly_produits?brand=eq.roly&maj=lt.' + encodeURIComponent(stamp), { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({ actif: false }) });
-    console.log('Modèles retirés par Roly : masqués.');
-  } else console.log('Synchro partielle : aucun modèle masqué.');
+  const MIN = { roly: 200, stamina: 10 };
+  const doneBrands = dir || file ? [] : okBrands.filter((br) => !onlyCat);
+  for (const br of doneBrands) {
+    const mine = rows.filter((r) => r.brand === br);
+    if (mine.length < (MIN[br] || 10)) { console.log('[' + br + '] Trop peu de modèles reçus : résultat suspect, aucun modèle masqué.'); continue; }
+    const stamp = mine.reduce((a, r) => (r.maj < a ? r.maj : a), mine[0].maj);
+    await sb('roly_produits?brand=eq.' + br + '&maj=lt.' + encodeURIComponent(stamp), { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({ actif: false }) });
+    console.log('[' + br + '] Modèles retirés par le fournisseur : masqués.');
+  }
+  if (!doneBrands.length) console.log('Synchro partielle : aucun modèle masqué.');
   if (failed) { console.error(failed + ' catégorie(s) en échec.'); process.exitCode = 1; }
 }
 if (import.meta.url === 'file://' + process.argv[1] || process.argv[1]?.endsWith('sync-roly.mjs')) main().catch((e) => { console.error('Erreur : ' + e.message); process.exit(1); });
