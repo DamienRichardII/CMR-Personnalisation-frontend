@@ -62,7 +62,8 @@ export function groupModels(items, catId, anc = {}, into = new Map(), brand = 'r
 }
 export function toRows(models) {
   return [...models.values()].map((m) => {
-    const coloris = [...m.colors.values()].filter((c) => c.image || c.views.length);
+    const shot = (c) => /_1_1\.jpg$/.test(c.image || '') ? 0 : 1;      // coloris avec photo shootée en premier (carte + fiche)
+    const coloris = [...m.colors.values()].filter((c) => c.image || c.views.length).map((c, i) => [c, i]).sort((a, b) => shot(a[0]) - shot(b[0]) || a[1] - b[1]).map((x) => x[0]);
     return { modelcode: m.modelcode, brand: m.brand, nom: m.nom, description: m.description, composition: m.composition, observations: m.observations,
       genre: m.genre, famille: m.famille, cat_ids: [...m.cat_ids], categories: [...m.categories], tailles: [...m.tailles].sort((a, b) => sizeRank(a) - sizeRank(b)),
       coloris, image: (coloris[0] && (coloris[0].image || coloris[0].views[0])) || null, nouveaute: m.nouveaute, enfant: m.enfant, actif: coloris.length > 0, maj: new Date().toISOString() };
@@ -72,6 +73,28 @@ export function ancestors(cats) {
   const by = new Map(cats.map((c) => [c.id, c])), out = {};
   for (const c of cats) { const chain = []; let cur = c, guard = 0; while (cur && guard++ < 10) { chain.push(cur.id); cur = cur.parentId ? by.get(cur.parentId) : null; } out[c.id] = chain; }
   return out;
+}
+
+/* Photos supplémentaires : la photo « shootée » (mannequin / mise en situation) porte le suffixe _1_1, le produit brut _2_1,
+ * d'autres vues _3_1. L'API ne les liste pas : on vérifie leur présence (requête HEAD) sur le même serveur d'images. */
+const IMG_RE = /^(https:\/\/(?:[\w-]+\.)*gorfactory\.es\/images\/models\/\d+\/model\/large\/\d+_\w+?)_(\d+)_(\d+)\.jpg$/;
+async function exists(u) {
+  for (let i = 0; i < 2; i++) { try { const r = await fetch(u, { method: 'HEAD', signal: AbortSignal.timeout(20000) }); if (r.status === 404) return false; if (r.ok) return true; } catch {} }
+  return false;
+}
+async function poolRun(items, n, fn) { let i = 0; await Promise.all(Array.from({ length: n }, async () => { while (i < items.length) { const k = i++; await fn(items[k]); } })); }
+export async function enrichPhotos(models, check = exists, concurrency = 16) {
+  const jobs = [];
+  for (const m of models.values()) for (const c of m.colors.values()) { const mt = IMG_RE.exec(c.image || ''); if (mt) jobs.push({ c, base: mt[1], cur: mt[2], tail: mt[3] }); }
+  let withShoot = 0;
+  await poolRun(jobs, concurrency, async (j) => {
+    const extra = {};
+    for (const n of ['1', '3']) { if (n === j.cur) continue; const u = j.base + '_' + n + '_' + j.tail + '.jpg'; if (await check(u)) extra[n] = u; }
+    const orig = j.c.image, views = [extra['1'], orig, extra['3'], ...(j.c.views || [])].filter(Boolean);
+    j.c.views = [...new Set(views)];
+    if (extra['1']) { j.c.image = extra['1']; withShoot++; }
+  });
+  console.log('Photos : ' + jobs.length + ' coloris vérifiés, ' + withShoot + ' avec photo shootée.');
 }
 
 /* ---------- accès réseau ---------- */
@@ -149,6 +172,7 @@ async function main() {
       if (!bOk) complete = false; else okBrands.push(brand);
     }
   }
+  if (!flag('no-photos')) await enrichPhotos(models);
   const rows = toRows(models);
   console.log(rows.length + ' modèles prêts' + (dry ? ' (mode test : rien n\'est écrit).' : '.'));
   if (dry) { console.log(JSON.stringify(rows[0], null, 2).slice(0, 1800)); return; }
