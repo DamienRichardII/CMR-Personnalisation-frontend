@@ -135,9 +135,11 @@
         <label class="cat-search"><span class="sr-only">Rechercher un produit</span><input class="input" type="search" id="cat-q" placeholder="Rechercher (polo, parka, sweat…)" autocomplete="off" maxlength="60"></label>
         <p class="cat-count" id="cat-count" role="status" aria-live="polite"></p>
       </div>
-      <div class="gal-filters" id="cat-genres" role="group" aria-label="Filtrer par public"></div>
-      <div class="gal-filters" id="cat-colors-f" role="group" aria-label="Filtrer par couleur"></div>
-      <div class="gal-filters" id="cat-chips" role="group" aria-label="Filtrer par catégorie"></div>
+      <div class="cat-filters">
+        <label class="cat-sel"><span>Rubrique</span><select class="input" id="cat-chips"></select></label>
+        <label class="cat-sel"><span>Public</span><select class="input" id="cat-genres"></select></label>
+        <label class="cat-sel"><span>Couleur</span><select class="input" id="cat-colors-f"></select></label>
+      </div>
       <div class="gal-grid" id="cat-grid"></div>
       <p class="cat-empty" id="cat-empty" hidden>Aucun produit ne correspond à votre recherche. Essayez un autre mot, ou <a href="contact.html">contactez-nous</a>.</p>
       <p class="cat-more"><button type="button" class="btn btn-outline btn-lg" id="cat-more" hidden><span>Voir plus de produits</span></button></p>

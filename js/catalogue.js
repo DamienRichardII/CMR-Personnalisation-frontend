@@ -3,7 +3,7 @@
   'use strict';
   var cfg = window.CMR_SUPABASE, grid = document.getElementById('cat-grid'); if (!cfg || !grid || !window.fetch) return;
   var PAGE = 24, state = { f: 'best', g: 'all', c: 'all', q: '', offset: 0, total: 0, req: 0 }, rows = {};
-  var CHIPS = [['best', 'Best sellers'], ['sweats', 'Sweats & polaires'], ['tshirts', 'T-shirts'], ['polos', 'Polos'], ['vestes', 'Vestes & blousons'], ['hv', 'Haute visibilité'], ['chemises', 'Chemises'], ['pantalons', 'Pantalons'], ['metiers', 'Métiers & travail'], ['sport', 'Sport'], ['chaussures', 'Chaussures'], ['bebe', 'Bébé'], ['casquettes', 'Casquettes & bonnets'], ['sacs', 'Sacs'], ['boissons', 'Gourdes, mugs & tasses'], ['cles', 'Porte-clés & badges'], ['bureau', 'Stylos & papeterie'], ['tech', 'High-tech'], ['accessoires', 'Autres objets'], ['new', 'Nouveautés']];
+  var CHIPS = [['best', 'Best sellers'], ['all', 'Toutes les rubriques'], ['sweats', 'Sweats & polaires'], ['tshirts', 'T-shirts'], ['polos', 'Polos'], ['vestes', 'Vestes & blousons'], ['hv', 'Haute visibilité'], ['chemises', 'Chemises'], ['pantalons', 'Pantalons'], ['metiers', 'Métiers & travail'], ['sport', 'Sport'], ['chaussures', 'Chaussures'], ['bebe', 'Bébé'], ['casquettes', 'Casquettes & bonnets'], ['sacs', 'Sacs'], ['boissons', 'Gourdes, mugs & tasses'], ['cles', 'Porte-clés & badges'], ['bureau', 'Stylos & papeterie'], ['tech', 'High-tech'], ['accessoires', 'Autres objets'], ['new', 'Nouveautés']];
   var GENRES = [['all', 'Tout public'], ['Homme', 'Homme'], ['Femme', 'Femme'], ['Enfant', 'Enfant'], ['Mixte', 'Mixte']];
   var COLORS = [['all', 'Toutes les couleurs', ''], ['Noir', 'Noir', '#111'], ['Blanc', 'Blanc', '#fff'], ['Gris', 'Gris', '#8a8f98'], ['Bleu', 'Bleu', '#1f4fbf'], ['Rouge', 'Rouge', '#d12b2b'], ['Vert', 'Vert', '#2e8b57'], ['Jaune', 'Jaune', '#f2c200'], ['Orange', 'Orange', '#f28c28'], ['Rose', 'Rose', '#ee7fb0'], ['Violet', 'Violet', '#7a4fb5'], ['Marron', 'Marron', '#8b5e3c']];
   function scope() { return (state.q.trim() || (state.f === 'best' && state.c !== 'all')) ? 'all' : state.f; }
@@ -48,10 +48,9 @@
   }
   function drawBar(box, list, key) {
     box.textContent = '';
-    list.forEach(function (c) {
-      var on = key === 'f' ? c[0] === scope() : c[0] === state[key], b = el('button', 'gal-chip' + (on ? ' is-on' : ''), c[1]); b.type = 'button'; if (c[2]) { var d = el('span', 'cat-dot'); d.style.background = c[2]; d.setAttribute('aria-hidden', 'true'); b.insertBefore(d, b.firstChild); } b.setAttribute('aria-pressed', on ? 'true' : 'false');
-      b.addEventListener('click', function () { state[key] = c[0]; draw(); load(true); }); box.appendChild(b);
-    });
+    list.forEach(function (c) { var o = el('option', null, c[1]); o.value = c[0]; box.appendChild(o); });
+    box.value = key === 'f' ? scope() : state[key];
+    if (!box.dataset.bound) { box.dataset.bound = '1'; box.addEventListener('change', function () { state[key] = box.value; draw(); load(true); }); }
   }
   function draw() { drawBar($('cat-genres'), GENRES, 'g'); drawBar($('cat-colors-f'), COLORS, 'c'); drawBar($('cat-chips'), CHIPS, 'f'); }
   var tmr; $('cat-q').addEventListener('input', function (e) { clearTimeout(tmr); tmr = setTimeout(function () { state.q = e.target.value; draw(); load(true); }, 300); });
