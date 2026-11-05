@@ -18,7 +18,11 @@
     if (sc === 'best') p.push('best=not.is.null'); else if (sc === 'new') p.push('nouveaute=eq.true'); else if (sc !== 'all') p.push('rubrique=eq.' + encodeURIComponent(sc));
     if (state.c !== 'all') p.push('couleurs=cs.' + encodeURIComponent('{' + state.c + '}'));
     if (state.g !== 'all') p.push('genre=eq.' + encodeURIComponent(state.g));
-    var q = state.q.replace(/[*%,()\\"]/g, ' ').trim(); if (q) p.push('or=' + encodeURIComponent('(nom.ilike.*' + q + '*,description.ilike.*' + q + '*)'));
+    var q = state.q.replace(/[*%,()\\"]/g, ' ').replace(/\b(t|tee)[\s-]*shirts?\b/gi, ' tshirt ').trim();
+    if (q) q.split(/\s+/).forEach(function (w) {
+      var v = w.toLowerCase() === 'tshirt' ? ['t-shirt', 'tshirt'] : [w];
+      p.push('or=' + encodeURIComponent('(' + v.map(function (x) { return 'nom.ilike.*' + x + '*,description.ilike.*' + x + '*'; }).join(',') + ')'));
+    });
     return cfg.url + '/rest/v1/catalogue_public?' + p.join('&');
   }
   function card(p) {
