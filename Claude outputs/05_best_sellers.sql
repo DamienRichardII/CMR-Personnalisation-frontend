@@ -1,54 +1,33 @@
 -- =====================================================================
--- Fichier 5/5 (FACULTATIF) : best sellers demandés par Ayoub
--- À lancer APRÈS la première synchro des catalogues (les produits doivent exister).
+-- Best sellers demandés par Ayoub (version corrigée d'après les noms réels du catalogue)
+-- Attendu : 17 produits (les versions Femme comptent avec les versions Homme).
 -- Le catalogue s'ouvre sur « Best sellers », triés par rang croissant (1 = premier affiché).
---
--- ÉTAPE A : lancez d'abord l'APERÇU (requête 1) et vérifiez que chaque ligne désigne le bon produit.
---           Si un motif désigne trop de produits ou le mauvais, affinez-le dans les DEUX requêtes.
--- ÉTAPE B : lancez ensuite la MISE À JOUR (requête 2).
--- Chaque requête est autonome : vous pouvez les lancer séparément.
+-- À coller dans le SQL Editor > Run (tout le fichier d'un coup).
+-- Non trouvé dans le catalogue : « Sweat Classica » (aucun produit de ce nom) et « Haute visibilité »
+-- (c'est une rubrique, pas un produit).
 -- =====================================================================
 
--- REQUÊTE 1 : aperçu (aucune modification)
-with b(rang, libelle, motif) as (values
-  (1,  'Softshell / Gilet Oslo', '%oslo%'),
-  (2,  'Rudolphe',               '%rudolph%'),
-  (3,  'Québec',                 '%qu_bec%'),
-  (4,  'Parka America',          '%america%'),
-  (5,  'Sweat Urban',            '%urban%'),
-  (6,  'Sweat Classica',         '%classica%'),
-  (7,  'Polaire New Artic',      '%artic%'),
-  (8,  'Polo Star',              'polo star%'),
-  (9,  'Polo Wos',               'polo wos%'),
-  (10, 'Polo Estrella',          'polo estrella%'),
-  (11, 'T-shirt Stafford',       '%stafford%'),
-  (12, 'Porte-clés Hornet',      '%hornet%')
-)
-select b.rang, b.libelle, p.modelcode, p.brand, p.nom
-from b join public.roly_produits p on p.actif and p.nom ilike b.motif
-order by b.rang, p.nom;
+-- 1. Remise à zéro de l'ancienne sélection
+update public.roly_produits set bestseller = null where bestseller is not null;
 
--- REQUÊTE 2 : application (mêmes motifs que ci-dessus)
-with b(rang, libelle, motif) as (values
-  (1,  'Softshell / Gilet Oslo', '%oslo%'),
-  (2,  'Rudolphe',               '%rudolph%'),
-  (3,  'Québec',                 '%qu_bec%'),
-  (4,  'Parka America',          '%america%'),
-  (5,  'Sweat Urban',            '%urban%'),
-  (6,  'Sweat Classica',         '%classica%'),
-  (7,  'Polaire New Artic',      '%artic%'),
-  (8,  'Polo Star',              'polo star%'),
-  (9,  'Polo Wos',               'polo wos%'),
-  (10, 'Polo Estrella',          'polo estrella%'),
-  (11, 'T-shirt Stafford',       '%stafford%'),
-  (12, 'Porte-clés Hornet',      '%hornet%')
+-- 2. Nouvelle sélection
+with b(rang, motif) as (values
+  (1,  'gilet oslo%'),                     -- Gilet Oslo (+ Femme) : à confirmer avec Ayoub (« Softshell Oslo »)
+  (2,  '%rudolph%'),                       -- Softshell Rudolph
+  (3,  '%quebec%'),                        -- Softshell Quebec
+  (4,  'parka america%'),                  -- Parka America (+ Femme)
+  (5,  'sweatshirt à capuche urban%'),     -- Sweat Urban (+ Femme)
+  (7,  'veste new artic%'),                -- New Artic (+ Femme)
+  (8,  'polo star%'),                      -- Polo Star (+ Femme)
+  (9,  'polo wos%'),                       -- Polo Wos
+  (10, '%estrella%'),                      -- Polo Estrella (+ Femme)
+  (11, 't-shirt stafford%'),               -- T-shirt Stafford
+  (12, 'porte-clés hornet%')               -- Porte-clés Hornet
 )
 update public.roly_produits p
 set bestseller = b.rang
 from b
 where p.actif and p.nom ilike b.motif;
 
--- Pour retirer un produit des best sellers :
---   update public.roly_produits set bestseller = null where modelcode = '...';
--- La table publique se met à jour toute seule (déclencheur).
--- La rubrique « Haute visibilité » est une catégorie, pas un produit : elle n'a pas de rang ici.
+-- 3. Contrôle (la table publique est mise à jour automatiquement)
+select best, nom, rubrique from public.catalogue_public where best is not null order by best, nom;
