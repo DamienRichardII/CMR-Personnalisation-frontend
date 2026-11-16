@@ -3,7 +3,7 @@
    Variables d'environnement (Vercel → Settings → Environment Variables) :
      RESEND_API_KEY  (obligatoire) clé API Resend
      MAIL_TO         (optionnel)  destinataire — défaut : cmr.personnalisation@gmail.com
-     SUPABASE_URL                (optionnel) https://ruxyfdmhkxfsbhxwscom.supabase.co
+     SUPABASE_URL                (optionnel) https://llfxqzvdgvvrihxotwcs.supabase.co
      SUPABASE_SERVICE_ROLE_KEY   (optionnel) clé "service_role" (secrète, jamais côté navigateur) :
                                   si présente, chaque demande est aussi enregistrée dans Supabase
      MAIL_FROM       (optionnel)  expéditeur — défaut : onboarding@resend.dev (test) ;
