@@ -30,14 +30,14 @@
 
 /* Catalogues PDF à télécharger */
 .cat-pdfs .title { margin: 0 0 clamp(20px, 3vw, 32px); }
-.pdf-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 2vw, 24px); }
+.pdf-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 2vw, 24px); }
 .pdf-card { display: flex; flex-direction: column; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; }
 .pdf-ph { aspect-ratio: 4 / 3; background: var(--color-surface); display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .pdf-ph img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .pdf-body { display: flex; flex-direction: column; gap: 10px; padding: 16px; flex: 1; }
 .pdf-body h3 { margin: 0; font-size: 1.05rem; line-height: 1.3; }
-.pdf-meta { margin: 0; color: var(--color-muted); font-size: .85rem; }
 .pdf-body .btn { margin-top: auto; align-self: stretch; }
 .pdf-note { margin: clamp(16px, 2vw, 24px) 0 0; color: var(--color-muted); font-size: .88rem; }
 .pdf-note a { color: var(--color-accent); }
-@media (max-width: 900px) { .pdf-grid { grid-template-columns: 1fr; max-width: 460px; } }
+@media (max-width: 1100px) { .pdf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .pdf-grid { grid-template-columns: 1fr; max-width: 460px; } }
