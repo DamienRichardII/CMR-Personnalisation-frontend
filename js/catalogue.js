@@ -21,8 +21,8 @@
     var q = state.q.replace(/[*%,()\\"]/g, ' ').replace(/\b(t|tee)[\s-]*shirts?\b/gi, ' tshirt ').trim();
     if (q) q.split(/\s+/).forEach(function (w) {
       var ts = w.toLowerCase() === 'tshirt';
-      var v = ts ? ['t-shirt', 'tshirt', 'tee-shirt'] : [w];
-      p.push('or=' + encodeURIComponent('(' + v.map(function (x) { return ts ? 'nom.ilike.*' + x + '*' : 'nom.ilike.*' + x + '*,description.ilike.*' + x + '*'; }).join(',') + ')'));
+      var v = ts ? ['t-shirt', 'tee-shirt', 'tee shirt', 't shirt', 'teeshirt', ' tshirt'] : [w];
+      p.push('or=' + encodeURIComponent('(' + v.map(function (x) { return ts ? 'nom.ilike.*' + x + '*,nom.ilike.tshirt*' : 'nom.ilike.*' + x + '*,description.ilike.*' + x + '*'; }).join(',') + ')'));
     });
     return cfg.url + '/rest/v1/catalogue_public?' + p.join('&');
   }
