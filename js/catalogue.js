@@ -13,16 +13,17 @@
   function plural(n, w) { return n + ' ' + w + (n > 1 ? 's' : ''); }
   var COLS = 'best,ref,nom,image,genre,rubrique,tailles,coloris,nouveaute,description,composition';
 
-  function url() {
+  var SYN = { tshirt: ['t-shirt', 'tee-shirt', 'tee shirt', 't shirt', 'teeshirt', ' tshirt', 'tshirt*'], casquette: ['casquette', 'cap *', '* cap *'], casquettes: ['casquette', 'cap *', '* cap *'], gourde: ['gourde', 'bouteille', 'bottle'], gourdes: ['gourde', 'bouteille', 'bottle'], bonnet: ['bonnet', 'beanie', 'gorro'], bonnets: ['bonnet', 'beanie', 'gorro'], blouson: ['blouson', 'veste', 'cazadora', 'chaqueta'], veste: ['veste', 'cazadora', 'chaqueta'], vestes: ['veste', 'cazadora', 'chaqueta'], gilet: ['gilet', 'chaleco'], gilets: ['gilet', 'chaleco'], chemise: ['chemise', 'camisa'], chemises: ['chemise', 'camisa'], pantalon: ['pantalon', 'pantalón'], pantalons: ['pantalon', 'pantalón'], sweat: ['sweat', 'sudadera'], sweats: ['sweat', 'sudadera'], hoodie: ['hoodie', 'hooded', 'capuche', 'sudadera con capucha'], sac: ['sac', 'bag'], sacs: ['sac', 'bag'] };
+  function url(deep) {
+    deep = deep || state.deep;
     var q0 = state.q.trim(), sc = scope(), p = ['select=' + COLS, (sc === 'best' ? 'order=best.asc' : 'order=nom.asc,ref.asc'), 'limit=' + PAGE, 'offset=' + state.offset];
     if (sc === 'best') p.push('best=not.is.null'); else if (sc === 'new') p.push('nouveaute=eq.true'); else if (sc !== 'all') p.push('rubrique=eq.' + encodeURIComponent(sc));
     if (state.c !== 'all') p.push('couleurs=cs.' + encodeURIComponent('{' + state.c + '}'));
     if (state.g !== 'all') p.push('genre=eq.' + encodeURIComponent(state.g));
     var q = state.q.replace(/[*%,()\\"]/g, ' ').replace(/\b(t|tee)[\s-]*shirts?\b/gi, ' tshirt ').trim();
     if (q) q.split(/\s+/).forEach(function (w) {
-      var ts = w.toLowerCase() === 'tshirt';
-      var v = ts ? ['t-shirt', 'tee-shirt', 'tee shirt', 't shirt', 'teeshirt', ' tshirt'] : [w];
-      p.push('or=' + encodeURIComponent('(' + v.map(function (x) { return ts ? 'nom.ilike.*' + x + '*,nom.ilike.tshirt*' : 'nom.ilike.*' + x + '*,description.ilike.*' + x + '*'; }).join(',') + ')'));
+      var k = w.toLowerCase(), v = SYN[k] || [w];
+      p.push('or=' + encodeURIComponent('(' + v.map(function (x) { return 'nom.ilike.' + (x.indexOf('*') < 0 ? '*' + x + '*' : x) + (deep && !SYN[k] ? ',description.ilike.*' + x + '*' : ''); }).join(',') + ')'));
     });
     return cfg.url + '/rest/v1/catalogue_public?' + p.join('&');
   }
@@ -40,9 +41,15 @@
     return c;
   }
   function load(reset) {
-    var my = ++state.req; if (reset) { state.offset = 0; grid.textContent = ''; $('cat-more').hidden = true; $('cat-empty').hidden = true; $('cat-count').textContent = 'Chargement…'; }
-    fetch(url(), { headers: { apikey: cfg.key, Authorization: 'Bearer ' + cfg.key, Prefer: 'count=exact' } }).then(function (r) {
-      if (!r.ok) throw new Error('http'); var m = /\/(\d+)$/.exec(r.headers.get('content-range') || ''); state.total = m ? +m[1] : 0; return r.json();
+    var my = ++state.req; if (reset) { state.deep = false; state.offset = 0; grid.textContent = ''; $('cat-more').hidden = true; $('cat-empty').hidden = true; $('cat-count').textContent = 'Chargement…'; }
+    function get(deep) {
+      return fetch(url(deep), { headers: { apikey: cfg.key, Authorization: 'Bearer ' + cfg.key, Prefer: 'count=exact' } }).then(function (r) {
+        if (!r.ok) throw new Error('http'); var m = /\/(\d+)$/.exec(r.headers.get('content-range') || ''); state.total = m ? +m[1] : 0; return r.json();
+      });
+    }
+    get(false).then(function (list) {
+      if ((!list || !list.length) && state.offset === 0 && state.q.trim()) { state.deep = true; return get(true); }
+      return list;
     }).then(function (list) {
       if (my !== state.req) return;
       (list || []).forEach(function (p) { var c = card(p); if (c) grid.appendChild(c); });
