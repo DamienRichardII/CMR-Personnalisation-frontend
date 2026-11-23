@@ -23,7 +23,7 @@
     var q = state.q.replace(/[*%,()\\"]/g, ' ').replace(/\b(t|tee)[\s-]*shirts?\b/gi, ' tshirt ').trim();
     if (q) q.split(/\s+/).forEach(function (w) {
       var k = w.toLowerCase(), v = SYN[k] || [w];
-      p.push('or=' + encodeURIComponent('(' + v.map(function (x) { return 'nom.ilike.' + (x.indexOf('*') < 0 ? '*' + x + '*' : x) + (deep && !SYN[k] ? ',description.ilike.*' + x + '*' : ''); }).join(',') + ')'));
+      p.push('or=' + encodeURIComponent('(' + v.map(function (x) { return 'nom.ilike.' + (x.indexOf('*') < 0 ? '*' + x + '*' : x) + (deep && x.indexOf('*') < 0 ? ',description.ilike.*' + x + '*' : ''); }).join(',') + ')'));
     });
     return cfg.url + '/rest/v1/catalogue_public?' + p.join('&');
   }
