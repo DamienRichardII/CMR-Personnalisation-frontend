@@ -20,8 +20,9 @@
     if (state.g !== 'all') p.push('genre=eq.' + encodeURIComponent(state.g));
     var q = state.q.replace(/[*%,()\\"]/g, ' ').replace(/\b(t|tee)[\s-]*shirts?\b/gi, ' tshirt ').trim();
     if (q) q.split(/\s+/).forEach(function (w) {
-      var v = w.toLowerCase() === 'tshirt' ? ['t-shirt', 'tshirt'] : [w];
-      p.push('or=' + encodeURIComponent('(' + v.map(function (x) { return 'nom.ilike.*' + x + '*,description.ilike.*' + x + '*'; }).join(',') + ')'));
+      var ts = w.toLowerCase() === 'tshirt';
+      var v = ts ? ['t-shirt', 'tshirt', 'tee-shirt'] : [w];
+      p.push('or=' + encodeURIComponent('(' + v.map(function (x) { return ts ? 'nom.ilike.*' + x + '*' : 'nom.ilike.*' + x + '*,description.ilike.*' + x + '*'; }).join(',') + ')'));
     });
     return cfg.url + '/rest/v1/catalogue_public?' + p.join('&');
   }
